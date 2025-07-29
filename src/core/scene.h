@@ -18,7 +18,7 @@ public:
     void render();
 
 private:
-    std::vector<GameObject*> *objectList;
+    std::vector<GameObject*> objectList;
 };
 
 #endif
