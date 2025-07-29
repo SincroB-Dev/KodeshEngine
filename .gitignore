@@ -1,0 +1,38 @@
+# VSCode
+.vscode/
+*.code-workspace
+
+# Diretórios específicos do projeto
+libs/
+builds/
+
+# Arquivos temporários de compilação
+*.o
+*.obj
+*.so
+*.dll
+*.exe
+*.out
+*.a
+*.lib
+*.pch
+*.pdb
+
+# Arquivos de log e temporários
+*.log
+*.tmp
+*.swp
+*.swo
+*.bak
+
+# Arquivos gerados por CMake ou Make
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Arquivos gerados por outros sistemas de build
+build/
+dist/
+Debug/
+Release/
