@@ -12,10 +12,11 @@ public:
     Scene();
     ~Scene();
 
-    GameObject *GetObject(const char *name);
-    
+    // Gerenciamento de Objetos
     void AddObject(GameObject *object);
     GameObject *AddObject(const char *name, Shape2D *shape = NULL);
+    
+    GameObject *GetObject(const char *name);
 
     void RemoveObject(const char *name);
     void ClearScene();
