@@ -66,6 +66,8 @@ void Scene::ClearScene()
 
 void Scene::render()
 {
+    gridView.Draw();
+
     for (GameObject *obj : objectList)
     {
         obj->update();

@@ -4,6 +4,8 @@
 #include "gameObject.h"
 #include <vector>
 
+#include "editor/grid.h"
+
 class Scene final
 {
 public:
@@ -22,6 +24,8 @@ public:
 
 private:
     std::vector<GameObject*> objectList;
+
+    scene::editor::GridView gridView;
 };
 
 #endif
