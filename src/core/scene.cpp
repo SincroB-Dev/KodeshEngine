@@ -39,6 +39,20 @@ GameObject *Scene::AddObject(const char *name, Shape2D *shape)
     return it;
 }
 
+void Scene::RemoveObject(const char *name)
+{
+    for (auto it = objectList.begin(); it != objectList.end();)
+    {
+        if ((*it)->name == name)
+        {
+            delete *it;
+            it = objectList.erase(it);
+            break;
+        }
+        it++;
+    }
+}
+
 void Scene::render()
 {
     for (GameObject *obj : objectList)
