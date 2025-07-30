@@ -37,6 +37,12 @@ namespace maths
         virtual float length() const override;
         virtual float dot(const vec3 &other) const;
         virtual int size() const { return 3; }
+
+        inline friend std::ostream& operator<<(std::ostream &os, const vec3 &v)
+        {
+            os << "(" << "x: " << v.x << ", y: " << v.y << ", z: " << v.z << ")";
+            return os;
+        }
     };
 }
 

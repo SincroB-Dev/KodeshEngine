@@ -2,6 +2,7 @@
 #define VEC2_H
 
 #include "proxies.h"
+#include <iostream>
 
 namespace maths
 {
@@ -36,6 +37,12 @@ namespace maths
         virtual float length() const;
         virtual float dot(const vec2 &other) const;
         virtual int size() const { return 2; }
+
+        inline friend std::ostream& operator<<(std::ostream &os, const vec2 &v)
+        {
+            os << "(" << "x: " << v.x << ", y: " << v.y << ")";
+            return os;
+        }
     };
 };
 
