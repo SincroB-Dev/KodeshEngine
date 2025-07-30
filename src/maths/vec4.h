@@ -20,6 +20,7 @@ namespace maths
             : vec3(x, y, z), w(w),
             zxw(this->z, this->x, this->y), wzx(this->w, this->x, this->z), zwx(this->z, this->w, this->x),
             xyzw(this->x, this->y, this->z, this->w) {}
+        inline vec4(): vec4(0.0f, 0.0f, 0.0f, 0.0f) {}
     };
 };
 
