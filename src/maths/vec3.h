@@ -22,6 +22,16 @@ namespace maths
             xyz(this->x, this->y, this->z), zyx(this->z, this->y, this->x), xzy(this->x, this->z, this->y),
             yzx(this->y, this->z, this->x) {}
         inline vec3(): vec3(0.0f, 0.0f, 0.0f) {}
+
+        vec3 operator-(const vec3 &other) const;
+        vec3 operator*(const vec3 &other) const;
+        vec3 operator*(float scalar) const;
+        friend vec3 operator*(float scalar, const vec3 &v);
+
+        vec3 operator=(const vec3 &other);
+
+        virtual float length() const override;
+        virtual float dot(const vec3 &other) const;
     };
 }
 

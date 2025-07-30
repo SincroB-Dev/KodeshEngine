@@ -21,7 +21,18 @@ namespace maths
 
         float& operator[](int i) { return reinterpret_cast<float*>(this)[i]; }
         const float& operator[](int i) const { return reinterpret_cast<const float*>(this)[i]; }
+
+        vec2 operator*(const vec2 &other) const;
+        vec2 operator*(float scalar) const;
+        friend vec2 operator*(float scalar, const vec2 &v);
+
+        vec2 operator=(const vec2 &other);
+
+        vec2 operator-(const vec2& other) const;
+
+        virtual float length() const;
+        virtual float dot(const vec2 &other) const;
     };
-}
+};
 
 #endif
