@@ -16,6 +16,7 @@ public:
     GameObject *AddObject(const char *name, Shape2D *shape = NULL);
 
     void RemoveObject(const char *name);
+    void ClearScene();
 
     void render();
 

@@ -53,6 +53,17 @@ void Scene::RemoveObject(const char *name)
     }
 }
 
+void Scene::ClearScene()
+{
+    for (auto it = objectList.begin(); it != objectList.end();)
+    {
+        delete *it;
+        it++;
+    }
+
+    objectList.clear();
+}
+
 void Scene::render()
 {
     for (GameObject *obj : objectList)
