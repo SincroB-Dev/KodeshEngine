@@ -1,5 +1,5 @@
-#ifndef mat4_HPP
-#define mat4_HPP
+#ifndef MAT4_HPP
+#define MAT4_HPP
 
 #include <cmath>
 #include <cstring>
@@ -9,7 +9,7 @@ namespace maths
 {
     class mat4 {
     public:
-        float m[4][4];
+        float m[4][4]; // Column-major: m[coluna][linha]
 
         mat4() {
             LoadIdentity();
@@ -27,9 +27,9 @@ namespace maths
 
         static mat4 Translation(float x, float y, float z) {
             mat4 result;
-            result.m[0][3] = x;
-            result.m[1][3] = y;
-            result.m[2][3] = z;
+            result.m[3][0] = x;
+            result.m[3][1] = y;
+            result.m[3][2] = z;
             return result;
         }
 
@@ -46,8 +46,8 @@ namespace maths
             float c = std::cos(angleRad);
             float s = std::sin(angleRad);
             result.m[0][0] = c;
-            result.m[0][1] = -s;
-            result.m[1][0] = s;
+            result.m[1][0] = -s;
+            result.m[0][1] = s;
             result.m[1][1] = c;
             return result;
         }
@@ -57,8 +57,8 @@ namespace maths
             float c = std::cos(angleRad);
             float s = std::sin(angleRad);
             result.m[1][1] = c;
-            result.m[1][2] = -s;
-            result.m[2][1] = s;
+            result.m[2][1] = -s;
+            result.m[1][2] = s;
             result.m[2][2] = c;
             return result;
         }
@@ -68,37 +68,38 @@ namespace maths
             float c = std::cos(angleRad);
             float s = std::sin(angleRad);
             result.m[0][0] = c;
-            result.m[0][2] = s;
-            result.m[2][0] = -s;
+            result.m[2][0] = s;
+            result.m[0][2] = -s;
             result.m[2][2] = c;
             return result;
         }
 
         mat4 Transpose() const {
             mat4 result;
-            for (int i = 0; i < 4; ++i)
-                for (int j = 0; j < 4; ++j)
-                    result.m[i][j] = m[j][i];
+            for (int col = 0; col < 4; ++col)
+                for (int row = 0; row < 4; ++row)
+                    result.m[row][col] = m[col][row];
             return result;
         }
 
         mat4 operator*(const mat4& rhs) const {
             mat4 result;
-            for (int row = 0; row < 4; ++row)
-                for (int col = 0; col < 4; ++col) {
-                    result.m[row][col] = 0.0f;
+            for (int col = 0; col < 4; ++col) {
+                for (int row = 0; row < 4; ++row) {
+                    result.m[col][row] = 0.0f;
                     for (int k = 0; k < 4; ++k)
-                        result.m[row][col] += m[row][k] * rhs.m[k][col];
+                        result.m[col][row] += m[k][row] * rhs.m[col][k];
                 }
+            }
             return result;
         }
 
         vec4 operator*(const vec4& v) const {
             vec4 result;
-            result.x = m[0][0]*v.x + m[0][1]*v.y + m[0][2]*v.z + m[0][3]*v.w;
-            result.y = m[1][0]*v.x + m[1][1]*v.y + m[1][2]*v.z + m[1][3]*v.w;
-            result.z = m[2][0]*v.x + m[2][1]*v.y + m[2][2]*v.z + m[2][3]*v.w;
-            result.w = m[3][0]*v.x + m[3][1]*v.y + m[3][2]*v.z + m[3][3]*v.w;
+            result.x = m[0][0]*v.x + m[1][0]*v.y + m[2][0]*v.z + m[3][0]*v.w;
+            result.y = m[0][1]*v.x + m[1][1]*v.y + m[2][1]*v.z + m[3][1]*v.w;
+            result.z = m[0][2]*v.x + m[1][2]*v.y + m[2][2]*v.z + m[3][2]*v.w;
+            result.w = m[0][3]*v.x + m[1][3]*v.y + m[2][3]*v.z + m[3][3]*v.w;
             return result;
         }
 
@@ -107,9 +108,9 @@ namespace maths
             result.m[0][0] = 2.0f / (right - left);
             result.m[1][1] = 2.0f / (top - bottom);
             result.m[2][2] = -2.0f / (farZ - nearZ);
-            result.m[0][3] = -(right + left) / (right - left);
-            result.m[1][3] = -(top + bottom) / (top - bottom);
-            result.m[2][3] = -(farZ + nearZ) / (farZ - nearZ);
+            result.m[3][0] = -(right + left) / (right - left);
+            result.m[3][1] = -(top + bottom) / (top - bottom);
+            result.m[3][2] = -(farZ + nearZ) / (farZ - nearZ);
             return result;
         }
 
@@ -119,10 +120,28 @@ namespace maths
             result.m[0][0] = 1.0f / (aspect * tanHalfFov);
             result.m[1][1] = 1.0f / tanHalfFov;
             result.m[2][2] = -(farZ + nearZ) / (farZ - nearZ);
-            result.m[2][3] = -(2.0f * farZ * nearZ) / (farZ - nearZ);
-            result.m[3][2] = -1.0f;
+            result.m[2][3] = -1.0f;
+            result.m[3][2] = -(2.0f * farZ * nearZ) / (farZ - nearZ);
             result.m[3][3] = 0.0f;
             return result;
+        }
+
+        static mat4 OrthoAspect(float space, int width, int height) {
+            float aspect = static_cast<float>(width) / height;
+
+            if (width > height) {
+                return Ortho(-space, space,
+                            -space / aspect, space / aspect,
+                            -space, space);
+            } else {
+                return Ortho(-space * aspect, space * aspect,
+                            -space, space,
+                            -space, space);
+            }
+        }
+
+        const float* ToPtr() const {
+            return &m[0][0]; // OpenGL ready
         }
     };
 };
