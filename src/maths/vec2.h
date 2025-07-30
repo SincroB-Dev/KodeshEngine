@@ -29,9 +29,13 @@ namespace maths
         vec2 operator=(const vec2 &other);
 
         vec2 operator-(const vec2& other) const;
+        vec2 operator+(const vec2& other) const;
+        vec2 operator/(const vec2 &other) const;
+        vec2 operator/(float scalar) const;
 
         virtual float length() const;
         virtual float dot(const vec2 &other) const;
+        virtual int size() const { return 2; }
     };
 };
 

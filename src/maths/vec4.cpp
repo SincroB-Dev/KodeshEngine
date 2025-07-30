@@ -14,11 +14,26 @@ namespace maths
         return x * other.x + y * other.y + z * other.z + w * other.w;
     }
 
-    vec4 vec4::operator-(const vec4& other) const
+    vec4 vec4::operator-(const vec4 &other) const
     {
         return vec4(x - other.x, y - other.y, z - other.z, w - other.w);
     }
 
+    vec4 vec4::operator+(const vec4 &other) const
+    {
+        return vec4(x + other.x, y + other.y, z + other.z, w + other.w);
+    }
+
+    vec4 vec4::operator/(const vec4 &other) const
+    {
+        return vec4(x / other.x, y / other.y, z / other.z, w / other.w);
+    }
+
+    vec4 vec4::operator/(float scalar) const
+    {
+        return vec4(x / scalar, y / scalar, z / scalar, w / scalar); 
+    }
+    
     vec4 vec4::operator*(const vec4 &other) const
     {
         return vec4(x * other.x, y * other.y, z * other.z, w * other.w);

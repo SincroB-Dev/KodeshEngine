@@ -22,15 +22,20 @@ namespace maths
             xyzw(this->x, this->y, this->z, this->w) {}
         inline vec4(): vec4(0.0f, 0.0f, 0.0f, 0.0f) {}
     
-        vec4 operator-(const vec4 &other) const;
         vec4 operator*(const vec4 &other) const;
         vec4 operator*(float scalar) const;
         friend vec4 operator*(float scalar, const vec4 &v);
-
+        
         vec4 operator=(const vec4 &other);
+
+        vec4 operator-(const vec4 &other) const;
+        vec4 operator+(const vec4 &other) const;
+        vec4 operator/(const vec4 &other) const;
+        vec4 operator/(float scalar) const;
 
         virtual float length() const override;
         virtual float dot(const vec4 &other) const;
+        virtual int size() const { return 4; }
     };
 };
 
