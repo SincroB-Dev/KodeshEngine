@@ -25,6 +25,41 @@ namespace maths
             return mat4();
         }
 
+        mat4 Inverse() const {
+            mat4 result;
+
+            // Separar componentes
+            vec3 right   = vec3(m[0][0], m[1][0], m[2][0]);
+            vec3 up      = vec3(m[0][1], m[1][1], m[2][1]);
+            vec3 forward = vec3(m[0][2], m[1][2], m[2][2]);
+            vec3 pos     = vec3(m[0][3], m[1][3], m[2][3]);
+
+            // Assumindo rotação ortonormal (sem escala): Inversa = transposta
+            result.m[0][0] = right.x;
+            result.m[1][0] = right.y;
+            result.m[2][0] = right.z;
+            result.m[3][0] = 0.0f;
+
+            result.m[0][1] = up.x;
+            result.m[1][1] = up.y;
+            result.m[2][1] = up.z;
+            result.m[3][1] = 0.0f;
+
+            result.m[0][2] = forward.x;
+            result.m[1][2] = forward.y;
+            result.m[2][2] = forward.z;
+            result.m[3][2] = 0.0f;
+
+            // Inverter a translação: -Rᵗ * T
+            result.m[0][3] = -(right.x * pos.x + up.x * pos.y + forward.x * pos.z);
+            result.m[1][3] = -(right.y * pos.x + up.y * pos.y + forward.y * pos.z);
+            result.m[2][3] = -(right.z * pos.x + up.z * pos.y + forward.z * pos.z);
+            result.m[3][3] = 1.0f;
+
+            return result;
+        }
+
+
         static mat4 Translation(float x, float y, float z) {
             mat4 result;
             result.m[3][0] = x;
