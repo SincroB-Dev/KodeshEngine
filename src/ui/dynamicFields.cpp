@@ -13,7 +13,7 @@ void DynamicFields(Serializable *obj)
         {
             ImGui::InputFloat(field.name.c_str(), static_cast<float*>(field.ptr));
         }
-        else if (field.type == typeid(Point))
+        else if (field.type == typeid(vec2))
         {
             ImGui::InputFloat2(field.name.c_str(), (float*)field.ptr);
         }

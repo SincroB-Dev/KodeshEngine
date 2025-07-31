@@ -24,15 +24,15 @@ void GameObject::AttachShape(Shape2D *s)
     shape = s;
 }
 
-void GameObject::applyMovement(Point mov)
+void GameObject::applyMovement(vec2 mov)
 {
     transform.localPosition += mov;
 }
-void GameObject::setLocalPosition(Point position)
+void GameObject::setLocalPosition(vec2 position)
 {
     transform.localPosition = position;
 }
-void GameObject::setLocalScale(Point scale)
+void GameObject::setLocalScale(vec2 scale)
 {
     transform.localScale = scale;
 }
