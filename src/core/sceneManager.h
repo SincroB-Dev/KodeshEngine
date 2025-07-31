@@ -7,9 +7,12 @@ class SceneManager {
     GameObject* mainObject;
 
 public:
-    SceneManager();
+    SceneManager(int &width, int &height);
     ~SceneManager();
 
+    void Update();
     void Render();
+    
     GameObject* GetMainObject() const { return mainObject; }
+    Camera2D* GetMainCamera() const { return scene->mainCamera; }
 };

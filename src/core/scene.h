@@ -5,11 +5,20 @@
 #include <vector>
 
 #include "editor/grid.h"
+#include "camera2d.h"
 
 class Scene final
 {
+    int &screenWidth, &screenHeight;
+
 public:
-    Scene();
+    Camera2D *mainCamera;
+
+    inline Scene(int &screenWidth, int &screenHeight)
+        : screenWidth(screenWidth), screenHeight(screenHeight)
+    {
+        AddCamera("mainCamera");
+    }
     ~Scene();
 
     // Gerenciamento de Objetos
@@ -18,6 +27,10 @@ public:
     
     GameObject *GetObject(const char *name);
 
+    Camera2D *AddCamera(const char *name);
+    Camera2D *GetCamera(const char *name);
+    void RemoveCamera(const char *name);
+
     void RemoveObject(const char *name);
     void ClearScene();
 
@@ -25,6 +38,7 @@ public:
 
 private:
     std::vector<GameObject*> objectList;
+    std::vector<Camera2D*> cameraList;
 
     scene::editor::GridView gridView;
 };

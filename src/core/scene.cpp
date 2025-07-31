@@ -4,9 +4,6 @@
 #include <algorithm>
 #include <iostream>
 
-Scene::Scene()
-{}
-
 Scene::~Scene() {}
 
 GameObject *Scene::GetObject(const char *name)
@@ -62,6 +59,41 @@ void Scene::ClearScene()
     }
 
     objectList.clear();
+}
+
+Camera2D *Scene::AddCamera(const char *name)
+{
+    if (GetCamera(name) == nullptr)
+    {
+        Camera2D *camera = new Camera2D(name, screenWidth, screenHeight);
+    
+        if (mainCamera == nullptr)
+        {
+            mainCamera = camera;
+        }
+    
+        cameraList.push_back(camera);
+        return camera;
+
+    } return nullptr;
+}
+
+Camera2D *Scene::GetCamera(const char *name)
+{
+    auto it = std::find_if(cameraList.begin(), cameraList.end(), [name](Camera2D *obj){
+        return obj->name == name;
+    });
+
+    if (it != cameraList.end())
+    {
+        return (*it);
+    }
+    else
+        return nullptr;
+}
+
+void Scene::RemoveCamera(const char *name)
+{
 }
 
 void Scene::render()
