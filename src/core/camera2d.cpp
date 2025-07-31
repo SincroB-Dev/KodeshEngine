@@ -1,16 +1,30 @@
 #include "camera2d.h"
 
-void Camera2D::Resize(int width, int height) {
-    screenWidth = width;
-    screenHeight = height;
-    projection = mat4::OrthoAspect(space, width, height);
+void Camera2D::UpdateProjection()
+{
+    if (_latest_shei != screenHeight || _latest_swid != screenWidth || _latest_space != space)
+    {
+        _latest_shei = screenHeight;
+        _latest_swid = screenWidth;
+        _latest_space = space;
+
+        projection = mat4::OrthoAspect(space, screenWidth, screenHeight);
+    }
 }
 
-void Camera2D::UpdateView() {
+void Camera2D::UpdateView() 
+{
     view = mat4::Translation(-position.x, -position.y, -position.z);
 }
 
-mat4 Camera2D::GetViewProjection() const {
+void Camera2D::Update()
+{
+    UpdateProjection();
+    UpdateView();
+}
+
+mat4 Camera2D::GetViewProjection() const 
+{
     return projection * view;
 }
 

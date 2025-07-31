@@ -5,6 +5,11 @@
 using namespace maths;
 
 class Camera2D {
+private:
+    int _latest_swid;
+    int _latest_shei;
+    int _latest_space;
+
 public:
     float space = 10.0f;
 
@@ -18,8 +23,10 @@ public:
 
     vec4 position = {0.0f, 0.0f, 0.0f, 1.0f};
 
-    void Resize(int width, int height);
+    void UpdateProjection();
     void UpdateView();
+    void Update();
+
     mat4 GetViewProjection() const;
     vec2 ScreenToWorld(int mouseX, int mouseY) const;
 };
