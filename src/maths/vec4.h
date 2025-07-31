@@ -37,6 +37,15 @@ namespace maths
         virtual float dot(const vec4 &other) const;
         virtual int size() const { return 4; }
 
+        inline vec4& operator+=(const vec4 &other)
+        {
+            x += other.x;
+            y += other.y;
+            z += other.z;
+            w += other.w;
+            return *this;
+        }
+
         inline friend std::ostream& operator<<(std::ostream &os, const vec4 &v)
         {
             os << "(" << "x: " << v.x << ", y: " << v.y << ", z: " << v.z << ", w:" << v.w << ")";
