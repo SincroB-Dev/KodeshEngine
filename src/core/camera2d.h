@@ -16,7 +16,9 @@ public:
     int &screenWidth;
     int &screenHeight;
 
-    inline Camera2D(int &swidth, int &sheight): screenWidth(swidth), screenHeight(sheight) {}
+    const char *name;
+
+    inline Camera2D(const char *name, int &swidth, int &sheight): name(name), screenWidth(swidth), screenHeight(sheight) {}
 
     mat4 projection;
     mat4 view;
