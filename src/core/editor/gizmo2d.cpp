@@ -152,7 +152,7 @@ namespace scene
                             transform->localPosition.y = dragStartValue.y + delta.y;
                             break;
                         case Mode::Rotate:
-                            transform->localAngle = dragStartValue.x + (delta.x + delta.y);
+                            transform->localAngle = dragStartValue.x + ((delta.x + delta.y) * (M_PI / 180.0f));
                             break;
                         case Mode::ScaleX:
                             transform->localScale.x = std::max(0.1f, dragStartValue.x + delta.x);
