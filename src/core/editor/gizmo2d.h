@@ -2,7 +2,8 @@
 
 #include <SDL2/SDL.h>
 #include "../../maths/maths.h"
-#include "../sceneManager.h"
+
+class SceneManager;
 
 using namespace maths;
 
@@ -12,10 +13,12 @@ namespace scene
     {
         class Gizmo2D {
         public:
-            Gizmo2D(Transform2D &transform);
+            Gizmo2D(SceneManager *sceneManager);
         
-            void Update(SDL_Event& event, const SceneManager &sm);
+            void Update();
             void Render();
+
+            void SetTransform(Transform2D *transform);
         
         private:
             enum class Mode { None, TranslateX, TranslateY, Rotate, ScaleX, ScaleY };
@@ -25,7 +28,8 @@ namespace scene
             float rotation;
             vec2 scale;
 
-            Transform2D &transform;
+            Transform2D *transform;
+            SceneManager *sceneManager;
         
             mat4 viewProjection;
         
