@@ -28,7 +28,7 @@ mat4 Camera2D::GetViewProjection() const
     return projection * view;
 }
 
-vec2 Camera2D::ScreenToWorld(int mouseX, int mouseY) const
+void Camera2D::ApplyScreenToWorld(int mouseX, int mouseY)
 {
     // Proporção da tela
     float aspect = (float)screenWidth / (float)screenHeight;
@@ -60,5 +60,10 @@ vec2 Camera2D::ScreenToWorld(int mouseX, int mouseY) const
     worldX += position.x;
     worldY += position.y;
 
-    return vec2(worldX, worldY);
+    worldMouse = vec2(worldX, worldY);
+}
+
+vec2 Camera2D::GetWorldMouse() const
+{
+    return worldMouse;
 }

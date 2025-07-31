@@ -23,6 +23,8 @@ public:
     mat4 projection;
     mat4 view;
 
+    vec2 worldMouse;
+
     vec4 position = {0.0f, 0.0f, 0.0f, 1.0f};
 
     void UpdateProjection();
@@ -30,5 +32,6 @@ public:
     void Update();
 
     mat4 GetViewProjection() const;
-    vec2 ScreenToWorld(int mouseX, int mouseY) const;
+    void ApplyScreenToWorld(int mouseX, int mouseY);
+    vec2 GetWorldMouse() const;
 };
