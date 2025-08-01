@@ -5,7 +5,12 @@
 #include "../../libs/imgui/imgui.h"
 #include "../../libs/ImGuiFileDialog/ImGuiFileDialog.h"
 
+#include "dockedToolbox.h"
+
+using namespace core::ui;
+
 class UIManager {
+    DockedToolbox dockedToolbox;
     ImFontConfig icons_config;
 
     // Intervalo de caracteres da fonte de ícones (Material Icons)

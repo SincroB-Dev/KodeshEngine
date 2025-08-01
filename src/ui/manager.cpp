@@ -102,8 +102,7 @@ void UIManager::Render(SceneManager& scene)
     ImGui::NewFrame();
 
     // Desenha painel lateral
-    static GameObjectPanel panel;
-    panel.drawPanel(scene.GetMainObject());
+    dockedToolbox.Draw();
 
     ImGui::Render();
     ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
