@@ -9,7 +9,7 @@ class GameObject
 public:
     GameObject(const char *name);
     GameObject(const char *name, Transform2D *transform, Color color);
-    ~GameObject();
+    virtual ~GameObject();
 
     const char *name;
 

@@ -16,7 +16,7 @@ void Shape2D::render()
     
         glColor3f(color.r, color.g, color.b); // Cor do objeto;
         
-        for (const auto it : vertices)
+        for (const auto &it : vertices)
         {
             glVertex2f(it.x, it.y);
         }

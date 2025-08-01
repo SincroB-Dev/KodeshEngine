@@ -21,7 +21,7 @@ class ScenePanel final : public Panel
     // IO -> Instance Objects
     std::map<std::string, ShapeFactory> UI_IOShapes;
 
-    int UI_ShapeSelectedIndex = -1;
+    size_t UI_ShapeSelectedIndex = -1;
     std::vector<std::string> UI_ShapeNames;
 
 public:

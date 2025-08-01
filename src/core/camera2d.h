@@ -11,20 +11,20 @@ private:
     int _latest_space;
 
 public:
-    float space = 10.0f;
+    const char *name;
 
     int &screenWidth;
     int &screenHeight;
 
-    const char *name;
+    float space = 10.0f;
 
-    inline Camera2D(const char *name, int &swidth, int &sheight): name(name), screenWidth(swidth), screenHeight(sheight) {}
+    inline Camera2D(const char *name, int &swidth, int &sheight): 
+        name(name), screenWidth(swidth), screenHeight(sheight) {}
 
     mat4 projection;
     mat4 view;
 
-    vec2 worldMouse;
-
+    vec2 worldMouse = {0.0f, 0.0f};
     vec4 position = {0.0f, 0.0f, 0.0f, 1.0f};
 
     void UpdateProjection();

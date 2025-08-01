@@ -46,8 +46,10 @@ void SceneManager::Update()
 
 void SceneManager::Render()
 {
+    auto viewMatrix = GetActiveCamera()->GetViewProjection();
+
     glMatrixMode(GL_PROJECTION);
-    glLoadMatrixf(&GetActiveCamera()->GetViewProjection().m[0][0]);
+    glLoadMatrixf(&viewMatrix.m[0][0]);
     
     activeScene->Render();
     gizmos->Render();

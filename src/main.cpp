@@ -1,3 +1,4 @@
+#define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h>
 #include <GL/gl.h>
 
@@ -5,7 +6,7 @@
 #include "core/core.h"
 #include "ui/manager.h"
 
-int main()
+int main(int argc, char *argv[])
 {
     SDL_Init(SDL_INIT_VIDEO);
 

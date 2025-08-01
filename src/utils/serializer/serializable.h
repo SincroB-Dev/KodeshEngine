@@ -14,7 +14,7 @@ protected:
 
 public:
     const std::vector<FieldDescriptor> &GetFields() const;
-    void AddField(void *ptr, const char *name, const std::type_info &type);
+    void AddField(void *ptr, const char *name, const std::type_info &type, size_t size);
 
     virtual ~Serializable() = default;
 

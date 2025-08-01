@@ -34,6 +34,10 @@ namespace maths
         vec4 operator/(float scalar) const;
 
         virtual float length() const override;
+
+        using vec2::dot;
+        using vec3::dot;
+
         virtual float dot(const vec4 &other) const;
         virtual int size() const { return 4; }
 

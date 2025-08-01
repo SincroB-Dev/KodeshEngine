@@ -22,14 +22,15 @@ namespace scene
         
         private:
             enum class Mode { None, TranslateX, TranslateY, Rotate, ScaleX, ScaleY };
+            
+            SceneManager *sceneManager;
+            Transform2D *transform;
+
             Mode currentMode;
         
             vec2 position;
             float rotation;
             vec2 scale;
-
-            Transform2D *transform;
-            SceneManager *sceneManager;
         
             mat4 viewProjection;
         

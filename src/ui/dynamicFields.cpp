@@ -23,13 +23,13 @@ void DynamicFields(Serializable *obj)
         }
         else if (field.type == typeid(std::string))
         {
-            ImGui::InputText(field.name.c_str(), static_cast<char*>(field.ptr), IM_ARRAYSIZE(&field.ptr));
+            ImGui::InputText(field.name.c_str(), static_cast<char*>(field.ptr), field.size);
         }
         else if (field.type == typeid(bool))
         {
-            ImGuiStyle& style = ImGui::GetStyle();
+            // ImGuiStyle& style = ImGui::GetStyle();
 
-            ImVec2 originalPadding = style.FramePadding;
+            // ImVec2 originalPadding = style.FramePadding;
 
             // Reduz temporariamente o padding
             ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(2.0f, 2.0f)); // menor padding

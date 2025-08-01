@@ -5,6 +5,8 @@
 
 #include "gameObjectPanel.h" // onde está o GameObjectPanel
 
+const ImWchar UIManager::icons_ranges[3] = { 0xe000, 0xf8ff, 0 };
+
 UIManager::UIManager(SDL_Window *window, SDL_GLContext context)
 {
     InitImGui(window, context);
@@ -84,8 +86,13 @@ void UIManager::InitImGui(SDL_Window *window, SDL_GLContext context)
 
 void UIManager::LoadFonts(ImGuiIO &io)
 {
+    icons_config.MergeMode = true;
+    icons_config.PixelSnapH = true;
+
     io.Fonts->Clear();
-    io.Fonts->AddFontFromFileTTF("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 12.0f);
+
+    io.Fonts->AddFontFromFileTTF("../assets/fonts/segoeui.ttf", 12.0f);
+    io.Fonts->AddFontFromFileTTF("../assets/fonts/MaterialIcons-Regular.ttf", 16.0f, &icons_config, UIManager::icons_ranges);
 }
 
 void UIManager::Render(SceneManager& scene)

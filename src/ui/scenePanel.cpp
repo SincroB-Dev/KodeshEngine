@@ -30,7 +30,7 @@ void ScenePanel::InitShapeFactory()
 
 void ScenePanel::ShapeSelector(SceneManager& scene)
 {
-    for (int i=0; i<UI_ShapeNames.size(); ++i)
+    for (size_t i=0; i<UI_ShapeNames.size(); ++i)
     {
         if (ImGui::Selectable(UI_ShapeNames[i].c_str(), UI_ShapeSelectedIndex == i))
         {

@@ -30,9 +30,6 @@ mat4 Camera2D::GetViewProjection() const
 
 void Camera2D::ApplyScreenToWorld(int mouseX, int mouseY)
 {
-    // Proporção da tela
-    float aspect = (float)screenWidth / (float)screenHeight;
-
     // Coordenadas normalizadas da tela (0 a 1)
     float normX = (float)mouseX / (float)screenWidth;
     float normY = (float)mouseY / (float)screenHeight;

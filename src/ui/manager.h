@@ -6,6 +6,11 @@
 #include "../../libs/ImGuiFileDialog/ImGuiFileDialog.h"
 
 class UIManager {
+    ImFontConfig icons_config;
+
+    // Intervalo de caracteres da fonte de ícones (Material Icons)
+    static const ImWchar icons_ranges[3]; // unicode private use area
+
 public:
     UIManager(SDL_Window *window, SDL_GLContext context);
 

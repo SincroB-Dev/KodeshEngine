@@ -17,8 +17,8 @@ private:
     Camera2D *camera;
     Gizmo2D *gizmos;
 
-    int &mouseX, &mouseY;
     int &width, &height;
+    int &mouseX, &mouseY;
     
     std::map<std::string, Scene*> sceneList;
 

@@ -34,6 +34,8 @@ namespace maths
         vec3 operator/(const vec3 &other) const;
         vec3 operator/(float scalar) const;
 
+        using vec2::dot;
+
         virtual float length() const override;
         virtual float dot(const vec3 &other) const;
         virtual int size() const { return 3; }
