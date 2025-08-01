@@ -96,7 +96,7 @@ void Scene::RemoveCamera(const char *name)
 {
 }
 
-void Scene::render()
+void Scene::Render()
 {
     gridView.Draw();
 

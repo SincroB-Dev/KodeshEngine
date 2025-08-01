@@ -13,11 +13,17 @@ class Scene final
 
 public:
     Camera2D *mainCamera;
+    GameObject *activeObject;
 
     inline Scene(int &screenWidth, int &screenHeight)
         : screenWidth(screenWidth), screenHeight(screenHeight)
     {
-        AddCamera("mainCamera");
+        GameObject *mainObject = new GameObject("object");
+        mainObject->AttachShape(new Shape2DStar(mainObject->transform, mainObject->color));
+        activeObject = mainObject;
+
+        AddObject(mainObject);
+        AddCamera("camera");
     }
     ~Scene();
 
@@ -34,7 +40,7 @@ public:
     void RemoveObject(const char *name);
     void ClearScene();
 
-    void render();
+    void Render();
 
 private:
     std::vector<GameObject*> objectList;
