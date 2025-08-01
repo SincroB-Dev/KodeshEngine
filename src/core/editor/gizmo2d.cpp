@@ -73,8 +73,8 @@ namespace scene
 
             glBegin(GL_TRIANGLES);
             glVertex2f(dir.x, dir.y);
-            glVertex2f(headBase.x + ortho.x * 0.15f, headBase.y + ortho.y * 0.15f);
-            glVertex2f(headBase.x - ortho.x * 0.15f, headBase.y - ortho.y * 0.15f);
+            glVertex2f(headBase.x + ortho.x * 0.125f, headBase.y + ortho.y * 0.125f);
+            glVertex2f(headBase.x - ortho.x * 0.125f, headBase.y - ortho.y * 0.125f);
             glEnd();
         }        
 
@@ -84,9 +84,8 @@ namespace scene
         }
 
         bool Gizmo2D::HitTestSquare(vec2 mousePos, vec2 localPos) {
-            vec2 testPos = transform->localPosition + rotate(localPos, (transform->localAngle * (M_PI / 180)));
-            vec2 diff = mousePos - testPos;
-            return abs(diff.x) < 0.15f && abs(diff.y) < 0.15f;
+            vec2 diff = mousePos - transform->localPosition;
+            return abs(diff.x) < 0.1f && abs(diff.y) < 0.1f;
         }
         
         bool Gizmo2D::HitTestArrow(vec2 dir, vec2 mousePos, float threshold) {
@@ -112,9 +111,9 @@ namespace scene
                         currentMode = Mode::TranslateY;
                     } else if (HitTestCircle(worldMouse, 1.2f)) {
                         currentMode = Mode::Rotate;
-                    } else if (HitTestSquare(worldMouse, vec2(1.3f, 0))) {
+                    } else if (HitTestSquare(worldMouse, vec2(1.5f, 0))) {
                         currentMode = Mode::ScaleX;
-                    } else if (HitTestSquare(worldMouse, vec2(0, 1.3f))) {
+                    } else if (HitTestSquare(worldMouse, vec2(0, 1.5f))) {
                         currentMode = Mode::ScaleY;
                     } else {
                         currentMode = Mode::None;
@@ -152,7 +151,7 @@ namespace scene
                             transform->localPosition.y = dragStartValue.y + delta.y;
                             break;
                         case Mode::Rotate:
-                            transform->localAngle = dragStartValue.x + ((delta.x + delta.y) * (M_PI / 180.0f));
+                            transform->localAngle = dragStartValue.x + ((delta.x + delta.y) * (180.0f / M_PI));
                             break;
                         case Mode::ScaleX:
                             transform->localScale.x = std::max(0.1f, dragStartValue.x + delta.x);
@@ -174,7 +173,7 @@ namespace scene
                 glTranslatef(transform->localPosition.x, transform->localPosition.y, 0);
 
                 if (isRotating) {
-                    DrawSector(0.0f, transform->localAngle, 1.2f, Color(1.0f, 0.5f, 0.0f, 0.5f)); // cor laranja translúcida
+                    DrawSector(0.0f, transform->localAngle * (M_PI / 180.0f), 1.2f, Color(1.0f, 0.7f, 0.3f, 0.5f)); // cor laranja translúcida
                 }
 
                 // Eixos de translação (fixos)
@@ -186,8 +185,8 @@ namespace scene
                 DrawCircle(rotColor, 1.2f);
 
                 // Quadradinhos para escala
-                DrawSquare(vec2(1.3f, 0), currentMode == Mode::ScaleX ? Color(1, 0.6f, 1) : Color(1, 0, 1));
-                DrawSquare(vec2(0, 1.3f), currentMode == Mode::ScaleY ? Color(0.6f, 1, 1) : Color(0, 1, 1));
+                DrawSquare(vec2(1.5f, 0), currentMode == Mode::ScaleX ? Color(1, 0.6f, 1) : Color(1, 0, 1));
+                DrawSquare(vec2(0, 1.5f), currentMode == Mode::ScaleY ? Color(0.6f, 1, 1) : Color(0, 1, 1));
 
                 glPopMatrix();
             }
