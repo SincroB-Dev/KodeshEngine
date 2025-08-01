@@ -53,5 +53,6 @@ namespace maths
     {
         x = other.x;
         y = other.y;
+        return *this;
     }
 };
