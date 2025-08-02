@@ -91,7 +91,7 @@ void UIManager::LoadFonts(ImGuiIO &io)
 
     io.Fonts->Clear();
 
-    io.Fonts->AddFontFromFileTTF("../assets/fonts/segoeui.ttf", 12.0f);
+    io.Fonts->AddFontFromFileTTF("../assets/fonts/segoeui.ttf", 14.0f);
     io.Fonts->AddFontFromFileTTF("../assets/fonts/MaterialIcons-Regular.ttf", 16.0f, &icons_config, UIManager::icons_ranges);
 }
 
