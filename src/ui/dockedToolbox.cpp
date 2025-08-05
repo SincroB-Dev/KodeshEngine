@@ -58,7 +58,7 @@ namespace core
             ImGui::EndChild();
 
             ImGui::SameLine();
-            ImGui::BeginChild("TabContent", ImVec2(0, panelSize.y), false);
+            ImGui::BeginChild("EnvironmentManagerTabs", ImVec2(0, panelSize.y), false);
 
             switch (activeTab)
             {
