@@ -23,8 +23,8 @@ namespace scene
         private:
             enum class Mode { None, TranslateX, TranslateY, Rotate, ScaleX, ScaleY };
             
-            SceneManager *sceneManager;
-            Transform2D *transform;
+            SceneManager *sceneManager = nullptr;
+            Transform2D *transform = nullptr;
 
             Mode currentMode;
         

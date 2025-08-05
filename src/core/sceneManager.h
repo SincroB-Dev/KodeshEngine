@@ -8,8 +8,10 @@
 #include <SDL2/SDL.h>
 
 #include "editor/gizmo2d.h"
+#include "../maths/maths.h"
 
 using namespace scene::editor;
+using namespace maths;
 
 class SceneManager {
 private:
@@ -21,6 +23,11 @@ private:
     int &mouseX, &mouseY;
     
     std::map<std::string, Scene*> sceneList;
+
+    vec2 dragStartMouse;
+    vec2 *worldMouse;
+
+    void CameraControls();
 
 public:
     SceneManager(int &width, int &height, int &mouseX, int &mouseY);

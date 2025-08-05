@@ -2,17 +2,19 @@
 #include <utility>
 
 GameObject::GameObject(const char *name, Transform2D *transform, Color color = {1.0f, 0.0f, 0.0f, 1.0f}):
-    name(name), transform(*transform), color(color)
+    Entity(name, *transform), color(color)
 {
     shape = new Shape2DQuad(this->transform, this->color);
 }
     
 GameObject::GameObject(const char *name):
-    name(name)
+    Entity(name, Transform2D())
 {}
 
 GameObject::~GameObject()
-{}
+{
+    
+}
 
 void GameObject::AttachShape(Shape2D *s)
 {
@@ -27,18 +29,6 @@ void GameObject::AttachShape(Shape2D *s)
 void GameObject::applyMovement(vec2 mov)
 {
     transform.localPosition += mov;
-}
-void GameObject::setLocalPosition(vec2 position)
-{
-    transform.localPosition = position;
-}
-void GameObject::setLocalScale(vec2 scale)
-{
-    transform.localScale = scale;
-}
-void GameObject::setLocalAngle(float angle)
-{
-    transform.localAngle = angle;
 }
 
 void GameObject::update()

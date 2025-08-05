@@ -35,12 +35,23 @@ SceneManager::~SceneManager()
     }
 }
 
+void SceneManager::CameraControls()
+{
+    // Implementar o controle de camera.
+}
+
 void SceneManager::Update()
 {
-    gizmos->SetTransform(&activeScene->activeObject->transform);
+    if (activeScene->activeObject != nullptr)
+    {
+        gizmos->SetTransform(&activeScene->activeObject->transform);
+    }
 
     GetActiveCamera()->ApplyScreenToWorld(mouseX, mouseY);
     GetActiveCamera()->Update();
+
+    CameraControls();
+
     gizmos->Update();
 }
 
