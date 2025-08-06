@@ -30,6 +30,8 @@ private:
     vec2 dragStartMouse;
     vec2 *worldMouse;
 
+    bool dragCam = false;
+
     void CameraControls();
 
 public:
