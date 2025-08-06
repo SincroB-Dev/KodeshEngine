@@ -19,7 +19,7 @@ GameObjectPanel::~GameObjectPanel()
 
 void GameObjectPanel::drawPanel(void *properties)
 {
-    ImGui::Begin("Propriedades de Objeto");
+    // ImGui::Begin("Propriedades de Objeto");
 
     if (properties)
     {
@@ -77,5 +77,5 @@ void GameObjectPanel::drawPanel(void *properties)
         ImGui::Text("Nenhum objeto selecionado!");
     }
 
-    ImGui::End();
+    // ImGui::End();
 }

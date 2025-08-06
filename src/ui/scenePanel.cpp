@@ -56,7 +56,6 @@ void ScenePanel::ShapeSelector(SceneManager& scene)
 
 void ScenePanel::drawPanel(void *properties)
 {
-    ImGui::Begin("Controle de Cenário");
     ImGui::Text("FPS: %.1f", ImGui::GetIO().Framerate);
 
     if (ImGui::Button("Carregar Asset"))
@@ -73,6 +72,4 @@ void ScenePanel::drawPanel(void *properties)
     }
 
     // ShapeSelector(scene);
-
-    ImGui::End();
 }
