@@ -1,13 +1,18 @@
 #ifndef PANEL_H
 #define PANEL_H
 
-class Panel
+namespace core
 {
-public:
-    Panel();
-    virtual ~Panel();
+    namespace ui
+    {
+        class Panel
+        {
+        public:
+            Panel();
+            virtual ~Panel();
 
-    virtual void drawPanel(void *properties);
-};
-
+            virtual void drawPanel(void *properties);
+        };
+    }
+}
 #endif

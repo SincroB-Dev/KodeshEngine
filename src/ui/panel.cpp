@@ -1,16 +1,22 @@
 #include "panel.h"
 
-Panel::Panel() 
+namespace core
 {
-
-}
-
-Panel::~Panel()
-{
-
-}
-
-void Panel::drawPanel(void *properties)
-{
-
+    namespace ui
+    {
+        Panel::Panel() 
+        {
+        
+        }
+        
+        Panel::~Panel()
+        {
+        
+        }
+        
+        void Panel::drawPanel(void *properties)
+        {
+        
+        }
+    }
 }

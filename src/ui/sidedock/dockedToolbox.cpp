@@ -1,7 +1,8 @@
 #include "dockedToolbox.h"
 
-#include "../../libs/imgui/imgui.h"
-#include "materialIcons.h"
+#include "../../../libs/imgui/imgui.h"
+#include "../../core/core.h"
+#include "../materialIcons.h"
 
 #include <iostream>
 

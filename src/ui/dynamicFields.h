@@ -5,4 +5,10 @@
 #include "../utils/utils.h"
 #include "../maths/maths.h"
 
-void DynamicFields(Serializable *obj);
+namespace core
+{
+    namespace ui
+    {
+        void DynamicFields(Serializable *obj);
+    };
+};

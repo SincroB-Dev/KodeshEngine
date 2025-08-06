@@ -2,4 +2,4 @@
 
 #include "panel.h"
 #include "dynamicFields.h"
-#include "gameObjectPanel.h"
+#include "manager.h"
