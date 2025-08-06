@@ -26,7 +26,7 @@ namespace core
             ImGui::PopStyleVar(1);
         }
 
-        void DockedToolbox::Draw()
+        void DockedToolbox::Draw(SceneManager& sm)
         {
             ImVec2 viewportSize = ImGui::GetMainViewport()->Size;
             float panelX = viewportSize.x - panelWidth;
@@ -67,9 +67,11 @@ namespace core
                 break;
             case TBEditorTab::Cenario:
                 ImGui::Text("Elementos do Cenário");
+                scenePanel.drawPanel(nullptr);
                 break;
             case TBEditorTab::Entidade:
                 ImGui::Text("Configurações da Entidade Selecionada");
+                entityPanel.drawPanel(sm.GetActiveScene()->activeObject);
                 break;
             case TBEditorTab::Material:
                 ImGui::Text("Editor de Materiais");

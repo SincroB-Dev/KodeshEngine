@@ -102,7 +102,7 @@ void UIManager::Render(SceneManager& scene)
     ImGui::NewFrame();
 
     // Desenha painel lateral
-    dockedToolbox.Draw();
+    dockedToolbox.Draw(scene);
 
     ImGui::Render();
     ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
