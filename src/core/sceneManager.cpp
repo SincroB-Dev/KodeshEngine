@@ -65,7 +65,6 @@ void SceneManager::CameraControls()
     }
     else
     {
-        camera->position.y += 0.05f;
     }
 }
 
