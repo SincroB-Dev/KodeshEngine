@@ -9,15 +9,18 @@
 
 #include "editor/gizmo2d.h"
 #include "../maths/maths.h"
+#include "components/componentStorage.h"
 
 using namespace scene::editor;
 using namespace maths;
+using namespace core::components;
 
 class SceneManager {
 private:
     Scene *activeScene;
     Camera2D *camera;
     Gizmo2D *gizmos;
+    ComponentStorage components;
 
     int &width, &height;
     int &mouseX, &mouseY;

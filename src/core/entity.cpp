@@ -2,8 +2,9 @@
 
 namespace core
 {
-    Entity::Entity(const char *name, Transform2D transform): name(name), transform(transform)
-    {}
+    Entity::Entity(const char *name, Transform2D transform): name(name), transform(transform), id(134)
+    {
+    }
     
     Entity::~Entity()
     {
