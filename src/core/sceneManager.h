@@ -40,6 +40,7 @@ public:
     
     SDL_Event event;
 
+    void UpdateWhenEvent();
     void Update();
     void Render();
     

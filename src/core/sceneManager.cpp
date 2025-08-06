@@ -65,11 +65,11 @@ void SceneManager::CameraControls()
     }
     else
     {
-
+        camera->position.y += 0.05f;
     }
 }
 
-void SceneManager::Update()
+void SceneManager::UpdateWhenEvent()
 {
     if (activeScene->activeObject != nullptr)
     {
@@ -82,6 +82,11 @@ void SceneManager::Update()
     CameraControls();
 
     gizmos->Update();
+}
+
+void SceneManager::Update()
+{
+    activeScene->Update();
 }
 
 void SceneManager::Render()

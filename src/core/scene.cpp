@@ -65,6 +65,11 @@ void Scene::ClearScene()
     objectList.clear();
 }
 
+void Scene::Update()
+{
+
+}
+
 void Scene::Render()
 {
     gridView.Draw();

@@ -36,6 +36,7 @@ public:
     void RemoveObject(const char *name);
     void ClearScene();
 
+    void Update();
     void Render();
 
 private:

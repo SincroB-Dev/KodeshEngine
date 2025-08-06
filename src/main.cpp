@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
             SDL_GetMouseState(&mouseX, &mouseY);
 
             ui.ProcessEvent(&sm.event);
-            sm.Update();
+            sm.UpdateWhenEvent();
 
             if (sm.event.type == SDL_QUIT)
             { 
@@ -42,6 +42,8 @@ int main(int argc, char *argv[])
 
         glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
+
+        sm.Update();
 
         sm.Render();
         ui.Render(sm);
