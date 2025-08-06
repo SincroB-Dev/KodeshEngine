@@ -46,4 +46,5 @@ public:
     
     GameObject* GetMainObject() const { return nullptr; }
     Camera2D* GetActiveCamera() const { return camera; }
+    Scene* GetActiveScene() const { return activeScene; }
 };
