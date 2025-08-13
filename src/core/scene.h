@@ -12,13 +12,14 @@ using namespace core;
 class Scene final
 {
     int &screenWidth, &screenHeight;
-
+    
 public:
-    Camera2D *mainCamera = nullptr;
-    Entity *activeObject = nullptr;
+    const char* name;
+    Camera2D* mainCamera = nullptr;
+    Entity* activeObject = nullptr;
 
     inline Scene(int &screenWidth, int &screenHeight)
-        : screenWidth(screenWidth), screenHeight(screenHeight)
+        : screenWidth(screenWidth), screenHeight(screenHeight), name("scene")
     {
         if (mainCamera == nullptr)
         {
@@ -29,9 +30,10 @@ public:
 
     // Gerenciamento de Objetos
     void AddObject(Entity *object);
-    Entity *AddGameObject(const char *name, Shape2D *shape = NULL);
+    Entity* AddGameObject(const char *name, Shape2D *shape = NULL);
 
-    Entity *GetObject(const char *name);
+    Entity* GetObject(const char *name);
+    std::vector<Entity*>& GetObjectList();
 
     void RemoveObject(const char *name);
     void ClearScene();

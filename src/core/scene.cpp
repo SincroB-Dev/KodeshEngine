@@ -23,24 +23,35 @@ Entity* Scene::GetObject(const char *name)
     else
         return nullptr;
 }
-    
-void Scene::AddObject(Entity *object)
+
+std::vector<Entity*>& Scene::GetObjectList()
 {
-    if (GetObject(object->name) == nullptr)
+    return objectList;
+}
+    
+void Scene::AddObject(Entity* object)
+{
+    if (GetObject(object->name.c_str()) == nullptr)
     {
         objectList.push_back(object);
+        activeObject = object;
+        std::cout << "Add object!" << std::endl;
     }
 }
 
-Entity *Scene::AddGameObject(const char *name, Shape2D *shape)
+Entity* Scene::AddGameObject(const char* name, Shape2D* shape)
 {
-    GameObject *it = new GameObject(name);
-    it->AttachShape(shape);
-    AddObject(it);
-    return it;
+    if (GetObject(name) == nullptr)
+    {
+        GameObject *it = new GameObject(name);
+        it->AttachShape(shape);
+        AddObject(it);
+        return it;
+    }
+    return nullptr;
 }
 
-void Scene::RemoveObject(const char *name)
+void Scene::RemoveObject(const char* name)
 {
     for (auto it = objectList.begin(); it != objectList.end();)
     {
@@ -74,7 +85,7 @@ void Scene::Render()
 {
     gridView.Draw();
 
-    for (Entity *obj : objectList)
+    for (Entity* obj : objectList)
     {
         obj->update();
         obj->render();
