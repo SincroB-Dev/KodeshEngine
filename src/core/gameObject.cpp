@@ -33,7 +33,7 @@ void GameObject::applyMovement(vec2 mov)
 
 void GameObject::update()
 {
-    // syncTransform(&transform);
+    
 }
 
 void GameObject::render()

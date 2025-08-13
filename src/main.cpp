@@ -24,8 +24,8 @@ int main(int argc, char *argv[])
     SDL_GetWindowSize(window, &width, &height);
 
     // Inicializar gerenciadores
-    UIManager ui(window, context);
     SceneManager sm(width, height, mouseX, mouseY);
+    UIManager ui(window, context, sm);
 
     while (running)
     {
