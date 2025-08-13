@@ -2,14 +2,14 @@
 
 namespace core
 {
-    Entity::Entity(const char *name, Transform2D transform): name(name), transform(transform), id(134)
-    {
-    }
+    std::atomic<EntityID> Entity::entityCounter{1};
     
-    Entity::~Entity()
-    {
-        delete name;
-    }
+    Entity::Entity(const char* name, Transform2D transform): name(name), transform(transform),
+    id(entityCounter++) 
+    {}
+    
+    Entity::~Entity() 
+    {}
 
     void Entity::setLocalPosition(vec2 position)
     {
@@ -22,5 +22,10 @@ namespace core
     void Entity::setLocalAngle(float angle)
     {
         transform.localAngle = angle;
+    }
+    
+    void Entity::setName(const char* name)
+    {
+        this->name = name;
     }
 }

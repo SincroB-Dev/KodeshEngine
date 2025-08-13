@@ -2,21 +2,24 @@
 #define ENTITY_H
 
 #include "../maths/maths.h"
+#include <atomic>
+#include <string>
 
 namespace core
 {
     using EntityID = uint32_t;
+    
 
     class Entity
     {
-        const EntityID id;
-
+        static std::atomic<EntityID> entityCounter;
+        
     public:
         Entity(const char *name, Transform2D transform);
         virtual ~Entity();
 
         // Principais propriedades
-        const char *name;
+        std::string name;
         Transform2D transform;
 
         virtual void update() {};
@@ -26,7 +29,11 @@ namespace core
         virtual void setLocalScale(vec2 scale) final;
         virtual void setLocalAngle(float angle) final;
 
-        virtual EntityID GetID() const final { return id; }
+        inline virtual EntityID GetID() const final { return id; }
+        virtual void setName(const char* name) final;
+        
+    private:
+        const EntityID id;
     };
 }
 
