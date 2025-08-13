@@ -1,6 +1,6 @@
 # Compilador
 CXX = g++
-CXXFLAGS = -g -Wall -std=c++17 -DIMGUI_IMPL_OPENGL_LOADER_GLAD
+CXXFLAGS = -g -Wall -std=c++17 -DIMGUI_IMPL_OPENGL_LOADER_GLAD -MMD -MP
 
 # Diretórios de código-fonte
 SRC_DIRS = src src/ui src/ui/sidedock src/core src/utils/serializer src/models/shapes src/maths src/core/editor
@@ -44,6 +44,8 @@ endif
 OBJ_SRC = $(SRC:%.cpp=build/%.o)
 OBJ_INCLUDES = $(INCLUDES:%.cpp=build/%.o)
 
+DEPS =  $(OBJ_SRC:.o=.d) $(OBJ_INCLUDES:.o=.d)
+
 # Regra principal
 all: $(OUT)
 
@@ -60,3 +62,6 @@ build/%.o: %.cpp
 # Limpeza
 clean:
 	rm -rf build
+
+# Incluí dependencias geradas pelo compilador
+-include $(DEPS)
