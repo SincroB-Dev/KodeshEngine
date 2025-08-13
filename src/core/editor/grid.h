@@ -2,7 +2,7 @@
 
 #include "../../maths/maths.h"
 
-namespace scene
+namespace core
 {
     namespace editor
     {

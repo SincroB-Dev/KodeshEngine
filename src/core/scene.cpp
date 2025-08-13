@@ -83,8 +83,6 @@ void Scene::Update()
 
 void Scene::Render()
 {
-    gridView.Draw();
-
     for (Entity* obj : objectList)
     {
         obj->update();

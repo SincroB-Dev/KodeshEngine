@@ -2,7 +2,7 @@
 
 #include <GL/gl.h>
 
-namespace scene
+namespace core
 {
     namespace editor
     {

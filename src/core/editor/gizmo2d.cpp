@@ -5,11 +5,11 @@
 
 using namespace maths;
 
-namespace scene
+namespace core
 {
     namespace editor
     {
-        Gizmo2D::Gizmo2D(SceneManager *sceneManager):
+        Gizmo2D::Gizmo2D(SceneManager* sceneManager):
               sceneManager(sceneManager), currentMode(Mode::None), isDragging(false) {}
 
         void Gizmo2D::DrawCircle(Color color, float radius) {

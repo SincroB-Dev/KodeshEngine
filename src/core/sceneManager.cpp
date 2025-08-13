@@ -1,7 +1,7 @@
 #include "sceneManager.h"
 
-SceneManager::SceneManager(int &width, int &height, int &mouseX, int &mouseY): 
-    width(width), height(height), mouseX(mouseX), mouseY(mouseY)
+SceneManager::SceneManager(int& width, int& height, int& mouseX, int& mouseY): 
+    width(width), height(height), mouseX(mouseX), mouseY(mouseY), editor(this)
 {
     if (sceneList.size() == 0)
     {
@@ -11,7 +11,6 @@ SceneManager::SceneManager(int &width, int &height, int &mouseX, int &mouseY):
     }
 
     camera = new Camera2D("_scene_manager_cam", width, height);
-    gizmos = new Gizmo2D(this);
 }
 
 SceneManager::~SceneManager()
@@ -27,60 +26,24 @@ SceneManager::~SceneManager()
 
     delete camera;
     camera = nullptr;
-
-    if (gizmos != nullptr)
-    {
-        delete gizmos;
-        gizmos = nullptr;
-    }
-}
-
-void SceneManager::CameraControls()
-{
-    // Implementar o controle de camera.
-    //if (event.key.keysym.sym == SDLK_LCTRL)
-    {
-        if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT)
-        {
-            if (!dragCam)
-            {
-                dragCam = true;
-                dragStartMouse = vec2(mouseX, mouseY);
-            }
-        }
-        else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
-        {
-            dragCam = false;
-        }
-    }
-
-    if (dragCam)
-    {
-        vec2 delta = vec2(mouseX, mouseY) - dragStartMouse;
-
-        camera->position.x -= delta.x / 100.0f;
-        camera->position.y += delta.y / 100.0f;
-
-        dragStartMouse = vec2(mouseX, mouseY);
-    }
-    else
-    {
-    }
 }
 
 void SceneManager::UpdateWhenEvent()
 {
     if (activeScene->activeObject != nullptr)
     {
-        gizmos->SetTransform(&activeScene->activeObject->transform);
+        editor.gizmos->SetTransform(&activeScene->activeObject->transform);
+    }
+
+    if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT)
+    {
+        editor.HandleMouseClick();
     }
 
     GetActiveCamera()->ApplyScreenToWorld(mouseX, mouseY);
     GetActiveCamera()->Update();
 
-    CameraControls();
-
-    gizmos->Update();
+    editor.gizmos->Update();
 }
 
 void SceneManager::Update()
@@ -95,6 +58,7 @@ void SceneManager::Render()
     glMatrixMode(GL_PROJECTION);
     glLoadMatrixf(&viewMatrix.m[0][0]);
     
-    activeScene->Render();
-    gizmos->Render();
+    editor.grid->Draw(); // Desenho do grid
+    activeScene->Render(); // Renderização da cena ativa
+    editor.gizmos->Render(); // Renderização dos gizmos da cena
 }

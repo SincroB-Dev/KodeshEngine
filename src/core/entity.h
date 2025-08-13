@@ -16,7 +16,7 @@ namespace core
         
     public:
         Entity(const char *name, Transform2D transform);
-        virtual ~Entity();
+        virtual ~Entity() = default;
 
         // Principais propriedades
         std::string name;

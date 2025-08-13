@@ -7,36 +7,30 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 
-#include "editor/gizmo2d.h"
+#include "editor/editor.h"
 #include "../maths/maths.h"
 #include "components/componentStorage.h"
 
-using namespace scene::editor;
 using namespace maths;
+
+using namespace core::editor;
 using namespace core::components;
 
 class SceneManager {
 private:
     Scene *activeScene;
     Camera2D *camera;
-    Gizmo2D *gizmos;
     ComponentStorage components;
+    Editor editor;
 
     int &width, &height;
     int &mouseX, &mouseY;
     
     std::map<std::string, Scene*> sceneList;
 
-    vec2 dragStartMouse;
-    vec2 *worldMouse;
-
-    bool dragCam = false;
-
-    void CameraControls();
-
 public:
-    SceneManager(int &width, int &height, int &mouseX, int &mouseY);
-    ~SceneManager();
+    SceneManager(int& width, int& height, int& mouseX, int& mouseY);
+    ~SceneManager(); 
     
     SDL_Event event;
 

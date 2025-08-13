@@ -7,7 +7,7 @@ class SceneManager;
 
 using namespace maths;
 
-namespace scene
+namespace core
 {
     namespace editor
     {

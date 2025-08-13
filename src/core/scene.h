@@ -4,7 +4,6 @@
 #include "gameObject.h"
 #include <vector>
 
-#include "editor/grid.h"
 #include "camera2d.h"
 
 using namespace core;
@@ -43,8 +42,6 @@ public:
 
 private:
     std::vector<Entity*> objectList;
-
-    scene::editor::GridView gridView;
 };
 
 #endif
