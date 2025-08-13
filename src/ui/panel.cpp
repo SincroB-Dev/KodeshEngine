@@ -4,7 +4,7 @@ namespace core
 {
     namespace ui
     {
-        Panel::Panel() 
+        Panel::Panel(SceneManager &sm): sceneManager(sm) 
         {
         
         }
@@ -14,9 +14,19 @@ namespace core
         
         }
         
+        void Panel::drawMenu()
+        {
+            
+        }
+        
         void Panel::drawPanel(void *properties)
         {
         
+        }
+        
+        SceneManager& Panel::GetSM()
+        {
+            return this->sceneManager;
         }
     }
 }

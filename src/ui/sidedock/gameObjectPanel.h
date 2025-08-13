@@ -10,7 +10,7 @@ namespace core
         class GameObjectPanel final : public Panel
         {
         public:
-            GameObjectPanel();
+            GameObjectPanel(SceneManager &sm);
             virtual ~GameObjectPanel() override;
         
             void drawPanel(void *properties) override;

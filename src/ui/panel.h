@@ -1,6 +1,8 @@
 #ifndef PANEL_H
 #define PANEL_H
 
+#include "../core/sceneManager.h"
+
 namespace core
 {
     namespace ui
@@ -8,10 +10,15 @@ namespace core
         class Panel
         {
         public:
-            Panel();
+            SceneManager &sceneManager;
+            
+            Panel(SceneManager &sm);
             virtual ~Panel();
 
+            virtual void drawMenu();
             virtual void drawPanel(void *properties);
+            
+            virtual SceneManager& GetSM() final;
         };
     }
 }

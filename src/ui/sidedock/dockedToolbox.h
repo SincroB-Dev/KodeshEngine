@@ -3,6 +3,8 @@
 #include "scenePanel.h"
 #include "gameObjectPanel.h"
 
+#include "../../core/sceneManager.h"
+
 namespace core
 {
     namespace ui
@@ -31,14 +33,18 @@ namespace core
             // Paineis
             ScenePanel scenePanel;
             GameObjectPanel entityPanel;
+            
+            // Gerenciador da Cena
+            SceneManager& sceneManager;
 
         public:
-            inline DockedToolbox(float wmin = 200.0f, float wmax = 500.0f, float iconbsize = 30.0f, float tabcolwidth = 4.0f)
-                : panelWidthMin(wmin), panelWidthMax(wmax), iconButtonSize(iconbsize), tabColumnWidth(iconbsize + tabcolwidth)
+            inline DockedToolbox(SceneManager &sm, float wmin = 200.0f, float wmax = 500.0f, float iconbsize = 30.0f, float tabcolwidth = 4.0f)
+                : panelWidthMin(wmin), panelWidthMax(wmax), iconButtonSize(iconbsize), tabColumnWidth(iconbsize + tabcolwidth), scenePanel(sm), entityPanel(sm), sceneManager(sm)
             {}
+            virtual ~DockedToolbox() {};
 
             void DrawIconButton(const char *icon, TBEditorTab tab);
-            void Draw(SceneManager& scene);
+            void Draw();
         };
     };
 };

@@ -10,7 +10,7 @@ namespace core
 {
     namespace ui
     {
-        GameObjectPanel::GameObjectPanel()
+        GameObjectPanel::GameObjectPanel(SceneManager &sm): Panel(sm)
         {}
 
         GameObjectPanel::~GameObjectPanel()
@@ -23,7 +23,7 @@ namespace core
                 GameObject *props = (GameObject*) properties;
 
                 // Propriedades do objeto
-                ImGui::Text("Name: %s", props->name);
+                ImGui::Text("Name: %s", props->name.c_str());
                 ImGui::Spacing();
 
                 // Posição

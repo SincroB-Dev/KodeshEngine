@@ -13,6 +13,7 @@
 #include "../../core/core.h"
 
 #include "../panel.h"
+#include "../treenode.h"
 
 namespace core
 {
@@ -29,13 +30,14 @@ namespace core
             std::vector<std::string> UI_ShapeNames;
         
         public:
-            ScenePanel();
+            ScenePanel(SceneManager &sm);
             virtual ~ScenePanel() override;
         
-            void ShapeSelector(SceneManager& scene);
             void InitShapeFactory();
-        
-            void drawPanel(void *properties) override;
+            TreeNode MainHierarchy();
+            
+            virtual void drawMenu() override;
+            virtual void drawPanel(void *properties) override;
         };
     };
 };

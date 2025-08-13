@@ -9,7 +9,8 @@ namespace core
     {
         const ImWchar UIManager::icons_ranges[3] = { 0xe000, 0xf8ff, 0 };
         
-        UIManager::UIManager(SDL_Window *window, SDL_GLContext context)
+        UIManager::UIManager(SDL_Window *window, SDL_GLContext context, SceneManager& sm)
+            : sceneManager(sm), dockedToolbox(sm)
         {
             InitImGui(window, context);
         }
@@ -19,6 +20,7 @@ namespace core
             ImGui_ImplSDL2_ProcessEvent(event);
         }
         
+        // Aplica um tema parecido com o blender 3d, ainda está fixo, porém é temporario.
         void UIManager::SetTheme(ImGuiStyle& style, ImVec4* colors)
         {
             style.WindowRounding = 5.0f;
@@ -67,6 +69,7 @@ namespace core
             colors[ImGuiCol_TabUnfocusedActive]     = ImVec4(0.14f, 0.26f, 0.42f, 1.00f);
         }
         
+        // Inicialização do Dear ImGui
         void UIManager::InitImGui(SDL_Window *window, SDL_GLContext context)
         {
             // IMGUI Init
@@ -86,6 +89,7 @@ namespace core
             ImGui_ImplOpenGL2_Init();
         }
         
+        // Carregamento das fontes e icones da interface
         void UIManager::LoadFonts(ImGuiIO &io)
         {
             icons_config.MergeMode = true;
@@ -97,6 +101,7 @@ namespace core
             io.Fonts->AddFontFromFileTTF("../assets/fonts/MaterialIcons-Regular.ttf", 16.0f, &icons_config, UIManager::icons_ranges);
         }
         
+        // Renderização da interface
         void UIManager::Render(SceneManager& scene)
         {
             ImGui_ImplOpenGL2_NewFrame();
@@ -104,8 +109,8 @@ namespace core
             ImGui::NewFrame();
         
             // Desenha painel lateral
-            dockedToolbox.Draw(scene);
-        
+            dockedToolbox.Draw();
+            
             ImGui::Render();
             ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
         }
