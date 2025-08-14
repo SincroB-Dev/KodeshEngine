@@ -43,12 +43,16 @@ void SceneManager::UpdateWhenEvent()
     GetActiveCamera()->ApplyScreenToWorld(mouseX, mouseY);
     GetActiveCamera()->Update();
 
-    editor.gizmos->Update();
+    editor.HandleEvents(mouseX, mouseY);
 }
 
 void SceneManager::Update()
 {
     activeScene->Update();
+    
+    // Atualizações do editor, devem ser removidas in game
+    editor.Update();
+    editor.camHandler->Apply(*GetActiveCamera(), mouseX, mouseY);
 }
 
 void SceneManager::Render()

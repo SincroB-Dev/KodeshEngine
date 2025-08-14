@@ -10,12 +10,14 @@ namespace core
         {
             gizmos = new Gizmo2D(sm);
             grid = new GridView();
+            camHandler = new CameraHandler(sm->event, 0.015f);
         }
 
         Editor::~Editor()
         {
             delete gizmos;
             delete grid;
+            delete camHandler;
         }
 
         bool Editor::PointInPolygon(vec2 point, const std::vector<vec2> vertices) const
@@ -35,39 +37,17 @@ namespace core
             return inside;
         }
 
-        void Editor::CameraControls()
+        void Editor::HandleEvents(int mouseX, int mouseY)
         {
-            // Implementar o controle de camera.
-            /**
-            if (event.key.keysym.sym == SDLK_LCTRL)
-            {
-                if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT)
-                {
-                    if (!dragCam)
-                    {
-                        dragCam = true;
-                        dragStartMouse = vec2(mouseX, mouseY);
-                    }
-                }
-                else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
-                {
-                    dragCam = false;
-                }
-            }
-
-            if (dragCam)
-            {
-                vec2 delta = vec2(mouseX, mouseY) - dragStartMouse;
-
-                camera->position.x -= delta.x / 100.0f;
-                camera->position.y += delta.y / 100.0f;
-
-                dragStartMouse = vec2(mouseX, mouseY);
-            }
-            else
-            {
-            }
-            */
+            gizmos->Update();
+            
+            camHandler->Movement(mouseX, mouseY);
+            camHandler->Zoom();
+        }
+        
+        void Editor::Update()
+        {
+            
         }
 
         void Editor::HandleMouseClick()
