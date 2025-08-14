@@ -28,8 +28,6 @@ namespace core
 
                 // Posição
                 if (ImGui::CollapsingHeader("Transformação")) {
-                    ImGui::Text("Posição:");
-
                     if (ImGui::BeginTable("TransformationTable", 2)) {
                         ImGui::TableNextRow();
                         ImGui::TableSetColumnIndex(0); ImGui::Text("Pos X:");

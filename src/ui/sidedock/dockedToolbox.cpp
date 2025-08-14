@@ -65,6 +65,7 @@ namespace core
             {
             case TBEditorTab::Ambiente:
                 ImGui::Text("Configurações do Ambiente");
+                environmentPanel.drawPanel(nullptr);
                 break;
             case TBEditorTab::Cenario:
                 ImGui::Text("Elementos do Cenário");
@@ -85,6 +86,7 @@ namespace core
             // Chamada dos menus
             scenePanel.drawMenu();
             entityPanel.drawMenu();
+            environmentPanel.drawMenu();
 
             ImGui::EndChild();
             ImGui::End();
