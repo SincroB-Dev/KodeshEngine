@@ -32,6 +32,8 @@ namespace core
         inline virtual EntityID GetID() const final { return id; }
         virtual void setName(const char* name) final;
         
+        inline static EntityID GetEntityCounter() { return entityCounter.load(); }
+        
     private:
         const EntityID id;
     };
