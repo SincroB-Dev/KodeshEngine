@@ -3,7 +3,7 @@ CXX = g++
 CXXFLAGS = -g -Wall -std=c++17 -DIMGUI_IMPL_OPENGL_LOADER_GLAD -MMD -MP
 
 # Diretórios de código-fonte
-SRC_DIRS = src src/ui src/ui/forms src/ui/sidedock src/core src/utils/serializer src/models/shapes src/maths src/core/editor
+SRC_DIRS = src src/ui src/ui/forms src/ui/sidedock src/core src/core/interpreter src/utils/serializer src/models/shapes src/maths src/core/editor
 SRC = $(foreach dir, $(SRC_DIRS), $(wildcard $(dir)/*.cpp))
 
 # Bibliotecas externas (IMGUI e similares)
@@ -11,7 +11,8 @@ INCLUDE_SRC = \
     libs/imgui/*.cpp \
     libs/imgui/backends/imgui_impl_sdl2.cpp \
     libs/imgui/backends/imgui_impl_opengl2.cpp \
-    libs/ImGuiFileDialog/ImGuiFileDialog.cpp
+    libs/ImGuiFileDialog/ImGuiFileDialog.cpp \
+    libs/ImGuiColorTextEdit/TextEditor.cpp
 INCLUDES = $(wildcard $(INCLUDE_SRC))
 
 # Arquivo final
@@ -26,18 +27,24 @@ ifeq ($(OS),Windows_NT)
     SDL_LIB     = -lmingw32 -lSDL2main -lSDL2
     GL_LIB      = -lopengl32 -lglu32 -Wl,-subsystem,console
     LIBS_EXTRA  =
+    LUA_LIBDIR  = -Llibs/lua
+    LUA_LIB     = -llua -Ilibs -ldl
 else ifneq (,$(findstring MINGW, $(UNAME_S)))
     SDL_INCLUDE = -Ic:/dev/libs/SDL2/include
     SDL_LIBDIR  = -Lc:/dev/libs/SDL2/lib
     SDL_LIB     = -lmingw32 -lSDL2main -lSDL2
     GL_LIB      = -lopengl32 -lglu32 -Wl,-subsystem,console
     LIBS_EXTRA  =
+    LUA_LIBDIR  = -Llibs/lua
+    LUA_LIB     = -llua -Ilibs -ldl
 else
-    SDL_INCLUDE = `sdl2-config --cflags`
+    SDL_INCLUDE = `sdl2-config --cflags` -Ilibs
     SDL_LIBDIR  =
-    SDL_LIB     = `sdl2-config --libs`
+    SDL_LIB     = `sdl2-config --libs` -Ilibs
     GL_LIB      = -lGL -lGLU -ldl
     LIBS_EXTRA  = -pthread
+    LUA_LIBDIR  = -Llibs/lua
+    LUA_LIB     = -llua -ldl
 endif
 
 # Transformar todos os .cpp em .o dentro de build/
@@ -52,7 +59,7 @@ all: $(OUT)
 # Link final
 $(OUT): $(OBJ_SRC) $(OBJ_INCLUDES)
 	@mkdir -p $(dir $@)
-	$(CXX) $(CXXFLAGS) $(SDL_INCLUDE) $^ -o $@ $(SDL_LIBDIR) $(SDL_LIB) $(GL_LIB) $(LIBS_EXTRA)
+	$(CXX) $(CXXFLAGS) $(SDL_INCLUDE) $^ -o $@ $(SDL_LIBDIR) $(SDL_LIB) $(GL_LIB) $(LIBS_EXTRA) $(LUA_LIB) $(LUA_LIBDIR)
 
 # Compilação de cada .cpp para .o
 build/%.o: %.cpp

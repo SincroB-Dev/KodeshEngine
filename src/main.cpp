@@ -1,8 +1,11 @@
 #define SDL_MAIN_HANDLED
+
 #include <SDL2/SDL.h>
 #include <GL/gl.h>
 
 #include <iostream>
+#include <string>
+
 #include "core/core.h"
 #include "ui/manager.h"
 
@@ -48,7 +51,7 @@ int main(int argc, char *argv[])
         glClear(GL_COLOR_BUFFER_BIT);
 
         sm.Update();
-
+        
         sm.Render();
         ui.Render(sm);
 

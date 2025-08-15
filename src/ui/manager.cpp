@@ -115,6 +115,7 @@ namespace core
             // Desenha painel lateral
             dockedToolbox.Draw();
             LogWindow::Instance->Show();
+            luaTextEditor.Render();
             
             ImGui::Render();
             ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
