@@ -29,6 +29,12 @@ namespace core
 
         // Mostra janela de logs avançada
         void LogWindow::Show() {
+            // Caso a janela seja fechada.
+            if (!isOpen)
+            {
+                return;
+            }
+            
             ImGui::Begin("Logs", &isOpen, ImGuiWindowFlags_MenuBar);
 
             // Menu de opções
