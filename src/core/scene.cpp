@@ -1,9 +1,12 @@
 #include "scene.h"
+
 #include "../models/shapes.h"
+#include "../ui/forms/logger.h"
 
 #include <algorithm>
 #include <iostream>
-#include "../ui/forms/logger.h"
+#include <sstream>
+#include <iomanip>
 
 Scene::~Scene() 
 {
@@ -38,7 +41,17 @@ void Scene::AddObject(Entity* object)
         activeObject = object;
         
         core::ui::LogWindow::Log("Objeto adicionado a cena!", core::ui::LogType::INFO);
+        return;
     }
+    
+    std::string entityN = object->name;
+    EntityID id = Entity::GetEntityCounter();
+    std::ostringstream oss;
+    oss << '.' << std::setw(3) << std::setfill('0') << id;
+    
+    object->setName((entityN + oss.str()).c_str());
+    
+    AddObject(object);
 }
 
 Entity* Scene::AddGameObject(const char* name, Shape2D* shape)
