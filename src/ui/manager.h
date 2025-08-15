@@ -6,6 +6,8 @@
 #include "../../libs/ImGuiFileDialog/ImGuiFileDialog.h"
 
 #include "sidedock/dockedToolbox.h"
+#include "forms/logger.h"
+
 #include "../core/sceneManager.h"
 
 namespace core
@@ -19,7 +21,7 @@ namespace core
             // Intervalo de caracteres da fonte de ícones (Material Icons)
             static const ImWchar icons_ranges[3]; // unicode private use area
             ImFontConfig icons_config;
-        
+            
         public:
             UIManager(SDL_Window *window, SDL_GLContext context, SceneManager& sm);
         
@@ -33,6 +35,9 @@ namespace core
             void ShapeSelector(SceneManager& scene);
         
             void Render(SceneManager& scene);
+        
+            static ImFont* MainFont;
+            static ImFont* IconifiedFont;
         };
     };
 };

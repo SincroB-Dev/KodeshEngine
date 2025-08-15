@@ -1,7 +1,7 @@
 #include "sceneManager.h"
 
-SceneManager::SceneManager(int& width, int& height, int& mouseX, int& mouseY): 
-    width(width), height(height), mouseX(mouseX), mouseY(mouseY), editor(this)
+SceneManager::SceneManager(int& width, int& height, int& mouseX, int& mouseY): editor(this),
+    width(width), height(height), mouseX(mouseX), mouseY(mouseY)
 {
     if (sceneList.size() == 0)
     {

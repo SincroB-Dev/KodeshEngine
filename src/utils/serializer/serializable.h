@@ -6,6 +6,7 @@
 #include <vector>
 #include <type_traits>
 #include <iostream>
+#include "../../ui/forms/logger.h"
 
 class Serializable
 {
@@ -19,7 +20,7 @@ public:
     virtual ~Serializable() = default;
 
     inline virtual void Register() {
-        std::cout << "<NoN Registers>" << std::endl;
+        core::ui::LogWindow::Log("<NoN Registers>", core::ui::LogType::INFO);
     }
 };
 

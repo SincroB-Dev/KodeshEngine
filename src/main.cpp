@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 {
     SDL_Init(SDL_INIT_VIDEO);
 
-    SDL_Window* window = SDL_CreateWindow("SDL + OpenGL 1.4", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 950, 500, SDL_WINDOW_OPENGL);
+    SDL_Window* window = SDL_CreateWindow("Kodesh Engine v1.0: SDL + OpenGL 1.4", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 950, 500, SDL_WINDOW_OPENGL);
     SDL_GLContext context = SDL_GL_CreateContext(window);
     SDL_GL_SetSwapInterval(1);
 
@@ -27,6 +27,8 @@ int main(int argc, char *argv[])
     SceneManager sm(width, height, mouseX, mouseY);
     UIManager ui(window, context, sm);
 
+    LogWindow::Log("Kodesh Engine Inicializada com Sucesso!", LogType::INFO);
+    
     while (running)
     {
         while (SDL_PollEvent(&sm.event))

@@ -3,6 +3,7 @@
 
 #include <algorithm>
 #include <iostream>
+#include "../ui/forms/logger.h"
 
 Scene::~Scene() 
 {
@@ -35,7 +36,8 @@ void Scene::AddObject(Entity* object)
     {
         objectList.push_back(object);
         activeObject = object;
-        std::cout << "Add object!" << std::endl;
+        
+        core::ui::LogWindow::Log("Objeto adicionado a cena!", core::ui::LogType::INFO);
     }
 }
 

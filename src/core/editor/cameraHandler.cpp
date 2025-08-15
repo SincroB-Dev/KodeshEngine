@@ -7,7 +7,7 @@ namespace core
     namespace editor
     {
         CameraHandler::CameraHandler(SDL_Event& event, float sensibility)
-            : event(event), sensibility(sensibility)
+            : event(event), sensibility(sensibility), isDragging(false), ctrlActive(false)
         {}
         
         CameraHandler::~CameraHandler()

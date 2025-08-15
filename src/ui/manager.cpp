@@ -9,10 +9,14 @@ namespace core
     {
         const ImWchar UIManager::icons_ranges[3] = { 0xe000, 0xf8ff, 0 };
         
+        ImFont* UIManager::MainFont = nullptr;
+        ImFont* UIManager::IconifiedFont = nullptr;
+        
         UIManager::UIManager(SDL_Window *window, SDL_GLContext context, SceneManager& sm)
             : sceneManager(sm), dockedToolbox(sm)
         {
             InitImGui(window, context);
+            LogWindow::Instance = new LogWindow();
         }
         
         void UIManager::ProcessEvent(const SDL_Event *event)
@@ -97,8 +101,8 @@ namespace core
         
             io.Fonts->Clear();
         
-            io.Fonts->AddFontFromFileTTF("../assets/fonts/segoeui.ttf", 14.0f);
-            io.Fonts->AddFontFromFileTTF("../assets/fonts/MaterialIcons-Regular.ttf", 16.0f, &icons_config, UIManager::icons_ranges);
+            MainFont = io.Fonts->AddFontFromFileTTF("../assets/fonts/segoeui.ttf", 14.0f);
+            IconifiedFont = io.Fonts->AddFontFromFileTTF("../assets/fonts/MaterialIcons-Regular.ttf", 16.0f, &icons_config, UIManager::icons_ranges);
         }
         
         // Renderização da interface
@@ -107,9 +111,10 @@ namespace core
             ImGui_ImplOpenGL2_NewFrame();
             ImGui_ImplSDL2_NewFrame();
             ImGui::NewFrame();
-        
+            
             // Desenha painel lateral
             dockedToolbox.Draw();
+            LogWindow::Instance->Show();
             
             ImGui::Render();
             ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
