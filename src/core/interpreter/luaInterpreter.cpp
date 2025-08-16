@@ -6,6 +6,10 @@
 
 #include "../../ui/forms/logger.h"
 
+#include "luaIntegration.h"
+
+using namespace core::ui;
+
 LuaInterpreter::LuaInterpreter()
 {
     // Abre bibliotecas base
@@ -14,10 +18,19 @@ LuaInterpreter::LuaInterpreter()
                         sol::lib::string,
                         sol::lib::table,
                         sol::lib::package);
+
+    integration();
 }
 
 LuaInterpreter::~LuaInterpreter()
 {
+}
+
+void LuaInterpreter::integration()
+{
+    core::lua::in_enumerators_(lua);
+    core::lua::in_classes_(lua);
+    core::lua::in_functions_(lua);
 }
 
 void LuaInterpreter::execute(const std::string& code)
@@ -27,7 +40,7 @@ void LuaInterpreter::execute(const std::string& code)
     if (!script.valid()) {
         sol::error err = script;
         std::cerr << "Lua syntax error: " << err.what() << "\n";
-        core::ui::LogWindow::Log("Lua, erro de sintaxe!", core::ui::LogType::ERROR);
+        LogWindow::Log("Lua, erro de sintaxe!", LogType::ERROR);
         return;
     }
     sol::protected_function_result result = script();

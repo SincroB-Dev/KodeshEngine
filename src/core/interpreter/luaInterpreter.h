@@ -1,6 +1,8 @@
 #include <sol/sol.hpp>
 
 class LuaInterpreter {
+    void integration();
+    
 public:
     sol::state lua;
 
