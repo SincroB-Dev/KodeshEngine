@@ -72,6 +72,9 @@ clean:
 	
 run:
 	cd build;./app;cd ..
+	
+debug:
+	cd build;gdb ./app;cd ..
 
 # Incluí dependencias geradas pelo compilador
 -include $(DEPS)
