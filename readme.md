@@ -1,4 +1,4 @@
-# Simple2DEngine
+# Kodesh2D Engine
 
 Uma engine 2D modular e em evolução, construída do zero com SDL2, OpenGL 1.4 e ImGui. O objetivo do projeto é servir como base de estudo e experimentação, com foco em desenvolvimento progressivo de uma engine gráfica moderna, começando pelas bases mais simples e avançando até tecnologias mais recentes como OpenGL moderno e possivelmente Vulkan.
 
@@ -12,7 +12,7 @@ O projeto foi iniciado com a intenção de **explorar, entender e evoluir gradua
 
 ## 🚀 Tecnologias Utilizadas
 
-- **Linguagem:** C++
+- **Linguagem:** C++, Lua
 - **Renderização:** OpenGL 1.4
 - **Janela e eventos:** SDL2
 - **Interface de usuário:** Dear ImGui
@@ -59,6 +59,7 @@ Biblioteca interna de vetores e pontos para suporte a transformações e geometr
 
 **Requisitos:**
 - C++17 ou superior
+- Lua, Sol2
 - SDL2
 - OpenGL 1.4
 - Dear ImGui
@@ -67,18 +68,3 @@ Biblioteca interna de vetores e pontos para suporte a transformações e geometr
 ## 👤 Autor
 Desenvolvido por Vinicius Okami
 Projeto em constante evolução 🚧
-
-**Instruções básicas:**
-Deve-se incluir o projeto imgui e o projeto ImGuiFileDialog na pasta libs.
-
-```bash
-# Compilação (exemplo com g++)
-CXX = g++ -pipe
-SRC = src/*.cpp src/ui/*.cpp src/core/*.cpp src/utils/serializer/*.cpp src/models/shapes/*.cpp src/maths/*.cpp
-INCLUDES =  libs/imgui/*.cpp libs/imgui/backends/imgui_impl_sdl2.cpp libs/imgui/backends/imgui_impl_opengl2.cpp libs/ImGuiFileDialog/ImGuiFileDialog.cpp
-OUT = build/app
-CFLAGS = -Wall -std=c++17
-LIBS = -lSDL2 -ldl -lGL -lGLU -lstdc++ -DIMGUI_IMPL_OPENGL_LOADER_GLAD
-
-all:
-	$(CXX) $(SRC) $(INCLUDES) -o $(OUT) $(FLAGS) $(LIBS)
