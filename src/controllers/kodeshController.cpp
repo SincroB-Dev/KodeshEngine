@@ -5,7 +5,7 @@ namespace core
     namespace controller
     {
         KodeshController::KodeshController(const char* title, int w, int h, int si)
-            : kodeshIsRunning(true)
+            : kodeshIsRunning(true), kodeshDisplayUI(true)
         {
             SDL_Init(SDL_INIT_VIDEO);
 
@@ -25,37 +25,89 @@ namespace core
         {
             delete sc_manager;
             delete ui_manager;
+            
+            delete engine;
         }
         
         void KodeshController::InitManagers()
         {
             // Inicializar gerenciadores
-            sc_manager = new SceneManager(width, height, mouseX, mouseY);
+            sc_manager = new SceneManager(width, height, mouseX, mouseY, event);
             ui_manager = new UIManager(window, context, *sc_manager);
+            
+            // Utilizado para execução in-game;
+            sc_manager_bkp = nullptr;
             
             LogWindow::Log("Kodesh Managers inicializados com sucesso!", LogType::INFO);
         }
         
+        void KodeshController::InitControllers()
+        {
+            // Inicializa controladores
+            engine = new EngineController(*this);
+        }
+        
         void KodeshController::EventLoop()
         {
-            while (SDL_PollEvent(&sc_manager->event))
+            while (SDL_PollEvent(&event))
             {
                 SDL_GetMouseState(&mouseX, &mouseY);
 
-                ui_manager->ProcessEvent(&sc_manager->event);
+                if (kodeshDisplayUI) ui_manager->ProcessEvent(&event);
+                
                 sc_manager->UpdateWhenEvent();
 
-                if (sc_manager->event.type == SDL_QUIT)
+                if (event.type == SDL_QUIT)
                 { 
                     kodeshIsRunning = false;
+                }
+                
+                // Troca de estados da engine
+                if (event.type == SDL_KEYDOWN)
+                {
+                    if (engine->state == EngineState::Edit)
+                    {
+                        if (event.key.keysym.sym == SDLK_F7)
+                        {
+                            engine->SwitchState(EngineState::Play);
+                        }
+                    }
+                    else if (engine->state == EngineState::Play || engine->state == EngineState::Pause)
+                    {
+                        if (event.key.keysym.sym == SDLK_F8)
+                        {
+                            engine->SwitchState(EngineState::Edit);
+                        }
+                    }
                 }
             }
         }
         
         void KodeshController::Render()
         {
-            sc_manager->Render();
-            ui_manager->Render(*sc_manager);
+            // Execução de cena backup, a cena que roda in-game
+            if (engine->state == EngineState::Play || engine->state == EngineState::Pause)
+            {
+                if (sc_manager_bkp != nullptr)
+                {
+                    sc_manager_bkp->Render();
+                }
+            }
+            // Execução da cena edit
+            else
+            {
+                sc_manager->Render();
+            }
+            
+            // Apenas é renderizado no modo de edição, ou no modo de pausa.
+            if (kodeshDisplayUI)
+            {
+                ui_manager->Render(*sc_manager);
+            }
+            // Apresenta outra interface para modo de jogo.
+            else
+            {
+            }
         }
         
         void KodeshController::Update()
