@@ -6,11 +6,11 @@ namespace core
 {
     namespace editor
     {
-        Editor::Editor(SceneManager* sm): sm(*sm)
+        Editor::Editor(SceneManager& sm): sm(sm)
         {
-            gizmos = new Gizmo2D(sm);
+            gizmos = new Gizmo2D(&sm);
             grid = new GridView();
-            camHandler = new CameraHandler(sm->event, 0.015f);
+            camHandler = new CameraHandler(this, 0.015f);
         }
 
         Editor::~Editor()

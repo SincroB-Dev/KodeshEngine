@@ -12,17 +12,18 @@ namespace core
 {
     namespace editor
     {
+        class Editor;
         class CameraHandler
         {
             float sensibility;
-            SDL_Event& event;
+            Editor* editor;
             
             bool isDragging, ctrlActive;
             vec2 dragStartMouse;
             int scrollMouse;
             
         public:
-            CameraHandler(SDL_Event& event, float sensibility);
+            CameraHandler(Editor* editor, float sensibility);
             ~CameraHandler();
             
             void Movement(int mouseX, int mouseY);

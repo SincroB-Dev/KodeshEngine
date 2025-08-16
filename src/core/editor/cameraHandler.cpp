@@ -1,13 +1,15 @@
 #include "cameraHandler.h"
 
 #include "../camera2d.h"
+#include "editor.h"
+#include "../sceneManager.h"
 
 namespace core
 {
     namespace editor
     {
-        CameraHandler::CameraHandler(SDL_Event& event, float sensibility)
-            : event(event), sensibility(sensibility), isDragging(false), ctrlActive(false)
+        CameraHandler::CameraHandler(Editor* editor, float sensibility)
+            : editor(editor), sensibility(sensibility), isDragging(false), ctrlActive(false)
         {}
         
         CameraHandler::~CameraHandler()
@@ -15,6 +17,8 @@ namespace core
         
         void CameraHandler::Movement(int mouseX, int mouseY)
         {
+            SDL_Event& event = editor->sm.event;
+            
             if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_LCTRL)
             {
                 ctrlActive = true;
@@ -40,6 +44,7 @@ namespace core
         
         void CameraHandler::Zoom()
         {
+            SDL_Event& event = editor->sm.event;
             if (event.type == SDL_MOUSEWHEEL)
             {
                 scrollMouse += event.wheel.y;

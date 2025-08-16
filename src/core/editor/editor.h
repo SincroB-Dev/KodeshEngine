@@ -23,7 +23,7 @@ namespace core
             GridView* grid;
             CameraHandler* camHandler;
 
-            Editor(SceneManager* sm);
+            Editor(SceneManager& sm);
             ~Editor();
 
             bool PointInPolygon(vec2 point, const std::vector<vec2> vertices) const;
