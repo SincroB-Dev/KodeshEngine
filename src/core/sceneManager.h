@@ -38,7 +38,6 @@ public:
     void Update();
     void Render();
     
-    GameObject* GetMainObject() const { return nullptr; }
-    Camera2D* GetActiveCamera() const { return camera; }
-    Scene* GetActiveScene() const { return activeScene; }
+    
+    const char* GetActiveSceneName() const;
 };

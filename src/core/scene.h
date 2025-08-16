@@ -5,26 +5,23 @@
 #include <vector>
 
 #include "camera2d.h"
+#include <atomic>
 
 using namespace core;
 
+using SceneID = uint32_t;
+
 class Scene final
 {
+    static std::atomic<SceneID> sceneCounter;
     int &screenWidth, &screenHeight;
     
 public:
-    const char* name;
+    SceneID id;
     Camera2D* mainCamera = nullptr;
     Entity* activeObject = nullptr;
 
-    inline Scene(int &screenWidth, int &screenHeight)
-        : screenWidth(screenWidth), screenHeight(screenHeight), name("scene")
-    {
-        if (mainCamera == nullptr)
-        {
-            mainCamera = new Camera2D("chd_kn_view", screenWidth, screenHeight);
-        }
-    }
+    Scene(int& screenWidth, int& screenHeight);
     ~Scene();
 
     // Gerenciamento de Objetos

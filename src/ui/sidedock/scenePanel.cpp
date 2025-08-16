@@ -36,7 +36,7 @@ namespace core
         
         TreeNode ScenePanel::MainHierarchy()
         {
-            TreeNode root(sceneManager.GetActiveScene()->name);
+            TreeNode root(sceneManager.GetActiveSceneName());
             
             auto objLst = sceneManager.GetActiveScene()->GetObjectList();
             

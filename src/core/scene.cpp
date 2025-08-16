@@ -8,6 +8,17 @@
 #include <sstream>
 #include <iomanip>
 
+std::atomic<SceneID> Scene::sceneCounter{1};
+
+Scene::Scene(int& screenWidth, int& screenHeight)
+    : screenWidth(screenWidth), screenHeight(screenHeight), id(sceneCounter++)
+{
+    if (mainCamera == nullptr)
+    {
+        mainCamera = new Camera2D("chd_kn_view", screenWidth, screenHeight);
+    }
+}
+
 Scene::~Scene() 
 {
     delete mainCamera;
