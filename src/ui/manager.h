@@ -24,6 +24,7 @@ namespace core
             // Intervalo de caracteres da fonte de ícones (Material Icons)
             static const ImWchar icons_ranges[3]; // unicode private use area
             ImFontConfig icons_config;
+            float menuHeight;
 
         public:
             UIManager(SDL_Window *window, SDL_GLContext context, SceneManager& sm);
@@ -33,10 +34,8 @@ namespace core
             void LoadFonts(ImGuiIO &io);
             void SetTheme(ImGuiStyle& style, ImVec4* colors);
             void ProcessEvent(const SDL_Event *event);
-        
-            void InitShapeFactory();
-        
-            void ShapeSelector(SceneManager& scene);
+
+            void MainMenu();
         
             void Render(SceneManager& scene);
         

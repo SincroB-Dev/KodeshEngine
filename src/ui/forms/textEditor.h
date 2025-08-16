@@ -23,10 +23,11 @@ namespace core {
             std::vector<ScriptTab> tabs;
             TextEditor mainEditor; // único editor
             int activeTab = -1;
-            bool isOpen;
             LuaInterpreter interpreter;
 
         public:
+            bool isOpen;
+            
             LuaTextEditor();
             ~LuaTextEditor();
 

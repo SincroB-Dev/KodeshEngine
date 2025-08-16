@@ -80,7 +80,7 @@ namespace core
             IMGUI_CHECKVERSION();
             ImGui::CreateContext();
             ImGuiIO &io = ImGui::GetIO();
-        
+            
             LoadFonts(io);
         
             ImGui::StyleColorsDark();
@@ -105,20 +105,123 @@ namespace core
             IconifiedFont = io.Fonts->AddFontFromFileTTF("../assets/fonts/MaterialIcons-Regular.ttf", 16.0f, &icons_config, UIManager::icons_ranges);
         }
         
+        // Menu principal da apĺicação
+        void UIManager::MainMenu()
+        {
+            if (ImGui::BeginMainMenuBar())
+            {
+                if (ImGui::BeginMenu("Arquivo"))
+                {
+                    if (ImGui::BeginMenu("Projeto"))
+                    {
+                        if (ImGui::MenuItem("Novo Projeto", "Ctrl+N")) {
+                            // ação de novo
+                        }
+                        if (ImGui::MenuItem("Abrir Projeto", "Ctrl+O")) {
+                            // ação de abrir
+                        }
+                        if (ImGui::MenuItem("Salvar Projeto", "Ctrl+S")) {
+                            // ação de salvar
+                        }
+                        
+                        ImGui::EndMenu();
+                    }
+                    
+                    if (ImGui::BeginMenu("Importar"))
+                    {
+                        if (ImGui::MenuItem("Script")) {
+                            // ação de novo
+                        }
+                        if (ImGui::MenuItem("Imagem")) {
+                            // ação de abrir
+                        }
+                        
+                        ImGui::EndMenu();
+                    }
+                    
+                    ImGui::Separator();
+                    if (ImGui::MenuItem("Sair", "Alt+F4")) {
+                        // ação de sair
+                    }
+                    
+                    ImGui::EndMenu();
+                }
+
+                if (ImGui::BeginMenu("Editar"))
+                {
+                    if (ImGui::BeginMenu("Adicionar"))
+                    {
+                        if (ImGui::MenuItem("Entity")) {
+                            // ação
+                        }
+                        ImGui::Separator();
+                        
+                        if (ImGui::MenuItem("Retangulo")) {
+                            // ação
+                        }
+
+                        
+                        if (ImGui::MenuItem("Circulo")) {
+                            // ação
+                        }
+                        
+                        
+                        if (ImGui::MenuItem("Estrela")) {
+                            // ação
+                        }
+                        
+                        ImGui::EndMenu();
+                    }
+                    ImGui::EndMenu();
+                }
+                
+                if (!LogWindow::Instance->isOpen || !luaTextEditor.isOpen)
+                {
+                    if (ImGui::BeginMenu("Workspace"))
+                    {
+                        if (!luaTextEditor.isOpen)
+                        {
+                            if (ImGui::MenuItem("Editor de Scripts")) {
+                                luaTextEditor.isOpen = true;
+                            }
+                        }
+                        if (!LogWindow::Instance->isOpen)
+                        {
+                            if (ImGui::MenuItem("Logs")) {
+                                LogWindow::Instance->isOpen = true;
+                            }
+                        }
+
+                        ImGui::EndMenu();
+                    }
+                }
+
+                ImGui::EndMainMenuBar();
+            }
+
+            // depois do EndMainMenuBar
+            menuHeight = ImGui::GetFrameHeight();
+        }
+        
         // Renderização da interface
         void UIManager::Render(SceneManager& scene)
         {
             ImGui_ImplOpenGL2_NewFrame();
             ImGui_ImplSDL2_NewFrame();
             ImGui::NewFrame();
-            
-            // Desenha painel lateral
-            dockedToolbox.Draw();
+
+            // Menu principal no topo
+            MainMenu();
+
+            // Painéis dockáveis ou flutuantes
+            dockedToolbox.Draw(menuHeight); // Janela dock fixa a direita
             LogWindow::Instance->Show();
             luaTextEditor.Render();
-            
+
+            // Renderiza a UI
             ImGui::Render();
             ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
         }
+
     };
 };

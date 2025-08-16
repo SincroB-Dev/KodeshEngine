@@ -48,7 +48,7 @@ namespace core
             virtual ~DockedToolbox() {};
 
             void DrawIconButton(const char *icon, TBEditorTab tab);
-            void Draw();
+            void Draw(float& menuHeight);
         };
     };
 };

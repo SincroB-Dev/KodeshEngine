@@ -27,68 +27,74 @@ namespace core
             ImGui::PopStyleVar(1);
         }
 
-        void DockedToolbox::Draw()
+        void DockedToolbox::Draw(float& menuHeight)
         {
-            ImVec2 viewportSize = ImGui::GetMainViewport()->Size;
-            float panelX = viewportSize.x - panelWidth;
-            ImVec2 panelPos(panelX, 0);
+            ImGuiViewport* viewport = ImGui::GetMainViewport();
+            ImVec2 viewportPos  = viewport->WorkPos;
+            ImVec2 viewportSize = viewport->WorkSize;
+
+            // posição na direita
+            ImVec2 panelPos(viewportPos.x + viewportSize.x - panelWidth, viewportPos.y);
             ImVec2 panelSize(panelWidth, viewportSize.y);
 
             ImGui::SetNextWindowPos(panelPos, ImGuiCond_Always);
             ImGui::SetNextWindowSize(panelSize, ImGuiCond_Always);
-            ImGui::SetNextWindowBgAlpha(1.0f);
 
-            ImGuiWindowFlags flags = ImGuiWindowFlags_NoTitleBar |
-                                     ImGuiWindowFlags_NoMove |
-                                     ImGuiWindowFlags_NoBringToFrontOnFocus |
-                                     ImGuiWindowFlags_NoNavFocus |
-                                     ImGuiWindowFlags_NoResize;
+            ImGuiWindowFlags flags =
+                ImGuiWindowFlags_NoTitleBar |
+                ImGuiWindowFlags_NoCollapse |
+                ImGuiWindowFlags_NoResize |
+                ImGuiWindowFlags_NoMove |
+                ImGuiWindowFlags_NoBringToFrontOnFocus |
+                ImGuiWindowFlags_NoNavFocus;
 
-            ImGui::Begin("RightPanel", nullptr, flags);
-
-            ImGui::SameLine();
-            ImGui::SetCursorPosX(12);
-            ImGui::BeginChild("TabButtons", ImVec2(tabColumnWidth, panelSize.y), true);
-
-            DrawIconButton(MICON_FOREST, TBEditorTab::Ambiente);
-            DrawIconButton(MICON_SCENE, TBEditorTab::Cenario);
-            DrawIconButton(MICON_DEPLOYED_CODE, TBEditorTab::Entidade);
-            DrawIconButton(MICON_FORMAT_PAINT, TBEditorTab::Material);
-            DrawIconButton(MICON_COMPONENT_EXCHANGE, TBEditorTab::Componentes);
-
-            ImGui::EndChild();
-
-            ImGui::SameLine();
-            ImGui::BeginChild("EnvironmentManagerTabs", ImVec2(0, panelSize.y), false);
-
-            switch (activeTab)
+            if (ImGui::Begin("RightPanel", nullptr, flags))
             {
-            case TBEditorTab::Ambiente:
-                ImGui::Text("Configurações do Ambiente");
-                environmentPanel.drawPanel(nullptr);
-                break;
-            case TBEditorTab::Cenario:
-                ImGui::Text("Elementos do Cenário");
-                scenePanel.drawPanel(nullptr);
-                break;
-            case TBEditorTab::Entidade:
-                ImGui::Text("Configurações da Entidade Selecionada");
-                entityPanel.drawPanel(sceneManager.GetActiveScene()->activeObject);
-                break;
-            case TBEditorTab::Material:
-                ImGui::Text("Editor de Materiais");
-                break;
-            case TBEditorTab::Componentes:
-                ImGui::Text("Componentes disponíveis");
-                break;
+                ImGui::SameLine();
+                ImGui::SetCursorPosX(12);
+                ImGui::BeginChild("TabButtons", ImVec2(tabColumnWidth, panelSize.y), true);
+
+                DrawIconButton(MICON_FOREST, TBEditorTab::Ambiente);
+                DrawIconButton(MICON_SCENE, TBEditorTab::Cenario);
+                DrawIconButton(MICON_DEPLOYED_CODE, TBEditorTab::Entidade);
+                DrawIconButton(MICON_FORMAT_PAINT, TBEditorTab::Material);
+                DrawIconButton(MICON_COMPONENT_EXCHANGE, TBEditorTab::Componentes);
+
+                ImGui::EndChild();
+
+                ImGui::SameLine();
+                ImGui::BeginChild("EnvironmentManagerTabs", ImVec2(0, panelSize.y), false);
+
+                switch (activeTab)
+                {
+                case TBEditorTab::Ambiente:
+                    ImGui::Text("Configurações do Ambiente");
+                    environmentPanel.drawPanel(nullptr);
+                    break;
+                case TBEditorTab::Cenario:
+                    ImGui::Text("Elementos do Cenário");
+                    scenePanel.drawPanel(nullptr);
+                    break;
+                case TBEditorTab::Entidade:
+                    ImGui::Text("Configurações da Entidade Selecionada");
+                    entityPanel.drawPanel(sceneManager.GetActiveScene()->activeObject);
+                    break;
+                case TBEditorTab::Material:
+                    ImGui::Text("Editor de Materiais");
+                    break;
+                case TBEditorTab::Componentes:
+                    ImGui::Text("Componentes disponíveis");
+                    break;
+                }
+                
+                // Chamada dos menus
+                scenePanel.drawMenu();
+                entityPanel.drawMenu();
+                environmentPanel.drawMenu();
+
+                ImGui::EndChild();
             }
             
-            // Chamada dos menus
-            scenePanel.drawMenu();
-            entityPanel.drawMenu();
-            environmentPanel.drawMenu();
-
-            ImGui::EndChild();
             ImGui::End();
         }
     };
