@@ -20,6 +20,7 @@ public:
 
     inline Camera2D(const char *name, int &swidth, int &sheight): 
         name(name), screenWidth(swidth), screenHeight(sheight) {}
+    ~Camera2D() {}
 
     mat4 projection;
     mat4 view;
@@ -30,6 +31,8 @@ public:
     void UpdateProjection();
     void UpdateView();
     void Update();
+    
+    Camera2D* Clone();
 
     mat4 GetViewProjection() const;
     void ApplyScreenToWorld(int mouseX, int mouseY);

@@ -60,6 +60,18 @@ void Camera2D::ApplyScreenToWorld(int mouseX, int mouseY)
     worldMouse = vec2(worldX, worldY);
 }
 
+Camera2D* Camera2D::Clone()
+{
+    Camera2D* copy = new Camera2D(name, screenWidth, screenHeight);
+    
+    copy->position = position;
+    copy->space = space;
+    
+    copy->Update();
+    
+    return copy;
+}
+
 vec2 Camera2D::GetWorldMouse() const
 {
     return worldMouse;

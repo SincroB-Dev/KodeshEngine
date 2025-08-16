@@ -28,4 +28,11 @@ namespace core
     {
         this->name = name;
     }
+    
+    Entity* Entity::Clone()
+    {
+        Entity* copy = new Entity(std::string(name).c_str(), transform);
+        
+        return copy;
+    }
 }

@@ -23,6 +23,7 @@ Scene::~Scene()
 {
     delete mainCamera;
     mainCamera = nullptr;
+    ClearScene();
 }
 
 Entity* Scene::GetObject(const char *name)
@@ -105,6 +106,22 @@ void Scene::ClearScene()
 void Scene::Update()
 {
 
+}
+
+Scene* Scene::Clone()
+{
+    Scene* copy = new Scene(screenWidth, screenHeight);
+    
+    copy->activeObject = nullptr;
+    copy->mainCamera = mainCamera->Clone();
+    copy->id = id;
+    
+    for (auto it=objectList.begin(); it!=objectList.end(); it++)
+    {
+        copy->objectList.push_back((*it)->Clone());
+    }
+    
+    return copy;
 }
 
 void Scene::Render()

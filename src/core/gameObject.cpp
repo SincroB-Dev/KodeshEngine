@@ -43,3 +43,18 @@ void GameObject::render()
         shape->render();
     }
 }
+
+Entity* GameObject::Clone()
+{
+    GameObject* copy = new GameObject(std::string(name).c_str());
+    
+    if (shape != nullptr)
+    {
+        copy->shape = shape->Clone();
+    }
+    
+    copy->color = color;
+    copy->transform = transform;
+    
+    return (Entity*)copy;
+}

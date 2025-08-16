@@ -25,3 +25,13 @@ void Shape2D::render()
 
     glPopMatrix();
 }
+
+Shape2D* Shape2D::Clone()
+{
+    Shape2D* copy = new Shape2D(transform, color, mode);
+    
+    copy->vertices = vertices;
+    copy->t_coord = vertices;
+    
+    return copy;
+}

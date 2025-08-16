@@ -19,6 +19,8 @@ public:
 
     virtual void update() override;
     virtual void render() override;
+    
+    virtual Entity* Clone() override;
 
     virtual void applyMovement(vec2 mov) final;
     virtual void AttachShape(Shape2D *shape) final;

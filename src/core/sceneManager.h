@@ -28,16 +28,24 @@ private:
     
     std::map<std::string, Scene*> sceneList;
 
+    
 public:
-    SceneManager(int& width, int& height, int& mouseX, int& mouseY);
+    SceneManager(int& width, int& height, int& mouseX, int& mouseY, SDL_Event& event);
+    SceneManager(SceneManager& clone);
     ~SceneManager(); 
     
-    SDL_Event event;
+    SDL_Event& event;
+    bool EngineEditMode;
 
     void UpdateWhenEvent();
     void Update();
     void Render();
     
+    SceneManager* Clone();
+    
+    inline GameObject* GetMainObject() const { return nullptr; }
+    inline Camera2D* GetActiveCamera() const { return camera == nullptr ? activeScene->mainCamera : camera; }
+    inline Scene* GetActiveScene() const { return activeScene; }
     
     const char* GetActiveSceneName() const;
 };

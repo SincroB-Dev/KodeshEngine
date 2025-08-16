@@ -36,6 +36,8 @@ public:
 
     void Update();
     void Render();
+    
+    Scene* Clone();
 
 private:
     std::vector<Entity*> objectList;

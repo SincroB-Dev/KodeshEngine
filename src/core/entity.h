@@ -8,7 +8,6 @@
 namespace core
 {
     using EntityID = uint32_t;
-    
 
     class Entity
     {
@@ -31,6 +30,8 @@ namespace core
 
         inline virtual EntityID GetID() const final { return id; }
         virtual void setName(const char* name) final;
+        
+        virtual Entity* Clone();
         
         inline static EntityID GetEntityCounter() { return entityCounter.load(); }
         

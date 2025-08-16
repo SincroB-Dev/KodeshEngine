@@ -28,6 +28,8 @@ public:
     }
 
     virtual void render() final;
+    
+    virtual Shape2D* Clone();
 
     inline void Register() override 
     {
