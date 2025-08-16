@@ -3,7 +3,7 @@ CXX = g++
 CXXFLAGS = -g -Wall -std=c++17 -DIMGUI_IMPL_OPENGL_LOADER_GLAD -MMD -MP
 
 # Diretórios de código-fonte
-SRC_DIRS = src src/ui src/ui/forms src/ui/sidedock src/core src/core/interpreter src/utils/serializer src/models/shapes src/maths src/core/editor
+SRC_DIRS = src src/controllers src/ui src/ui/forms src/ui/sidedock src/core src/core/interpreter src/utils/serializer src/models/shapes src/maths src/core/editor
 SRC = $(foreach dir, $(SRC_DIRS), $(wildcard $(dir)/*.cpp))
 
 # Bibliotecas externas (IMGUI e similares)
