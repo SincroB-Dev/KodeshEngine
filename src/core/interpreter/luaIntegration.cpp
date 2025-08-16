@@ -9,7 +9,7 @@ namespace core
         /**
          * Faz chamadas ao log do sistema.
          */
-        void kx_log_(const char* msg, LogType type)
+        void kx_log_(const char* msg, LogType type = LogType::INFO)
         {
             LogWindow::Log(msg, type);
         }
@@ -19,7 +19,13 @@ namespace core
          */
         void in_functions_(sol::state& lua)
         {
-            lua.set_function("log", &kx_log_);
+            // Utilização de overload para argumento padrão
+            lua.set_function("log", 
+                sol::overload(
+                    [](const char* msg, LogType type){ kx_log_(msg, type); },
+                    [](const char* msg){ kx_log_(msg); }
+                )
+            );
         }
         
         /**
@@ -28,7 +34,7 @@ namespace core
         void in_enumerators_(sol::state& lua)
         {
             // Sistematica de logs
-            lua.create_named_table("LogType",
+            lua.new_enum("LogType",
                 "Info", LogType::INFO,
                 "Warn", LogType::WARNING,
                 "Error", LogType::ERROR
