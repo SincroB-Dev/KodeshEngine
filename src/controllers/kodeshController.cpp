@@ -39,6 +39,8 @@ namespace core
             lua_ = new LuaInterpreter();
             ui_manager->luaTextEditor->BindInterpreter(lua_);
             
+            lua_->lua["sc_manager"] = sc_manager;
+            
             // Utilizado para execução in-game;
             sc_manager_bkp = nullptr;
             

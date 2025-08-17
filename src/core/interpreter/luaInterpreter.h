@@ -11,4 +11,5 @@ public:
     ~LuaInterpreter();
 
     void execute(const std::string& code);
+    void bind(const char* nvar, void* value);
 };

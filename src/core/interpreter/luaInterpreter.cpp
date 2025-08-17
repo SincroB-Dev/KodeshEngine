@@ -26,6 +26,11 @@ LuaInterpreter::~LuaInterpreter()
 {
 }
 
+void LuaInterpreter::bind(const char* nvar, void* value)
+{
+    lua[nvar] = value;
+}
+
 void LuaInterpreter::integration()
 {
     core::lua::in_enumerators_(lua);
