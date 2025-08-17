@@ -9,12 +9,12 @@ GameObject::GameObject(const char *name, Transform2D *transform, Color color = {
     
 GameObject::GameObject(const char *name):
     Entity(name, Transform2D())
-{}
+{
+    shape = new Shape2DQuad(this->transform, this->color);
+}
 
 GameObject::~GameObject()
-{
-    
-}
+{}
 
 void GameObject::AttachShape(Shape2D *s)
 {

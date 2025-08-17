@@ -29,6 +29,7 @@ namespace core
         virtual void setLocalAngle(float angle) final;
 
         inline virtual EntityID GetID() const final { return id; }
+        inline virtual const char* getName() const final { return name.c_str(); };
         virtual void setName(const char* name) final;
         
         virtual Entity* Clone();

@@ -27,8 +27,10 @@ private:
     int &mouseX, &mouseY;
     
     std::map<std::string, Scene*> sceneList;
-
     
+    friend class Scene;
+    friend class Camera2D;
+
 public:
     SceneManager(int& width, int& height, int& mouseX, int& mouseY, SDL_Event& event);
     SceneManager(SceneManager& clone);
@@ -46,6 +48,7 @@ public:
     inline GameObject* GetMainObject() const { return nullptr; }
     inline Camera2D* GetActiveCamera() const { return camera == nullptr ? activeScene->mainCamera : camera; }
     inline Scene* GetActiveScene() const { return activeScene; }
+    inline std::map<std::string, Scene*>& GetScenes() { return sceneList; }
     
     const char* GetActiveSceneName() const;
 };

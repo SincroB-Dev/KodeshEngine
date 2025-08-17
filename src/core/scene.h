@@ -11,6 +11,8 @@ using namespace core;
 
 using SceneID = uint32_t;
 
+class SceneManager;
+
 class Scene final
 {
     static std::atomic<SceneID> sceneCounter;
@@ -22,6 +24,7 @@ public:
     Entity* activeObject = nullptr;
 
     Scene(int& screenWidth, int& screenHeight);
+    Scene(SceneManager& manager);
     ~Scene();
 
     // Gerenciamento de Objetos

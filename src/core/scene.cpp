@@ -2,6 +2,7 @@
 
 #include "../models/shapes.h"
 #include "../ui/forms/logger.h"
+#include "sceneManager.h"
 
 #include <algorithm>
 #include <iostream>
@@ -18,6 +19,10 @@ Scene::Scene(int& screenWidth, int& screenHeight)
         mainCamera = new Camera2D("chd_kn_view", screenWidth, screenHeight);
     }
 }
+
+// Delega para o primeiro construtor
+Scene::Scene(SceneManager& manager): Scene(manager.width, manager.height)
+{}
 
 Scene::~Scene() 
 {

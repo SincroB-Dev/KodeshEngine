@@ -4,6 +4,8 @@
 
 using namespace maths;
 
+class SceneManager;
+
 class Camera2D {
 private:
     int _latest_swid;
@@ -20,6 +22,7 @@ public:
 
     inline Camera2D(const char *name, int &swidth, int &sheight): 
         name(name), screenWidth(swidth), screenHeight(sheight) {}
+    Camera2D(const char* name, const SceneManager& sm);
     ~Camera2D() {}
 
     mat4 projection;

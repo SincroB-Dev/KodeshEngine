@@ -1,4 +1,8 @@
 #include "camera2d.h"
+#include "sceneManager.h"
+
+Camera2D::Camera2D(const char* name, const SceneManager& sm): Camera2D(name, sm.width, sm.height)
+{}
 
 void Camera2D::UpdateProjection()
 {
