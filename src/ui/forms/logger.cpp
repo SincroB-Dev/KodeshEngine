@@ -14,7 +14,7 @@ namespace core
     {
         LogWindow* LogWindow::Instance = nullptr;
         
-        LogWindow::LogWindow(): showLogWindow(true), isOpen(true), autoScroll(true),
+        LogWindow::LogWindow(): showLogWindow(true), isOpen(false), autoScroll(true),
             showInfo(true), showWarning(true), showError(true)
         {}
         
