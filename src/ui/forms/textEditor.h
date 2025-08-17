@@ -6,9 +6,10 @@
 #include "../../../libs/ImGuiColorTextEdit/TextEditor.h"
 #include "../../core/interpreter/luaInterpreter.h"
 
-namespace core {
-    namespace ui {
-        
+namespace core 
+{
+    namespace ui 
+    {
         struct ScriptTab {
             std::string name;      // nome da aba (ex: script.lua)
             std::string path;      // caminho real do arquivo
@@ -23,7 +24,7 @@ namespace core {
             std::vector<ScriptTab> tabs;
             TextEditor mainEditor; // único editor
             int activeTab = -1;
-            LuaInterpreter interpreter;
+            LuaInterpreter* interpreter;
 
         public:
             bool isOpen;
@@ -41,6 +42,11 @@ namespace core {
             
             void HandleOpenDialog();
             void HandleSaveDialog();
+            
+            inline void BindInterpreter(LuaInterpreter* interpreter)
+            {
+                this->interpreter = interpreter;
+            }
 
             void Render();
             void SwitchTab(int newTab);

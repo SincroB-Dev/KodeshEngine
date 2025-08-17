@@ -23,6 +23,8 @@ namespace core
             SDL_GLContext context;
             SDL_Event event;
             
+            LuaInterpreter* lua_;
+            
             // Gerenciadores
             SceneManager* sc_manager;
             UIManager* ui_manager;

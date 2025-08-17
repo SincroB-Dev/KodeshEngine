@@ -8,7 +8,7 @@ namespace core
     namespace ui
     {
 
-        LuaTextEditor::LuaTextEditor(): isOpen(true)
+        LuaTextEditor::LuaTextEditor(): isOpen(false)
         {
         }
         
@@ -205,7 +205,7 @@ namespace core
                     
                     if (ImGui::MenuItem("Executar") && activeTab >= 0) {
                         tabs[activeTab].content = mainEditor.GetText();
-                        interpreter.execute(tabs[activeTab].content);
+                        interpreter->execute(tabs[activeTab].content);
                     }
                     ImGui::EndMenu();
                 }

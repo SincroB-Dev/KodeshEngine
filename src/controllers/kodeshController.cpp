@@ -35,6 +35,10 @@ namespace core
             sc_manager = new SceneManager(width, height, mouseX, mouseY, event);
             ui_manager = new UIManager(window, context, *sc_manager);
             
+            // Inicializa o interpretador de scripts
+            lua_ = new LuaInterpreter();
+            ui_manager->luaTextEditor->BindInterpreter(lua_);
+            
             // Utilizado para execução in-game;
             sc_manager_bkp = nullptr;
             

@@ -3,6 +3,7 @@
 #include "../../libs/imgui/backends/imgui_impl_sdl2.h"
 #include "../../libs/imgui/backends/imgui_impl_opengl2.h"
 
+
 namespace core
 {
     namespace ui
@@ -17,6 +18,12 @@ namespace core
         {
             InitImGui(window, context);
             LogWindow::Instance = new LogWindow();
+            luaTextEditor = new LuaTextEditor();
+        }
+        
+        UIManager::~UIManager()
+        {
+            delete luaTextEditor;
         }
         
         void UIManager::ProcessEvent(const SDL_Event *event)
@@ -175,14 +182,14 @@ namespace core
                     ImGui::EndMenu();
                 }
                 
-                if (!LogWindow::Instance->isOpen || !luaTextEditor.isOpen)
+                if (!LogWindow::Instance->isOpen || !luaTextEditor->isOpen)
                 {
                     if (ImGui::BeginMenu("Workspace"))
                     {
-                        if (!luaTextEditor.isOpen)
+                        if (!luaTextEditor->isOpen)
                         {
                             if (ImGui::MenuItem("Editor de Scripts")) {
-                                luaTextEditor.isOpen = true;
+                                luaTextEditor->isOpen = true;
                             }
                         }
                         if (!LogWindow::Instance->isOpen)
@@ -216,7 +223,7 @@ namespace core
             // Painéis dockáveis ou flutuantes
             dockedToolbox.Draw(menuHeight); // Janela dock fixa a direita
             LogWindow::Instance->Show();
-            luaTextEditor.Render();
+            luaTextEditor->Render();
 
             // Renderiza a UI
             ImGui::Render();
