@@ -6,12 +6,10 @@
 #include <iostream>
 #include <string>
 
-#include "../core/core.h"
-#include "../ui/manager.h"
+#include "../core.h"
+#include "../../ui/manager.h"
 
 #include "engineController.h"
-
-using namespace core::ui;
 
 namespace core
 {
@@ -23,11 +21,15 @@ namespace core
             SDL_GLContext context;
             SDL_Event event;
             
+            uint64_t lastTime;
+            uint64_t currentTime;
+            double deltaTime;
+            
             LuaInterpreter* lua_;
             
             // Gerenciadores
             SceneManager* sc_manager;
-            UIManager* ui_manager;
+            ui::UIManager* ui_manager;
             
             // Backup da cena, onde será executado o modo de jogo.
             SceneManager* sc_manager_bkp;

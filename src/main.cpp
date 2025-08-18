@@ -1,6 +1,6 @@
 #define SDL_MAIN_HANDLED
 
-#include "controllers/kodeshController.h"
+#include "core/controllers/kodeshController.h"
 
 using namespace core::controller;
 

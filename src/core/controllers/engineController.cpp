@@ -20,6 +20,7 @@ namespace core
                     kodesh.ShowUI();
                     if (this->state == EngineState::Play || this->state == EngineState::Pause)
                     {
+                        kodesh.lua_->lua["sc_manager"] = kodesh.sc_manager; 
                         delete kodesh.sc_manager_bkp;
                     }
                     break;
@@ -30,6 +31,7 @@ namespace core
                     {
                         kodesh.sc_manager_bkp = kodesh.sc_manager->Clone();
                         kodesh.sc_manager_bkp->EngineEditMode = false;
+                        kodesh.lua_->lua["sc_manager"] = kodesh.sc_manager_bkp;
                     }
                     break;
                     

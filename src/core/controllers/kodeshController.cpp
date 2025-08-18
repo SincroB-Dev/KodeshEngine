@@ -17,6 +17,10 @@ namespace core
             
             context = SDL_GL_CreateContext(window);
             
+            lastTime = 0;
+            currentTime = SDL_GetPerformanceCounter();
+            deltaTime = 0.0;
+            
             SDL_GL_SetSwapInterval(si);
             SDL_GetWindowSize(window, &width, &height);
         }
@@ -33,7 +37,7 @@ namespace core
         {
             // Inicializar gerenciadores
             sc_manager = new SceneManager(width, height, mouseX, mouseY, event);
-            ui_manager = new UIManager(window, context, *sc_manager);
+            ui_manager = new ui::UIManager(window, context, *sc_manager);
             
             // Inicializa o interpretador de scripts
             lua_ = new LuaInterpreter();
@@ -44,7 +48,7 @@ namespace core
             // Utilizado para execução in-game;
             sc_manager_bkp = nullptr;
             
-            LogWindow::Log("Kodesh Managers inicializados com sucesso!", LogType::INFO);
+            ui::LogWindow::Log("Kodesh Managers inicializados com sucesso!", ui::LogType::INFO);
         }
         
         void KodeshController::InitControllers()
@@ -55,6 +59,12 @@ namespace core
         
         void KodeshController::EventLoop()
         {
+            lastTime = currentTime;
+            currentTime = SDL_GetPerformanceCounter();
+            
+            deltaTime = (double)(currentTime - lastTime) * 1000 / (double)SDL_GetPerformanceFrequency(); 
+            deltaTime /= 1000.0;// Em segundos
+            
             while (SDL_PollEvent(&event))
             {
                 SDL_GetMouseState(&mouseX, &mouseY);
@@ -118,6 +128,12 @@ namespace core
         
         void KodeshController::Update()
         {
+            if (engine->state == EngineState::Play)
+            {
+                lua_->update(deltaTime);
+                std::cout << ".";
+            }
+            
             sc_manager->Update();
         }
         
@@ -134,6 +150,7 @@ namespace core
                 Render();
 
                 SDL_GL_SwapWindow(window);
+                SDL_Delay(16);
             }
         }
         

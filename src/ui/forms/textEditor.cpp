@@ -202,11 +202,17 @@ namespace core
                     }
                     
                     ImGui::Separator();
-                    
                     if (ImGui::MenuItem("Executar") && activeTab >= 0) {
                         tabs[activeTab].content = mainEditor.GetText();
                         interpreter->execute(tabs[activeTab].content);
                     }
+                    
+                    ImGui::Separator();
+                    if (ImGui::MenuItem("Adicionar a Pilha de Execução") && activeTab >= 0) {
+                        tabs[activeTab].content = mainEditor.GetText();
+                        interpreter->load(tabs[activeTab].path);
+                    }
+                    
                     ImGui::EndMenu();
                 }
                 ImGui::EndMenuBar();
