@@ -1,59 +1,49 @@
-# Kodesh2D Engine
+# KodeshEngine
 
-Uma engine 2D modular e em evolução, construída do zero com SDL2, OpenGL 1.4 e ImGui. O objetivo do projeto é servir como base de estudo e experimentação, com foco em desenvolvimento progressivo de uma engine gráfica moderna, começando pelas bases mais simples e avançando até tecnologias mais recentes como OpenGL moderno e possivelmente Vulkan.
+## Nova arquitetura de pastas
 
----
+KodeshEngine/
+|
++-- Core/                  # Núcleo da engine (base independente do jogo)
+|     |--- Application/    # Inicialização, loop principal, pipeline
+|     |--- ECS/            # Entity + Component System (entidades e seus dados)
+|     |--- Events/         # Eventos (window, custom events)
+|     |--- Input/          # Gerenciamento de entradas (input de mouse, teclado, joy)
+|     |--- Scene/          # Relacionamentos expressos com a scene
+|     |--- Renderer/       # Abstração do render (SDL/OpenGL)
+|     |--- Resources/      # Gerenciamento de assets (texturas, shaders, fontes)
+|     |--- Systems/        # Gerenciadores específicos (UI, Physics, Audio)
+|     +--- Utils/          # Helpers, logging, math, time
+|
++-- Platform/              # Código específico de plataforma
+|     |--- SDL/            # Implementação SDL (janelas, input)
+|     |--- OpenGL/         # Implementações de Renderer
+|     +--- Threads/        # Worker threads, jobs, parallelism
+|
+|-- Editor/                # Futuro: Editor de engine (UI separada do runtime)
+|     |--- Panels/         # UI de cenas, hierarquias, inspector
+|     +--- Tools/          # Gizmos e ferramentas de edição
+|
+|-- Game/                  # Onde o usuário final vai plugar o jogo
+|     |--- Scripts/        # Scripts em Lua (caso decida colocar binds)
+|     |--- Assets/         # Imagens, sons, shaders
+|     +--- Scenes/         # Mapas, prefabs e entidades salvas
+|
++-- libs/                  # Dependencias externas, devem ser compiladas com o projeto
+|
++-- assets/                # Assets da engine (fontes, imagens, sons)
 
-## ✨ Objetivo
 
-O projeto foi iniciado com a intenção de **explorar, entender e evoluir gradualmente** a criação de uma engine gráfica, com foco em aprendizado prático. A ideia é manter o código modular, acessível e orientado à construção de conhecimento, partindo de uma base simples até alcançar estruturas mais robustas e modernas.
+## Trabalhar em um pipeline de renderização limpo
 
----
+1. Update -> Lógica do jogo, input, física.
+2. Scene Collect -> Percorre entidades visiveis e gera render commands.
+3. Sort -> Organiza por shader, textura (para reduzir state changes)
+4. Submit -> Envia comandos para renderer
+5. Renderer -> Executa draw calls.
+6. UI Layer -> Desenha UI por ultimo.
+7. Present -> Swap de buffers.
 
-## 🚀 Tecnologias Utilizadas
-
-- **Linguagem:** C++, Lua
-- **Renderização:** OpenGL 1.4
-- **Janela e eventos:** SDL2
-- **Interface de usuário:** Dear ImGui
-
----
-
-## 🧱 Estrutura Atual
-
-### 🔹 Core
-- **GameObject**: Classe base responsável pela lógica de objetos na cena. Planeja-se substituí-la futuramente por um sistema de entidades (`Entity`) mais flexível.
-- **Scene**: Classe responsável por controlar a renderização e update de componentes.
-- **SceneManager**: Classe responsável pelo gerenciamento das cenas em atividade no loop principal.
-- **Transformer2D**: Gerencia posição, rotação e escala (localPosition, localAngle, localScale) com base em um `Point`.
-
-### 🔹 Shapes
-Sistema de modelagem 2D simples baseado na classe abstrata `Shape2D`, com as seguintes formas já implementadas:
-
-- `Circle`
-- `Quad`
-- `Star`
-
-### 🔹 Matemática
-Biblioteca interna de vetores e pontos para suporte a transformações e geometria:
-
-- `Vec2`, `Vec3`, `Vec4`
-- `Point`
-- `Transformer2D`
-
----
-
-## 🛣️ Próximos Passos
-
-- Refatorar `GameObject` para `Entity`, adotando um modelo baseado em componentes (ECS).
-- Adicionar novos shapes 2D e suporte a sprites.
-- Implementar sistema de cena com camadas.
-- Evoluir para versões mais modernas do OpenGL (ex: 3.3+).
-- Implementar suporte a shaders customizados.
-- Adicionar integração com física 2D (como Box2D).
-- Melhorar ferramentas de depuração via ImGui.
-
----
 
 ## 📦 Compilação e Execução
 

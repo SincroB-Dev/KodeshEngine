@@ -1,0 +1,359 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"m_",
+				"m_Height"
+			],
+			[
+				"Window",
+				"WindowResizeEvent"
+			],
+			[
+				"Even",
+				"EventType"
+			],
+			[
+				"Entity",
+				"EntityType"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "Packages/User/builder.sublime-build",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/User/builder.sublime-build",
+					""
+				],
+				[
+					"Packages/User/builder.sublime-build",
+					"Run"
+				],
+				[
+					"Packages/User/builder.sublime-build",
+					"Debug Nemiver"
+				]
+			],
+			[
+				"Packages/User/builder.sublime-build",
+				"Debug Nemiver"
+			]
+		],
+		[
+			[
+				[
+					"Packages/User/builder.sublime-build",
+					""
+				],
+				[
+					"Packages/User/builder.sublime-build",
+					"Run"
+				],
+				[
+					"Packages/User/builder.sublime-build",
+					"Debug Nemiver"
+				],
+				[
+					"Packages/User/builder.sublime-build",
+					"Debug GDB"
+				],
+				[
+					"Packages/User/builder.sublime-build",
+					"Debug DDD"
+				],
+				[
+					"Packages/User/builder.sublime-build",
+					"Clean SRC"
+				]
+			],
+			[
+				"Packages/User/builder.sublime-build",
+				"Run"
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"SublimeLinter Sett",
+				"Preferences: SublimeLinter Settings"
+			],
+			[
+				"SublimeLinter",
+				"SublimeLinter: Reload SublimeLinter and its Plugins"
+			],
+			[
+				"SublimeLinter: S",
+				"SublimeLinter: Reload SublimeLinter and its Plugins"
+			],
+			[
+				"SublimeLinter: Show",
+				"SublimeLinter: Show Line Errors"
+			],
+			[
+				"Install",
+				"Package Control: Install Package"
+			],
+			[
+				"install pack",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"prefe",
+				"Preferences: Settings"
+			]
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 175.0,
+		"history":
+		[
+			"clear"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/vinicius/Área de Trabalho/Liminale Studios/KodeshEngine",
+		"/home/vinicius/Área de Trabalho/Liminale Studios/KodeshEngine/includes",
+		"/home/vinicius/Área de Trabalho/Liminale Studios/KodeshEngine/includes/Core",
+		"/home/vinicius/Área de Trabalho/Liminale Studios/KodeshEngine/includes/Core/Application",
+		"/home/vinicius/Área de Trabalho/Liminale Studios/KodeshEngine/includes/Core/Events",
+		"/home/vinicius/Área de Trabalho/Liminale Studios/KodeshEngine/includes/Platform",
+		"/home/vinicius/Área de Trabalho/Liminale Studios/KodeshEngine/includes/Platform/SDL",
+		"/home/vinicius/Área de Trabalho/Liminale Studios/KodeshEngine/src",
+		"/home/vinicius/Área de Trabalho/Liminale Studios/KodeshEngine/src/Core",
+		"/home/vinicius/Área de Trabalho/Liminale Studios/KodeshEngine/src/Core/Application",
+		"/home/vinicius/Área de Trabalho/Liminale Studios/KodeshEngine/src/Core/Events",
+		"/home/vinicius/Área de Trabalho/Liminale Studios/KodeshEngine/src/Platform",
+		"/home/vinicius/Área de Trabalho/Liminale Studios/KodeshEngine/src/Platform/SDL"
+	],
+	"file_history":
+	[
+		"/home/vinicius/Área de Trabalho/Liminale Studios/KodeshEngine/src/Core/Application/KodeshApplication.hpp",
+		"/home/vinicius/Área de Trabalho/Liminale Studios/KodeshEngine/src/Platform/SDL/SDLWindow.cpp",
+		"/home/vinicius/Área de Trabalho/Liminale Studios/KodeshEngine/src/Platform/SDL/SDLWindow.hpp",
+		"/home/vinicius/Área de Trabalho/Liminale Studios/KodeshEngine/includes/Core/Events/KeyPressedEvent.hpp",
+		"/home/vinicius/Área de Trabalho/Liminale Studios/KodeshEngine/includes/Core/Application/Window.hpp",
+		"/home/vinicius/Área de Trabalho/Liminale Studios/KodeshEngine/src/Core/Events/WindowEvent.hpp",
+		"/home/vinicius/Área de Trabalho/Liminale Studios/KodeshEngine/src/Core/Events/Event.hpp",
+		"/home/vinicius/Área de Trabalho/Liminale Studios/KodeshEngine/src/main.cpp",
+		"/home/vinicius/Área de Trabalho/Liminale Studios/KodeshEngine/readme.md",
+		"/home/vinicius/Área de Trabalho/Liminale Studios/KodeshEngine/src/Core/Application/Window.hpp",
+		"/home/vinicius/Área de Trabalho/Liminale Studios/KodeshEngine/src/core/sceneManager.h",
+		"/home/vinicius/Área de Trabalho/Liminale Studios/KodeshEngine/src/core/entity.h",
+		"/home/vinicius/Área de Trabalho/Liminale Studios/KodeshEngine/src/core/entity.cpp",
+		"/home/vinicius/Área de Trabalho/Liminale Studios/KodeshEngine/src/core/controllers/kodeshController.cpp",
+		"/home/vinicius/Área de Trabalho/Liminale Studios/KodeshEngine/src/core/sceneManager.cpp",
+		"/home/vinicius/Área de Trabalho/Liminale Studios/KodeshEngine/src/core/interpreter/luaInterpreter.cpp",
+		"/home/vinicius/Área de Trabalho/Liminale Studios/KodeshEngine/src/core/scene.cpp",
+		"/home/vinicius/Área de Trabalho/Liminale Studios/KodeshEngine/src/core/camera2d.h",
+		"/home/vinicius/Área de Trabalho/Liminale Studios/KodeshEngine/src/core/scene.h",
+		"/home/vinicius/Área de Trabalho/Liminale Studios/KodeshEngine/src/core/project.h",
+		"/home/vinicius/Área de Trabalho/Liminale Studios/KodeshEngine/src/core/gameObject.h",
+		"/home/vinicius/Área de Trabalho/Liminale Studios/KodeshEngine/.gitignore",
+		"/home/vinicius/.config/sublime-text/Packages/User/builder.sublime-build"
+	],
+	"find":
+	{
+		"height": 26.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"Systems",
+			"scene",
+			"std",
+			"\n    ",
+			"    \n"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"scrollbar_highlights": true,
+		"show_context": true,
+		"use_buffer2": true,
+		"use_gitignore": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 26.0
+	},
+	"input":
+	{
+		"height": 48.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": false,
+	"output.SublimeLinter":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"output.exec":
+	{
+		"height": 106.0,
+		"history":
+		[
+		]
+	},
+	"output.find_results":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"output.mdpopups":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"pinned_build_system": "Packages/User/builder.sublime-build",
+	"project": "SublimeProj.sublime-project",
+	"replace":
+	{
+		"height": 48.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"scene",
+				"src/core/sceneManager.h"
+			],
+			[
+				"",
+				"src/core/controllers/kodeshController.cpp"
+			],
+			[
+				"luaintepre",
+				"src/core/interpreter/luaInterpreter.cpp"
+			],
+			[
+				"kode",
+				"src/core/controllers/kodeshController.cpp"
+			],
+			[
+				"sce",
+				"src/core/scene.cpp"
+			],
+			[
+				"main",
+				"src/main.cpp"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 273.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

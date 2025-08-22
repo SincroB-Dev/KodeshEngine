@@ -1,9 +1,31 @@
 # Compilador
 CXX = g++
-CXXFLAGS = -g -Wall -std=c++17 -DIMGUI_IMPL_OPENGL_LOADER_GLAD -MMD -MP
+CXXFLAGS = -g -O0 -Wall -std=c++17 -Iincludes -DIMGUI_IMPL_OPENGL_LOADER_GLAD -MMD -MP
 
 # Diretórios de código-fonte
-SRC_DIRS = src src/ui src/ui/forms src/ui/sidedock src/core src/core/controllers src/core/interpreter src/utils/serializer src/models/shapes src/maths src/core/editor
+SRC_DIRS = src \
+             src/Core/Application \
+             src/Core/Events \
+             src/Core/Input \
+             src/Core/Platform \
+             src/Core/ECS \
+             src/Core/Renderer \
+             src/Core/Resource \
+             src/Core/Scene \
+             src/Core/Systems \
+             src/Core/Utils \
+           src/Platform/ \
+             src/Platform/OpenGL \
+             src/Platform/SDL \
+             src/Platform/Threads \
+           src/Game \
+             src/Game/Assets \
+             src/Game/Scenes \
+             src/Game/Scripts \
+            src/Editor \
+             src/Editor/Panels \
+             src/Editor/Tools
+
 SRC = $(foreach dir, $(SRC_DIRS), $(wildcard $(dir)/*.cpp))
 
 # Bibliotecas externas (IMGUI e similares)
