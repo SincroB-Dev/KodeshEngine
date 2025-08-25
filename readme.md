@@ -1,7 +1,7 @@
 # KodeshEngine
 
 ## Nova arquitetura de pastas
-
+```
 KodeshEngine/
 |
 +-- Core/                  # Núcleo da engine (base independente do jogo)
@@ -32,7 +32,7 @@ KodeshEngine/
 +-- libs/                  # Dependencias externas, devem ser compiladas com o projeto
 |
 +-- assets/                # Assets da engine (fontes, imagens, sons)
-
+```
 
 ## Trabalhar em um pipeline de renderização limpo
 
