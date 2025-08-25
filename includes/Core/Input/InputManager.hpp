@@ -12,9 +12,17 @@ namespace core
 		class InputManager
 		{
 		public:
-			InputManager(events::EventDispatcher& dispatcher);
+			InputManager()
+				: m_MouseX(0.0f), m_MouseY(0.0f), m_ScrollX(0.0f), m_ScrollY(0.0f)
+			{}
 
 			void Update();
+
+			/**
+			 * @brief Registra seus eventos no dispatcher de eventos, ele deve ser o ultimo a ser chamado
+			 * 		  pois quando estiver na engine, o UI deve ser a primeira a consumir os eventos.
+			 **/
+			void RegisterEventsOnDispatcher(events::EventDispatcher& dispatcher);
 
 			// [TECLADO]
 			bool IsKeyPressed(int keycode) const;

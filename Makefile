@@ -23,7 +23,11 @@ SRC_DIRS = src \
              src/Game/Scenes \
              src/Game/Scripts \
             src/Editor \
+             src/Editor/Windows \
+               src/Editor/Windows/UINodes \
              src/Editor/Panels \
+             src/Editor/UI \
+               src/Editor/UI/Fontes \
              src/Editor/Tools
 
 SRC = $(foreach dir, $(SRC_DIRS), $(wildcard $(dir)/*.cpp))
@@ -34,6 +38,7 @@ INCLUDE_SRC = \
     libs/imgui/backends/imgui_impl_sdl2.cpp \
     libs/imgui/backends/imgui_impl_opengl2.cpp \
     libs/ImGuiFileDialog/ImGuiFileDialog.cpp \
+    libs/ImGuiNodeEditor/*.cpp \
     libs/ImGuiColorTextEdit/TextEditor.cpp
 INCLUDES = $(wildcard $(INCLUDE_SRC))
 

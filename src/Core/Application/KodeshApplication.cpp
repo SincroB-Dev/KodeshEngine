@@ -8,6 +8,7 @@
 #include "Core/Application/KodeshApplication.hpp"
 
 #include <iostream>
+#include <fstream>
 
 namespace core
 {
@@ -15,17 +16,36 @@ namespace core
 
 	namespace app
 	{
+		// Nome e path padrão do arquivo de configurações.
+		const char* KodeshApplication::s_ConfigsPath = "configs.json";
+
 		KodeshApplication::KodeshApplication(): m_Running(true)
 		{
 			m_Window = Window::Create();
 
-			EventDispatcher& dispatcher = m_Window->GetDispatcher();
-
-			m_InputManager = std::make_unique<input::InputManager>(dispatcher);
+			m_InputManager = std::make_unique<input::InputManager>();
 		}
 
 		KodeshApplication::~KodeshApplication()
 		{}
+
+		nlohmann::json KodeshApplication::GetConfigs()
+		{
+			std::ifstream file(s_ConfigsPath);
+			nlohmann::json configs;
+
+			if (file.good())
+			{
+				file >> configs;
+			}
+
+			return configs;
+		}
+
+		const char* KodeshApplication::GetConfigsFilepath()
+		{
+			return s_ConfigsPath;
+		}
 
 		void KodeshApplication::RegisterWindowCallbacks()
 		{
@@ -56,6 +76,7 @@ namespace core
 			{
 				if (!e.Handled)
 				{
+					std::cout << "Evento consumido!" << std::endl;
 					break;
 				}
 
@@ -71,6 +92,8 @@ namespace core
 
 		void KodeshApplication::Run()
 		{
+			m_InputManager->RegisterEventsOnDispatcher(m_Window->GetDispatcher());
+
 			while(m_Running)
 			{
 				// 0.5 Atualiza o delta time.

@@ -26,13 +26,13 @@ namespace core
 			{
 				auto& pool = registry.GetPool<InputComponent>();
 
-			    for (auto& [entity, component] : pool)
+			    for (auto& component : pool)
 			    {
-			        for (auto& [name, action] : component.actions)
+			        for (auto& action : component.second.actions)
 			        {
-			            if (input.GetState(action.keycode) == action.status)
+			            if (input.GetState(action.second.keycode) == action.second.status)
 			            {
-			            	for (auto& callback : action.callbacks)
+			            	for (auto& callback : action.second.callbacks)
 			            	{
 			                	callback(deltaTime);
 			            	}

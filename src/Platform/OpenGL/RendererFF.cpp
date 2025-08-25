@@ -7,6 +7,12 @@
 
 #include "Core/Utils/Vector.hpp"
 
+extern "C" {
+    #define STB_IMAGE_IMPLEMENTATION
+    #define STB_IMAGE_STATIC
+    #include <stb_image/stb_image.h>
+}
+
 // Utilização de vetores, para facilitar.
 using namespace core::mathutils;
 using namespace core::renderer;
@@ -146,5 +152,52 @@ namespace platform
 	void RendererFF::EndFrame()
 	{
 		// Sem trabalho aqui, o swap é feito pelo SDL
+	}
+
+	unsigned int RendererFF::LoadTexture(const char* texPath)
+	{
+		core::renderer::ImageInfo image;
+
+	    unsigned char* data = stbi_load(texPath, &image.width, &image.height, &image.channels, 4); // força RGBA
+	    if (!data)
+	    {
+	        std::cout << "[RendererFF] Não foi possível carregar a imagem: " << texPath << std::endl;
+	        return 0;
+	    }
+
+	    glGenTextures(1, &image.texId);
+	    glBindTexture(GL_TEXTURE_2D, image.texId);
+
+	    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	    glTexImage2D(
+	        GL_TEXTURE_2D, 0, GL_RGBA,
+	        image.width, image.height, 0,
+	        GL_RGBA, GL_UNSIGNED_BYTE, data
+	    );
+
+	    m_TextureSlots.push_back(image);
+
+	    stbi_image_free(data);
+	    return image.texId;
+	}
+
+	int RendererFF::GetTextureWidth(unsigned int texID) const
+	{
+		for (auto tex : m_TextureSlots)
+			if (tex.texId == texID)
+				return tex.width;
+
+		return 0;
+	}
+
+	int RendererFF::GetTextureHeight(unsigned int texID) const
+	{
+		for (auto tex : m_TextureSlots)
+			if (tex.texId == texID)
+				return tex.height;
+
+		return 0;
 	}
 }

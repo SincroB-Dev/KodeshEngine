@@ -12,7 +12,7 @@ namespace core
 		}
 
 		// Marca a entidade como destruída e libera o ID
-		void EntityRegistry::DestroyEntity(const ecs::Entity& e)
+		void EntityRegistry::DestroyEntity(ecs::Entity e)
 		{
 			if (m_NextID.DestroyID(e))
 			{

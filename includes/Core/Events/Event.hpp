@@ -26,6 +26,8 @@ namespace core
 			virtual EventType GetEventType() const = 0;
 			inline virtual std::string ToString() const { return "Event"; }
 
+			const void* NativeEvent;
+
 			bool Handled = false; // Se true, subsistemas posteriores ignoram.
 		};
 	}

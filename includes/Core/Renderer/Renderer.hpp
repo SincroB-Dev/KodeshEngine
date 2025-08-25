@@ -32,6 +32,10 @@ namespace core
 				uint32_t zq = (uint32_t)((1.0f - z) * 16777215.0f);
 				return ((uint32_t)(tex & 0xFFFFFF) << 24) | ((uint32_t)zq);
 			}
+
+			virtual unsigned int LoadTexture(const char* texPath) = 0;
+			virtual int GetTextureWidth(unsigned int texId) const = 0;
+			virtual int GetTextureHeight(unsigned int texId) const = 0;
 		};
 	}
 }

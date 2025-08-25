@@ -39,6 +39,26 @@ namespace core
 			return m_ActiveScene;
 		}
 
+		Scene* SceneManager::GetScene(const std::string& name)
+		{
+			auto it = std::find_if(m_Scenes.begin(), m_Scenes.end(),
+		        [&name](const std::unique_ptr<Scene>& scn) {
+		            return scn->GetName() == name;
+		        });
+
+		    if (it != m_Scenes.end() && *it)
+		    {
+		        return it->get();
+		    }
+
+		    return nullptr;
+		}
+
+		Scene* SceneManager::GetActiveScene()
+		{
+			return m_ActiveScene;
+		}
+
 		void SceneManager::RemoveScene(const std::string& name)
 		{
 		    auto it = std::find_if(m_Scenes.begin(), m_Scenes.end(),

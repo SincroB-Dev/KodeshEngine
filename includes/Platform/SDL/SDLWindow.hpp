@@ -20,6 +20,9 @@ namespace platform
 		void SetWidth(int width) override;
 		void SetHeight(int height) override;
 
+		void* GetNative() { return m_Window; }
+		void* GetContext() { return &m_Context; }
+
 	private:
 		void HandleEvents(const SDL_Event& e);
 

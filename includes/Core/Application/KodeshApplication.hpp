@@ -10,6 +10,10 @@
 
 #include <memory>
 #include <vector>
+#include <nlohmann/json.hpp>
+
+#include <SDL2/SDL.h>
+#include "Platform/SDL/SDLWindow.hpp"
 
 namespace core
 {
@@ -41,12 +45,26 @@ namespace core
 
 			const utils::Timer GetTimer() const { return m_Timer; }
 
+			inline void* GetNativeWindow()
+			{
+				auto* native = dynamic_cast<platform::SDLWindow*>(m_Window.get());
+				return native->GetNative();
+			}
+
+			inline void* GetContext()
+			{
+				auto* native = dynamic_cast<platform::SDLWindow*>(m_Window.get());
+				return native->GetContext();
+			}
+
+			static nlohmann::json GetConfigs();
+			static const char* GetConfigsFilepath();
+
 		private:
 			std::unique_ptr<Window> m_Window;
 
 			// Renderizador
 			std::unique_ptr<renderer::Renderer> m_Renderer;
-
 			std::unique_ptr<input::InputManager> m_InputManager;
 
 			// Subsystems (UILayer, SceneManager, AudioManager...)
@@ -55,6 +73,8 @@ namespace core
 
 			bool m_Running;
 			utils::Timer m_Timer;
+
+			static const char* s_ConfigsPath;
 		};
 
 

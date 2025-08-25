@@ -1,8 +1,7 @@
-#include <SDL2/SDL.h>
+#include "Platform/SDL/SDLWindow.hpp"
+
 #include <GL/gl.h>
 #include <memory>
-
-#include "Platform/SDL/SDLWindow.hpp"
 
 #include "Core/Events/KeyboardEvent.hpp"
 #include "Core/Events/WindowEvent.hpp"
@@ -73,6 +72,7 @@ namespace platform
 		case SDL_QUIT:
 			{
 				WindowCloseEvent event;
+				event.NativeEvent = &e;
 				EventDispatch(event);
 			}
 			break;
@@ -81,6 +81,7 @@ namespace platform
 			if (e.window.event == SDL_WINDOWEVENT_RESIZED)
 			{
 				WindowResizeEvent event(e.window.data1, e.window.data2);
+				event.NativeEvent = &e;
 				EventDispatch(event);
 			}
 			break;
@@ -89,6 +90,7 @@ namespace platform
 			{
 				bool repeat = e.key.repeat != 0; 
 				KeyPressedEvent event(e.key.keysym.sym, repeat);
+				event.NativeEvent = &e;
 				EventDispatch(event);
 			}	
 			break;
@@ -96,6 +98,7 @@ namespace platform
 		case SDL_KEYUP:
 			{
 				KeyReleasedEvent event(e.key.keysym.sym);
+				event.NativeEvent = &e;
 				EventDispatch(event);
 			}
 			break;
@@ -103,6 +106,7 @@ namespace platform
 		case SDL_MOUSEMOTION:
 			{
 				MouseMovedEvent event((float)e.motion.x, (float)e.motion.y);
+				event.NativeEvent = &e;
 				EventDispatch(event);
 			}
 			break;
@@ -110,6 +114,7 @@ namespace platform
 		case SDL_MOUSEBUTTONDOWN:
 			{
 				MouseButtonPressedEvent event(e.button.button);
+				event.NativeEvent = &e;
 				EventDispatch(event);
 			}
 			break;
@@ -117,6 +122,7 @@ namespace platform
 		case SDL_MOUSEBUTTONUP:
 			{
 				MouseButtonReleasedEvent event(e.button.button);
+				event.NativeEvent = &e;
 				EventDispatch(event);
 			}
 			break;
@@ -124,6 +130,7 @@ namespace platform
 		case SDL_MOUSEWHEEL:
 			{
 				MouseScrolledEvent event((float)e.wheel.x, (float)e.wheel.y);
+				event.NativeEvent = &e;
 				EventDispatch(event);
 			}
 			break;

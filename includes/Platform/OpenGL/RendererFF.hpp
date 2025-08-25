@@ -38,7 +38,13 @@ namespace platform
 		void bindTexture(uint32_t texID);
 		GLenum castPrimitive(core::renderer::PrimitiveType ptype) const;
 
+		unsigned int LoadTexture(const char* texPath);
+		int GetTextureWidth(unsigned int texId) const;
+		int GetTextureHeight(unsigned int texId) const;
+
 	private:
 		int m_VPW=0, m_VPH=0;
+
+		std::vector<core::renderer::ImageInfo> m_TextureSlots;
 	};
 }

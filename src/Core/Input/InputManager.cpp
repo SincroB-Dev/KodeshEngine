@@ -8,8 +8,7 @@ namespace core
 {
 	namespace input
 	{
-		InputManager::InputManager(events::EventDispatcher& dispatcher)
-			: m_MouseX(0.0f), m_MouseY(0.0f), m_ScrollX(0.0f), m_ScrollY(0.0f)
+		void InputManager::RegisterEventsOnDispatcher(events::EventDispatcher& dispatcher)
 		{
 			// key events
 			dispatcher.Register<events::KeyPressedEvent>([this](events::Event& e) {
@@ -35,6 +34,7 @@ namespace core
 
 			dispatcher.Register<events::MouseMovedEvent>([this](events::Event& e) {
 				auto& me = static_cast<events::MouseMovedEvent&>(e);
+				if (e.Handled)
 				m_MouseX = me.GetX();
 				m_MouseY = me.GetY();
 			});
@@ -48,9 +48,9 @@ namespace core
 
 		void InputManager::Update()
 		{
-			for (auto& [key, state] : m_Keys)
+			for (auto& key : m_Keys)
 			{
-				state.Update();
+				key.second.Update();
 			}
 		}
 

@@ -19,6 +19,13 @@ namespace core
 			Polygon
 		};
 
+		struct ImageInfo
+		{
+			unsigned int texId;
+			int width, height;
+			int channels;
+		};
+
 		struct RenderCommand
 		{
 			PrimitiveType primitive;

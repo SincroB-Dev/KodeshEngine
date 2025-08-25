@@ -26,6 +26,9 @@ namespace core
 			SceneManager(events::EventDispatcher& dispatcher, input::InputManager& input);
 
 			scene::Scene* AddScene(const std::string& name);
+			scene::Scene* GetScene(const std::string& name);
+			scene::Scene* GetActiveScene();
+
 			void RemoveScene(const std::string& name);
 
 			void Update(double deltaTime) override;
