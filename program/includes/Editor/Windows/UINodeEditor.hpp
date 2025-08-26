@@ -15,6 +15,12 @@
 
 namespace editor::nodes
 {
+	// Abstração para friedship.
+    namespace compositor
+    {
+        class Compositor;
+    }
+
 	namespace ine = ax::NodeEditor;
 
 	class UINodeEditor : public windows::UIWindow
@@ -83,19 +89,6 @@ namespace editor::nodes
 		void AddSocketToLookup(ine::PinId id, Socket* socket);
 
 		// --------------------------------------
-		// Spawners de Nodes
-		// --------------------------------------
-		/**
-		 * @brief Cria um nó base com callbacks para entradas no lookup. 
-		 **/
-		Node* CreateBaseNode(std::string name);
-
-		/**
-		 * @brief Cria um nó de saída de ação.
-		 **/
-		Node* SpawnOutputActionNode();
-
-		// --------------------------------------
 		// Métodos de renderização
 		// --------------------------------------
 
@@ -127,5 +120,8 @@ namespace editor::nodes
 	    ine::EditorContext* m_Context;
 
 	    core::renderer::Renderer& m_Renderer;
+
+	    // Recebeu friend para dar entradas no m_SocketLookup
+	    friend class compositor::Compositor;
 	};
 }

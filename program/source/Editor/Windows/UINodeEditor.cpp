@@ -179,45 +179,9 @@ namespace editor::nodes
 		);
     }
 
-    //---------------------------------
-    // Construtor de nodes
-    //---------------------------------
-    Node* UINodeEditor::CreateBaseNode(std::string name)
-    {
-        m_Nodes.emplace_back(GetNextId(), name);
-
-        m_Nodes.back().OnAddInput = [this](ine::PinId id, Socket* socket){ 
-            this->AddSocketToLookup(id, socket);
-        };
-        m_Nodes.back().OnAddOutput = [this](ine::PinId id, Socket* socket){ 
-            this->AddSocketToLookup(id, socket);
-        };
-        m_Nodes.back().OnRemoveInput = [this](ine::PinId id){ 
-            this->RemoveSocketFromLookup(id);
-        };
-        m_Nodes.back().OnRemoveOutput = [this](ine::PinId id){ 
-            this->RemoveSocketFromLookup(id);
-        };
-    
-        return &m_Nodes.back();
-    }
-
-    Node* UINodeEditor::SpawnOutputActionNode()
-    {
-        Node* node = CreateBaseNode("Output");
-
-        node->AddValue("float", SocketType::Float, 10.0f);
-        node->AddValue("int", SocketType::Int, 5);
-        node->AddValue("string", SocketType::String, std::string("W"));
-        node->AddValue("bool", SocketType::Bool, false);
-
-        node->AddInput(GetNextId(), "Key", SocketType::String);
-        node->AddInput(GetNextId(), "Velocity", SocketType::Float);
-
-        node->AddOutput(GetNextId(), "VelocityBasedOnKey", SocketType::Float);
-
-        return node;
-    }
+    //----------------------------------------
+    // Comportamentos em create, delete link
+    //----------------------------------------
 
     void UINodeEditor::HandleLinkCreate()
     {
@@ -295,6 +259,7 @@ namespace editor::nodes
                 // O ImGui precisa de buffer para a manipulação de strings, pois ele
                 // trabalha com char[]
                 strncpy(objVal->InputBuffer, v.c_str(), sizeof(objVal->InputBuffer));
+
                 if (ImGui::InputText(label, objVal->InputBuffer, sizeof(objVal->InputBuffer)))
                 {
                     v = objVal->InputBuffer; // Atualização da string variant;
@@ -306,28 +271,48 @@ namespace editor::nodes
 
     void UINodeEditor::RenderBlueprintNode(Node* node)
     {
+        auto& io = ImGui::GetIO();
+
         ine::BeginNode(node->ID);
 
         // Header
-        ImGui::Text("%s", node->Name.c_str());
-
-        auto& io = ImGui::GetIO();
+        ImGui::BeginGroup();
+        {
+            ImGui::TextUnformatted(node->Name.c_str());
+            ImGui::Dummy(ImVec2(0.0f, 5.0f));
+        }
+        ImGui::EndGroup();
 
         ImGui::BeginGroup();
         {
             // -----------
             // Inputs
             // -----------
-            ImGui::BeginGroup();
+
+            // Para correção no layout, sempre que não houver input nodes, adiciona um Spacing, assim ele ajusta automaticamente o espacamento entre os nodes de saída.
+            if (node->Inputs.size() > 0)
             {
-                for (auto& input : node->Inputs)
+                ImGui::BeginGroup();
                 {
-                    ine::BeginPin(input->ID, ine::PinKind::Input);
-                    DrawPinIcon(*input.get(), IsSocketLinked(input->ID), 255.0f);
-                    ine::EndPin();
+                    for (auto& input : node->Inputs)
+                    {
+                        ImGui::PushItemWidth(40);
+                        ine::BeginPin(input->ID, ine::PinKind::Input);
+                        {
+                            // Desenha o pin, futuramente encaixar o nome dele com mais calma
+                            DrawPinIcon(*input.get(), IsSocketLinked(input->ID), 255.0f);
+                        }
+                        ine::EndPin();
+                        ImGui::PopItemWidth();
+                    }
                 }
+                ImGui::EndGroup();
+
             }
-            ImGui::EndGroup();
+            else
+            {
+                ImGui::Spacing();
+            }
 
             // Mantém na mesma linha
             ImGui::SameLine();
@@ -338,7 +323,9 @@ namespace editor::nodes
             ImGui::BeginGroup();
             {
                 // Desativa os shortcuts enquanto algum componente estiver em foco.
+                // Deve ser chamado pois o NodeEditor bloqueia todas as entradas de teclas.
                 ine::EnableShortcuts(!io.WantTextInput);
+
                 ImGui::PushItemWidth(150);
 
                 for (auto& data : node->DataSet)

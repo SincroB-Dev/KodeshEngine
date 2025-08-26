@@ -23,6 +23,7 @@ namespace editor::nodes
 
 		return socket;
 	}
+	
 	Socket* Node::AddOutput(ine::PinId id, std::string name, SocketType type)
 	{
 		Outputs.emplace_back(std::make_unique<Socket>(id, name, type));
