@@ -145,7 +145,7 @@ namespace core::systems
     UIMenuComponent& UILayer::AddLayoutMenubarItem(const std::string& Label)
     {
         return m_LayoutMenubar.emplace_back(
-            UIMenuComponent(m_UniqueLayoutGen.CreateUniqueID(), Label, "")
+            UIMenuComponent(Label, "")
         );
     }
 

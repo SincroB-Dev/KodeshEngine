@@ -123,7 +123,9 @@ namespace core::systems
 
     private:
         bool m_ImGuiInitialized = false; // Marca se o ImGui já foi inicializado.
-        utils::UniqueIDGen m_UniqueLayoutGen; // Gerador de IDs únicos para elementos de layout.
+
+        utils::UniqueIDGen m_UniqueLayoutGen; // Gerador de IDs únicos janelas no layout.
+        
         std::vector<editor::ui::UIMenuComponent> m_LayoutMenubar; // Lista principal de menus.
     	std::string m_ConfigsPath; // Path do arquivo de configurações da engine.
 
@@ -145,7 +147,6 @@ namespace core::systems
     {
         menu.m_Childrens.push_back(
             std::make_unique<editor::ui::UIMenuComponent>(
-                m_UniqueLayoutGen.CreateUniqueID(),
                 label,
                 shortcut,
                 std::forward<Funcs>(callbacks)...
