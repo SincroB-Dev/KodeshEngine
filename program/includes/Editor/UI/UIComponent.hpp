@@ -5,23 +5,20 @@
 #include <string>
 #include <functional>
 
-namespace editor
+namespace editor::ui
 {
-	namespace ui
+	/**
+	 * @brief Abstração para utilização em interfaces.
+	 */
+	class UIComponent
 	{
-		/**
-		 * Abstração para utilização em interfaces 
-		 */
-		class UIComponent
-		{
-		public:
-			UIComponent(core::utils::UniqueID uid)
-				: UID(uid) {}
-			virtual ~UIComponent() = default;
+	public:
+		UIComponent(core::utils::UniqueID uid)
+			: UID(uid) {}
+		virtual ~UIComponent() = default;
 
-			const core::utils::UniqueID UID;
+		const core::utils::UniqueID UID;
 
-			virtual void Render() = 0;
-		};
-	}
+		virtual void Render() = 0;
+	};
 }

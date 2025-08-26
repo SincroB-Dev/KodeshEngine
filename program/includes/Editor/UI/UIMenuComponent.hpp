@@ -5,48 +5,45 @@
 #include <vector>
 #include <memory>
 
-namespace core
+namespace core::systems
 {
-	namespace systems
-	{
-		class UILayer;
-	}
+	class UILayer;
 }
 
-namespace editor
+namespace editor::ui
 {
-	namespace ui
+	/**
+	 * @brief Componente hierárquico para inclusão e gerenciamento de botões e submenus.
+	 **/
+	class UIMenuComponent : public UIComponent
 	{
-		class UIMenuComponent : public UIComponent
+	public:
+		template<typename... Func>
+		UIMenuComponent(core::utils::UniqueID uid, 
+			std::string label, std::string shortcut, Func&&... callbacks)
+			: UIComponent(uid), Label(label), Shortcut(shortcut)
 		{
-		public:
-			template<typename... Func>
-			UIMenuComponent(core::utils::UniqueID uid, 
-				std::string label, std::string shortcut, Func&&... callbacks)
-				: UIComponent(uid), Label(label), Shortcut(shortcut)
-			{
-				(m_Callbacks.emplace_back(std::forward<Func>(callbacks)), ...);
-				IsEnabled = (sizeof...(callbacks)) > 0;
-			}
+			(m_Callbacks.emplace_back(std::forward<Func>(callbacks)), ...);
+			IsEnabled = (sizeof...(callbacks)) > 0;
+		}
 
-			void Click();
+		void Click();
 
-			void PushCallback(UIButtonCallbackFn callback);
-			void ClearCallback();
+		void PushCallback(UIButtonCallbackFn callback);
+		void ClearCallback();
 
-			void Render() override;
+		void Render() override;
 
-			bool IsEnabled;
-			std::string Label;
-			std::string Shortcut;
+		bool IsEnabled;
+		std::string Label;
+		std::string Shortcut;
 
 
-		private:
-			// Sequencia de callbacks que o componente ativa.
-			std::vector<UIButtonCallbackFn> m_Callbacks;
-			std::vector<std::unique_ptr<UIComponent>> m_Childrens;
+	private:
+		// Sequencia de callbacks que o componente ativa.
+		std::vector<UIButtonCallbackFn> m_Callbacks;
+		std::vector<std::unique_ptr<UIComponent>> m_Childrens;
 
-			friend class core::systems::UILayer;
-		};
-	}
+		friend class core::systems::UILayer;
+	};
 }

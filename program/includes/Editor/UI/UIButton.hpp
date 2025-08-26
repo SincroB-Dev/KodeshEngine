@@ -8,6 +8,9 @@ namespace editor
 	{
 		using UIButtonCallbackFn = std::function<void()>;
 
+		/**
+		 * @brief Componente responsável pelo display e callback de botões.
+		 **/
 		class UIButton : public UIComponent
 		{
 		public:

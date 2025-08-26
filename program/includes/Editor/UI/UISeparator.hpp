@@ -4,19 +4,19 @@
 
 #include <imgui/imgui.h>
 
-namespace editor
+namespace editor::ui
 {
-	namespace ui
+	/**
+	 * @brief Componente responsável por inserir um espaço no layout.
+	 **/
+	class UISeparator : public UIComponent
 	{
-		class UISeparator : public UIComponent
-		{
-		public:
-			UISeparator(): UIComponent(0) {}
+	public:
+		UISeparator(): UIComponent(0) {}
 
-			void Render() override
-			{
-				ImGui::Separator();
-			}
-		};
-	}
+		void Render() override
+		{
+			ImGui::Separator();
+		}
+	};
 }
