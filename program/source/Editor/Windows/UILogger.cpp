@@ -3,6 +3,10 @@
 
 #include "Editor/UI/Fontes/MaterialIcons.hpp"
 
+// Excluir
+#include "Core/Utils/UniqueIDGen.hpp"
+#include "Editor/UI/UIPressButton.hpp"
+
 #include <imgui/imgui.h>
 
 using namespace core::systems;
@@ -41,9 +45,6 @@ namespace editor::windows
         ImGui::Checkbox("Editor Debug", &m_ShowEDebug);
 
         ImGui::Separator();
-
-        static char str1[128] = "";
-        ImGui::InputTextWithHint("###logger_find_text", "Pesquisa de logs", str1, IM_ARRAYSIZE(str1));
 
         ImGui::BeginChild("-- [Logs] --", ImVec2(0, 0), false, ImGuiWindowFlags_HorizontalScrollbar);
 
