@@ -1,5 +1,6 @@
 #include "Core/Systems/UILayer.hpp"
 
+#include "Core/Events/TextInputEvent.hpp"
 #include "Core/Events/KeyboardEvent.hpp"
 #include "Core/Events/MouseEvent.hpp"
 
@@ -26,7 +27,15 @@ namespace core::systems
 	UILayer::UILayer(events::EventDispatcher& dispatcher, input::InputManager& input, std::string configsPath)
 		: m_ImGuiInitialized(false), m_ConfigsPath(configsPath)
 	{
-		// Registrar callbacks se necessário;
+        // Registra os callbacks que vão para a interface, lembrando que ao registrar esses eventos
+        // no dispatcher, ele vai dar prioridade para aqueles que foram inseridos primeiro, então,
+        // o layout deve ser o primeiro a registrar seus eventos.
+
+        // text input event
+        dispatcher.Register<events::TextInputEvent>([this](events::Event& e){
+            this->OnEvent(e);
+        });
+
         // key events
         dispatcher.Register<events::KeyPressedEvent>([this](events::Event& e) {
             this->OnEvent(e);

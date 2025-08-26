@@ -76,7 +76,6 @@ namespace core
 			{
 				if (!e.Handled)
 				{
-					std::cout << "Evento consumido!" << std::endl;
 					break;
 				}
 

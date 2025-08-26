@@ -3,6 +3,7 @@
 #include <GL/gl.h>
 #include <memory>
 
+#include "Core/Events/TextInputEvent.hpp"
 #include "Core/Events/KeyboardEvent.hpp"
 #include "Core/Events/WindowEvent.hpp"
 #include "Core/Events/MouseEvent.hpp"
@@ -40,6 +41,7 @@ namespace platform
 		SDL_Event e;
 		while (SDL_PollEvent(&e))
 		{
+			// Chama o EventDispatcher correspondente ao tipo de ação.
 			HandleEvents(e);
 		}
 		SDL_GL_SwapWindow(m_Window);
@@ -98,6 +100,14 @@ namespace platform
 		case SDL_KEYUP:
 			{
 				KeyReleasedEvent event(e.key.keysym.sym);
+				event.NativeEvent = &e;
+				EventDispatch(event);
+			}
+			break;
+
+		case SDL_TEXTINPUT:
+			{
+				TextInputEvent event(e.text.text);
 				event.NativeEvent = &e;
 				EventDispatch(event);
 			}

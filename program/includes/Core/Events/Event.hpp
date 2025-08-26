@@ -2,33 +2,34 @@
 
 #include <string>
 
-namespace core
+namespace core::events
 {
-	namespace events
+	/**
+	 * @brief Tipos de eventos que podem ser filtrados pelo listener 
+	 */
+	enum class EventType
 	{
-		/**
-		 * Tipos de eventos que podem ser filtrados pelo listener 
-		 */
-		enum class EventType
-		{
-			None = 0,
-			WindowClose, WindowResize,
-			KeyPressed, KeyReleased,
-			MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled
-		};
+		None = 0,
+		WindowClose, WindowResize,
+		KeyPressed, KeyReleased, TextInput,
+		MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled
+	};
 
-		class Event
-		{
-		public:
-			Event() {}
+	/**
+	 * @brief Classe base para eventos, sua implementação em eventos é crucial para
+	 *        a compatibilidade com o dispatcher de eventos. 
+	 **/
+	class Event
+	{
+	public:
+		Event() {}
 
-			virtual ~Event() = default;
-			virtual EventType GetEventType() const = 0;
-			inline virtual std::string ToString() const { return "Event"; }
+		virtual ~Event() = default;
+		virtual EventType GetEventType() const = 0;
+		inline virtual std::string ToString() const { return "Event"; }
 
-			const void* NativeEvent;
+		const void* NativeEvent;
 
-			bool Handled = false; // Se true, subsistemas posteriores ignoram.
-		};
-	}
+		bool Handled = false; // Se true, subsistemas posteriores ignoram.
+	};
 }
