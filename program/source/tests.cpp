@@ -31,7 +31,7 @@
 #include "Editor/UI/Fontes/MaterialIcons.hpp"
 
 #include "Editor/Windows/UINodeEditor.hpp"
-#include "Editor/Windows/UINodes/Compositor.hpp"
+#include "Editor/Windows/UINodeEditor/Compositor.hpp"
 #include "Editor/Windows/UILogger.hpp"
 
 #include <memory>

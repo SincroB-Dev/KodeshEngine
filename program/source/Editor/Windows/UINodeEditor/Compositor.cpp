@@ -1,4 +1,4 @@
-#include "Editor/Windows/UINodes/Compositor.hpp"
+#include "Editor/Windows/UINodeEditor/Compositor.hpp"
 #include <ImGuiNodeEditor/imgui_node_editor.h>
 
 namespace ine = ax::NodeEditor;

@@ -28,11 +28,14 @@ namespace editor::nodes
 	enum class SocketType
 	{
 		Flow,
-		Bool,
+		
 		Int,
 		Float,
+		Bool,
 		String,
+		
 		Entity,
+		
 		Function,
 		Delegate
 	};
@@ -159,6 +162,9 @@ namespace editor::nodes
 
 		std::function<void(ine::PinId)> OnRemoveInput;
 		std::function<void(ine::PinId)> OnRemoveOutput;
+
+		// Execução do node
+		std::function<void()> OnEvaluate;
 
 		//----------------------------
 		// Setups visuais

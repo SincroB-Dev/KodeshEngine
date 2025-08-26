@@ -1,11 +1,11 @@
 #pragma once
 
 #include "Editor/Windows/UIWindow.hpp"
-#include "Editor/Windows/UINodes/Widgets.hpp"
+#include "Editor/Windows/UINodeEditor/Widgets.hpp"
 
 #include <ImGuiNodeEditor/imgui_node_editor.h>
 
-#include "Editor/Windows/UINodes/Node.hpp"
+#include "Editor/Windows/UINodeEditor/Node.hpp"
 #include "Core/Renderer/Renderer.hpp"
 
 #include <imgui/imgui.h>

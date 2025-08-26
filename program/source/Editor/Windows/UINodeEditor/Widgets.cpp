@@ -1,4 +1,4 @@
-#include "Editor/Windows/UINodes/Widgets.hpp"
+#include "Editor/Windows/UINodeEditor/Widgets.hpp"
 #include "Core/Helpers/ImGuiOperators.hpp"
 
 #include <imgui/imgui_internal.h>

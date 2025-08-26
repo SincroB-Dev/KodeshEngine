@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Editor/Windows/UINodes/Node.hpp"
+#include "Editor/Windows/UINodeEditor/Node.hpp"
 #include "Editor/Windows/UINodeEditor.hpp"
 #include <string>
 
