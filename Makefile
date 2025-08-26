@@ -25,6 +25,7 @@ SRC_DIRS = program/source \
             program/source/Editor \
              program/source/Editor/Windows \
                program/source/Editor/Windows/UINodeEditor \
+                 program/source/Editor/Windows/UINodeEditor/Nodes \
              program/source/Editor/Panels \
              program/source/Editor/UI \
                program/source/Editor/UI/Fontes \
