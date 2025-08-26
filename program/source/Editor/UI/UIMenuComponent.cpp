@@ -2,69 +2,54 @@
 
 #include <imgui/imgui.h>
 
-namespace editor
+namespace editor::ui
 {
-	namespace ui
+	void UIMenuComponent::Click()
 	{
-		void UIMenuComponent::Click()
+		if (!m_IsEnabled || m_Childrens.size() > 0)
 		{
-			if (!IsEnabled || m_Childrens.size() > 0)
-			{
-				return;
-			}
-
-			for (UIButtonCallbackFn& callback : m_Callbacks)
-			{
-				callback();
-			}
+			return;
 		}
 
-		void UIMenuComponent::PushCallback(UIButtonCallbackFn callback)
+		for (UIButtonCallbackFn& callback : m_Callbacks)
 		{
-			m_Callbacks.push_back(callback);
-			IsEnabled = true;
+			callback();
 		}
+	}
 
-		void UIMenuComponent::ClearCallback()
+	void UIMenuComponent::Render()
+	{
+		ImGui::PushID(this);
+		if (m_Childrens.size() > 0)
 		{
-			m_Callbacks.clear();
-			IsEnabled = false;
-		}
+			if (ImGui::BeginMenu(m_Label.c_str()))
+            {
+        		for (auto& child : m_Childrens)
+        		{
+        			child->Render();
+        		}
 
-		void UIMenuComponent::Render()
-		{
-			ImGui::PushID(UID.ID);
-			if (m_Childrens.size() > 0)
-			{
-				if (ImGui::BeginMenu(Label.c_str()))
-                {
-            		for (auto& child : m_Childrens)
-            		{
-            			child->Render();
-            		}
-
-                	ImGui::EndMenu();
-                }
-                goto CloseComponent;
-			}
-
-			if (!IsEnabled)
-			{
-				ImGui::BeginDisabled();
-			}
-
-			if (ImGui::MenuItem(Label.c_str(), Shortcut.c_str())) 
-			{
-				Click();
+            	ImGui::EndMenu();
             }
-
-			if (!IsEnabled)
-			{
-				ImGui::EndDisabled();
-			}
-
-		CloseComponent:
-			ImGui::PopID();
+            goto CloseComponent;
 		}
+
+		if (!m_IsEnabled)
+		{
+			ImGui::BeginDisabled();
+		}
+
+		if (ImGui::MenuItem(m_Label.c_str(), m_Shortcut.c_str())) 
+		{
+			Click();
+        }
+
+		if (!m_IsEnabled)
+		{
+			ImGui::EndDisabled();
+		}
+
+	CloseComponent:
+		ImGui::PopID();
 	}
 }

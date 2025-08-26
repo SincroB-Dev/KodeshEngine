@@ -12,7 +12,7 @@ namespace editor::ui
 	class UISeparator : public UIComponent
 	{
 	public:
-		UISeparator(): UIComponent(0) {}
+		UISeparator() {}
 
 		void Render() override
 		{

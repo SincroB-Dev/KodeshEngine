@@ -13,12 +13,11 @@ namespace editor::ui
 	class UIComponent
 	{
 	public:
-		UIComponent(core::utils::UniqueID uid)
-			: UID(uid) {}
 		virtual ~UIComponent() = default;
 
-		const core::utils::UniqueID UID;
-
+		/**
+		 * @brief Método padrão de renderização de componentes.
+		 **/
 		virtual void Render() = 0;
 	};
 }

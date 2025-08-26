@@ -1,32 +1,29 @@
 #include "Editor/UI/UIButton.hpp"
 
-namespace editor
+namespace editor::ui
 {
-	namespace ui
+	void UIButton::Click()
 	{
-		void UIButton::Click()
+		for (UIButtonCallbackFn& callback : m_Callbacks)
 		{
-			for (UIButtonCallbackFn& callback : m_Callbacks)
-			{
-				callback();
-			}
+			callback();
 		}
+	}
 
-		void UIButton::PushCallback(UIButtonCallbackFn callback)
-		{
-			m_Callbacks.push_back(callback);
-			IsEnabled = true;
-		}
+	void UIButton::PushCallback(UIButtonCallbackFn callback)
+	{
+		m_Callbacks.push_back(callback);
+		m_IsEnabled = true;
+	}
 
-		void UIButton::ClearCallback()
-		{
-			m_Callbacks.clear();
-			IsEnabled = false;
-		}
+	void UIButton::ClearCallback()
+	{
+		m_Callbacks.clear();
+		m_IsEnabled = false;
+	}
 
-		void UIButton::Render()
-		{
-			// Renderização do botão
-		}
+	void UIButton::Render()
+	{
+		// Renderização do botão
 	}
 }

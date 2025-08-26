@@ -2,39 +2,45 @@
 
 #include <functional>
 
-namespace editor
+namespace editor::ui
 {
-	namespace ui
+	using UIButtonCallbackFn = std::function<void()>;
+
+	/**
+	 * @brief Componente responsável pelo display e callback de botões.
+	 **/
+	class UIButton : public UIComponent
 	{
-		using UIButtonCallbackFn = std::function<void()>;
+	public:
+		template<typename... Func>
+		UIButton(std::string label, Func&&... callbacks)
+			: m_Label(label)
+		{
+			(m_Callbacks.emplace_back(std::forward<Func>(callbacks)), ...);
+			m_IsEnabled = (sizeof...(callbacks)) > 0;
+		}
+
+		virtual void Click();
 
 		/**
-		 * @brief Componente responsável pelo display e callback de botões.
+		 * @brief Registra um novo callback associado ao botão. Permite definir
+		 *        ações que serão executadas quando o botão for acionado,
+		 *        possibilitando o encadeamento de múltiplas operações.
+		 */
+		void PushCallback(UIButtonCallbackFn callback);
+
+		/**
+		 * @brief Limpa os a pilha de callbacks associados ao botão.
 		 **/
-		class UIButton : public UIComponent
-		{
-		public:
-			template<typename... Func>
-			UIButton(core::utils::UniqueID uid, std::string label, Func&&... callbacks)
-				: UIComponent(uid), m_Label(label)
-			{
-				(m_Callbacks.emplace_back(std::forward<Func>(callbacks)), ...);
-				IsEnabled = (sizeof...(callbacks)) > 0;
-			}
+		void ClearCallback();
 
-			void Click();
+		virtual void Render() override;
 
-			void PushCallback(UIButtonCallbackFn callback);
-			void ClearCallback();
+	protected:
+		// Sequencia de callbacks que o componente ativa.
+		std::vector<UIButtonCallbackFn> m_Callbacks;
+		std::string m_Label;
 
-			virtual void Render() override;
-
-			bool IsEnabled;
-
-		private:
-			// Sequencia de callbacks que o componente ativa.
-			std::vector<UIButtonCallbackFn> m_Callbacks;
-			std::string m_Label;
-		};
-	}
+		bool m_IsEnabled; // Desativa o botão caso seja false.
+	};
 }
