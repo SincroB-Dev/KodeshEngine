@@ -1,34 +1,34 @@
 # Compilador
 CXX = g++
-CXXFLAGS = -g -O0 -Wall -std=c++17 -Iincludes -DIMGUI_IMPL_OPENGL_LOADER_GLAD -MMD -MP
+CXXFLAGS = -g -O0 -Wall -std=c++17 -Iprogram/includes -DIMGUI_IMPL_OPENGL_LOADER_GLAD -MMD -MP
 
 # Diretórios de código-fonte
-SRC_DIRS = src \
-             src/Core/Application \
-             src/Core/Events \
-             src/Core/Input \
-             src/Core/Platform \
-             src/Core/ECS \
-             src/Core/Renderer \
-             src/Core/Resource \
-             src/Core/Scene \
-             src/Core/Systems \
-             src/Core/Utils \
-           src/Platform/ \
-             src/Platform/OpenGL \
-             src/Platform/SDL \
-             src/Platform/Threads \
-           src/Game \
-             src/Game/Assets \
-             src/Game/Scenes \
-             src/Game/Scripts \
-            src/Editor \
-             src/Editor/Windows \
-               src/Editor/Windows/UINodes \
-             src/Editor/Panels \
-             src/Editor/UI \
-               src/Editor/UI/Fontes \
-             src/Editor/Tools
+SRC_DIRS = program/source \
+             program/source/Core/Application \
+             program/source/Core/Events \
+             program/source/Core/Input \
+             program/source/Core/Platform \
+             program/source/Core/ECS \
+             program/source/Core/Renderer \
+             program/source/Core/Resource \
+             program/source/Core/Scene \
+             program/source/Core/Systems \
+             program/source/Core/Utils \
+           program/source/Platform/ \
+             program/source/Platform/OpenGL \
+             program/source/Platform/SDL \
+             program/source/Platform/Threads \
+           program/source/Game \
+             program/source/Game/Assets \
+             program/source/Game/Scenes \
+             program/source/Game/Scripts \
+            program/source/Editor \
+             program/source/Editor/Windows \
+               program/source/Editor/Windows/UINodes \
+             program/source/Editor/Panels \
+             program/source/Editor/UI \
+               program/source/Editor/UI/Fontes \
+             program/source/Editor/Tools
 
 SRC = $(foreach dir, $(SRC_DIRS), $(wildcard $(dir)/*.cpp))
 
