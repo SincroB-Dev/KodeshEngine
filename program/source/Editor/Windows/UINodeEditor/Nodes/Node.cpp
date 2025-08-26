@@ -1,4 +1,4 @@
-#include <Editor/Windows/UINodeEditor/Node.hpp>
+#include <Editor/Windows/UINodeEditor/Nodes/Node.hpp>
 #include <algorithm>
 #include <sstream>
 #include <string>
