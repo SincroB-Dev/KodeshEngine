@@ -31,6 +31,7 @@
 #include "Editor/UI/Fontes/MaterialIcons.hpp"
 
 #include "Editor/Windows/UINodeEditor.hpp"
+#include "Editor/Windows/UINodes/Compositor.hpp"
 #include "Editor/Windows/UILogger.hpp"
 
 #include <memory>
@@ -45,7 +46,10 @@ using namespace core::renderer;
 using namespace core::input;
 using namespace core;
 
+using namespace editor;
 using namespace platform;
+
+namespace comp = nodes::compositor;
 
 namespace sandbox
 {
@@ -242,11 +246,15 @@ namespace sandbox
 
 	void UserInterfaceWindows(KodeshApplication& app, UILayer& ui)
 	{
-		auto nodeWin = std::make_unique<editor::nodes::UINodeEditor>(app.GetRenderer());
-		auto loggerWin = std::make_unique<editor::windows::UILogger>();
+		auto nodeWin = std::make_unique<nodes::UINodeEditor>(app.GetRenderer());
+		auto loggerWin = std::make_unique<windows::UILogger>();
 
-		nodeWin->SpawnOutputActionNode();
-		nodeWin->SpawnOutputActionNode();
+		comp::Compositor::KeyboardEventNode(nodeWin.get());
+		comp::Compositor::MouseEventNode(nodeWin.get());
+		comp::Compositor::AlwaysEventNode(nodeWin.get());
+
+		comp::Compositor::GetEntityNode(nodeWin.get());
+		comp::Compositor::TestOutputNode(nodeWin.get());
 
 		ui.AddWindow(std::move(nodeWin)); // retorna um inteiro, o qual é a identificação da janela.
 		ui.AddWindow(std::move(loggerWin));
