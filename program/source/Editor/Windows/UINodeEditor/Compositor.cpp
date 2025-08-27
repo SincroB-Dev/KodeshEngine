@@ -1,5 +1,6 @@
 #include "Editor/Windows/UINodeEditor/Compositor.hpp"
 #include <ImGuiNodeEditor/imgui_node_editor.h>
+#include <memory>
 
 namespace ine = ax::NodeEditor;
 
@@ -10,23 +11,23 @@ namespace editor::nodes::compositor
     	auto& refNodes = editor->m_Nodes;
 
     	// Adiciona o node básico.
-        refNodes.emplace_back(editor->GetNextId(), name);
+        refNodes.emplace_back(std::make_unique<Node>(editor->GetNextId(), name));
 
         // Adiciona callbacks para cada tipo de ação, permitindo o nó saber oque fazer quando entrar no editor.
-        refNodes.back().OnAddInput = [editor](ine::PinId id, Socket* socket){ 
+        refNodes.back()->OnAddInput = [editor](ine::PinId id, Socket* socket){ 
             editor->AddSocketToLookup(id, socket);
         };
-        refNodes.back().OnAddOutput = [editor](ine::PinId id, Socket* socket){ 
+        refNodes.back()->OnAddOutput = [editor](ine::PinId id, Socket* socket){ 
             editor->AddSocketToLookup(id, socket);
         };
-        refNodes.back().OnRemoveInput = [editor](ine::PinId id){ 
+        refNodes.back()->OnRemoveInput = [editor](ine::PinId id){ 
             editor->RemoveSocketFromLookup(id);
         };
-        refNodes.back().OnRemoveOutput = [editor](ine::PinId id){ 
+        refNodes.back()->OnRemoveOutput = [editor](ine::PinId id){ 
             editor->RemoveSocketFromLookup(id);
         };
     
-        return &refNodes.back();
+        return refNodes.back().get();
     }
 
 	//-----------------------------

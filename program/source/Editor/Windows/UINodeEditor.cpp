@@ -102,8 +102,8 @@ namespace editor::nodes
     Node* UINodeEditor::FindNode(ine::NodeId id)
     {
         for (auto& node : m_Nodes)
-            if (node.ID == id)
-                return &node;
+            if (node->ID == id)
+                return node.get();
 
         return nullptr;
     }
@@ -111,8 +111,8 @@ namespace editor::nodes
     Link* UINodeEditor::FindLink(ine::LinkId id)
     {
         for (auto& link : m_Links)
-            if (link.ID == id)
-                return &link;
+            if (link->ID == id)
+                return link.get();
 
         return nullptr;
     }
@@ -163,7 +163,7 @@ namespace editor::nodes
             return false;
 
         for (auto& link : m_Links)
-            if (link.StartSocketId == id || link.EndSocketId == id)
+            if (link->StartSocketId == id || link->EndSocketId == id)
                 return true;
 
         return false;
@@ -210,7 +210,7 @@ namespace editor::nodes
 
                         if (CanCreateLink(output, input))
                         {
-                            m_Links.push_back(Link(GetNextId(), output->ID, input->ID));
+                            m_Links.push_back(std::make_unique<Link>(GetNextId(), output->ID, input->ID));
                         }
                     }
                 }
@@ -232,8 +232,8 @@ namespace editor::nodes
                         std::remove_if(
                             m_Links.begin(), 
                             m_Links.end(), 
-                            [deletedLinkId](const Link& link) {
-                                return link.ID == deletedLinkId;
+                            [deletedLinkId](const std::unique_ptr<Link>& link) {
+                                return link->ID == deletedLinkId;
                             }
                         ), m_Links.end()
                     );
@@ -402,9 +402,9 @@ namespace editor::nodes
                 //-----------------------------
                 for (auto& node : m_Nodes)
                 {
-                    if (node.Type == NodeType::Blueprint)
+                    if (node->Type == NodeType::Blueprint)
                     {
-                        RenderBlueprintNode(&node);
+                        RenderBlueprintNode(node.get());
                     }
                 }
 
@@ -412,9 +412,9 @@ namespace editor::nodes
                 // Renderiza os links
                 //-----------------------------
 
-                for (auto link : m_Links)
+                for (auto& link : m_Links)
                 {
-                    ine::Link(link.ID, link.StartSocketId, link.EndSocketId);
+                    ine::Link(link->ID, link->StartSocketId, link->EndSocketId);
                 }
 
                 // -----------------------------------------------------------------------

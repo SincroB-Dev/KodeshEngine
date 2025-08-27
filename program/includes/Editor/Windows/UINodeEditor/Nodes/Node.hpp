@@ -105,8 +105,9 @@ namespace editor::nodes
 	/**
 	 * @brief Representa um nó (Node) completo. 
 	 **/
-	struct Node
+	class Node
 	{
+	public:
 		ine::NodeId ID;
 		std::string Name;
 
@@ -196,8 +197,9 @@ namespace editor::nodes
 	/**
 	 * @brief Representa uma conexão entre dois sockets 
 	 **/
-	struct Link
+	class Link
 	{
+	public:
 		ine::LinkId ID;
 
 		ine::PinId StartSocketId;
@@ -208,6 +210,7 @@ namespace editor::nodes
 		Link(ine::LinkId id, ine::PinId startSocketId, ine::PinId endSocketId)
 			: ID(id), StartSocketId(startSocketId), EndSocketId(endSocketId)
 		{}
+		~Link() = default;
 	};
 
 	// -------------------------------------------------------

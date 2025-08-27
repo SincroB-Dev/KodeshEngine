@@ -12,6 +12,7 @@
 #include <vector>
 #include <map>
 #include <unordered_map>
+#include <memory>
 
 namespace editor::nodes
 {
@@ -126,8 +127,8 @@ namespace editor::nodes
 	    int                  m_NextId;
 	    const int            m_SocketIconSize;
 
-	    std::vector<Node>    m_Nodes;
-	    std::vector<Link>    m_Links;
+	    std::vector<std::unique_ptr<Node>>    m_Nodes;
+	    std::vector<std::unique_ptr<Link>>    m_Links;
 
 	    std::unordered_map<int, Socket*> m_SocketLookup;
 
