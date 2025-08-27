@@ -104,6 +104,9 @@ namespace editor::nodes
 		{}
 	};
 
+	// Abstração para uso posterior.
+	class UINodeEditor;
+
 	/**
 	 * @brief Representa um nó (Node) completo. 
 	 **/
@@ -166,9 +169,6 @@ namespace editor::nodes
 		std::function<void(ine::PinId)> OnRemoveInput;
 		std::function<void(ine::PinId)> OnRemoveOutput;
 
-		// Execução do node
-		std::function<void()> OnEvaluate;
-
 		//----------------------------
 		// Setups visuais
 		//----------------------------
@@ -192,6 +192,16 @@ namespace editor::nodes
 			: ID(id), Name(name), Type(NodeType::Blueprint), Size(0, 0)
 		{}
 		~Node() = default;
+
+		/**
+		 * @brief Função responsável pela montagem do node.
+		 **/
+		virtual void Mount(UINodeEditor& editor) {}
+
+		/**
+		 * @brief Função responsável pela ativação de filhos do pin flow.
+		 **/
+		virtual void Evaluate() {}
 
 	private:
 		static unsigned int s_NextUIID;
