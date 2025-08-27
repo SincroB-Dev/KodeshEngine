@@ -163,7 +163,7 @@ namespace editor::nodes
             return false;
 
         for (auto& link : m_Links)
-            if (link->StartSocketId == id || link->EndSocketId == id)
+            if (link->Output->ID == id || link->Input->ID == id)
                 return true;
 
         return false;
@@ -210,7 +210,7 @@ namespace editor::nodes
 
                         if (CanCreateLink(output, input))
                         {
-                            m_Links.push_back(std::make_unique<Link>(GetNextId(), output->ID, input->ID));
+                            m_Links.push_back(std::make_unique<Link>(GetNextId(), output, input));
                         }
                     }
                 }
@@ -414,7 +414,7 @@ namespace editor::nodes
 
                 for (auto& link : m_Links)
                 {
-                    ine::Link(link->ID, link->StartSocketId, link->EndSocketId);
+                    ine::Link(link->ID, link->Output->ID, link->Input->ID);
                 }
 
                 // -----------------------------------------------------------------------

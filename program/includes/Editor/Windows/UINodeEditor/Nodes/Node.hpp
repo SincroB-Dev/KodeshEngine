@@ -189,6 +189,7 @@ namespace editor::nodes
 		Node(ine::NodeId id, std::string name, ImColor Color = ImColor(255, 255, 255))
 			: ID(id), Name(name), Type(NodeType::Blueprint), Size(0, 0)
 		{}
+		~Node() = default;
 
 	private:
 		static unsigned int s_NextUIID;
@@ -202,13 +203,13 @@ namespace editor::nodes
 	public:
 		ine::LinkId ID;
 
-		ine::PinId StartSocketId;
-		ine::PinId EndSocketId;
+		Socket* Output;
+		Socket* Input;
 
 		ImColor Color;
 
-		Link(ine::LinkId id, ine::PinId startSocketId, ine::PinId endSocketId)
-			: ID(id), StartSocketId(startSocketId), EndSocketId(endSocketId)
+		Link(ine::LinkId id, Socket* start, Socket* end)
+			: ID(id), Output(start), Input(end)
 		{}
 		~Link() = default;
 	};
