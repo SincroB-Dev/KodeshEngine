@@ -3,36 +3,33 @@
 #include <ostream>
 #include <iostream>
 
-namespace core
+namespace core::input
 {
-	namespace input
+	enum class KeyStateEnum
 	{
-		enum class KeyStateEnum
-		{
-			Idle = 0,    // Não pressionada
-			Pressed, // Pressoonada agora
-			Held,    // Mantida
-			Released // Acabou de soltar
-		};
+		Idle     = 0, // Não pressionada
+		Pressed  = 1, // Pressoonada agora
+		Held     = 2, // Mantida
+		Released = 3  // Acabou de soltar
+	};
 
-		class KeyState
-		{
-		public:
-			KeyState() : m_State(KeyStateEnum::Idle) {}
+	class KeyState
+	{
+	public:
+		KeyState() : m_State(KeyStateEnum::Idle) {}
 
-			void Press();
-			void Release();
-			void Update();
+		void Press();
+		void Release();
+		void Update();
 
-			bool IsPressed() const;
-			bool IsHeld() const;
-			bool IsReleased() const;
-			bool IsIdle() const;
+		bool IsPressed() const;
+		bool IsHeld() const;
+		bool IsReleased() const;
+		bool IsIdle() const;
 
-			KeyStateEnum GetState() const;
+		KeyStateEnum GetState() const;
 
-		private:
-			KeyStateEnum m_State;
-		};
-	}
+	private:
+		KeyStateEnum m_State;
+	};
 }
