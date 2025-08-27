@@ -1,4 +1,6 @@
 #include "Editor/Windows/UINodeEditor/Compositor.hpp"
+#include "Editor/Windows/UINodeEditor/Nodes/KeyboardEventNode.hpp"
+#include "Editor/Windows/UINodeEditor/Nodes/OnUpdateNode.hpp"
 #include <ImGuiNodeEditor/imgui_node_editor.h>
 #include <memory>
 
@@ -6,99 +8,58 @@ namespace ine = ax::NodeEditor;
 
 namespace editor::nodes::compositor
 {
-	Node* Compositor::BaseNode(UINodeEditor* editor, std::string name)
+	void Compositor::AddSocketsCallbacks(UINodeEditor* editor, Node* node)
     {
-    	auto& refNodes = editor->m_Nodes;
-
-    	// Adiciona o node básico.
-        refNodes.emplace_back(std::make_unique<Node>(editor->GetNextId(), name));
-
         // Adiciona callbacks para cada tipo de ação, permitindo o nó saber oque fazer quando entrar no editor.
-        refNodes.back()->OnAddInput = [editor](ine::PinId id, Socket* socket){ 
+        node->OnAddInput = [editor](ine::PinId id, Socket* socket){ 
             editor->AddSocketToLookup(id, socket);
         };
-        refNodes.back()->OnAddOutput = [editor](ine::PinId id, Socket* socket){ 
+        node->OnAddOutput = [editor](ine::PinId id, Socket* socket){ 
             editor->AddSocketToLookup(id, socket);
         };
-        refNodes.back()->OnRemoveInput = [editor](ine::PinId id){ 
+        node->OnRemoveInput = [editor](ine::PinId id){ 
             editor->RemoveSocketFromLookup(id);
         };
-        refNodes.back()->OnRemoveOutput = [editor](ine::PinId id){ 
+        node->OnRemoveOutput = [editor](ine::PinId id){ 
             editor->RemoveSocketFromLookup(id);
         };
-    
-        return refNodes.back().get();
     }
 
 	//-----------------------------
 	// Inputs básicos
 	//-----------------------------
 
-	Node* Compositor::KeyboardEventNode(UINodeEditor* editor)
+	Node* Compositor::InputEventNode(core::app::KodeshApplication& app, UINodeEditor* editor)
 	{
-		Node* node = BaseNode(editor, "KeyboardEventNode");
+		auto& refNodes = editor->m_Nodes;
 
-		// Inputs/Outputs
-		node->AddOutput(editor->GetNextId(), "KeyStatusOut", SocketType::Flow);
+		auto node = std::make_unique<compositor::KeyboardEventNode>(editor->GetNextId(), app.GetInputManager());
+		Node* ptr = node.get();
 
-		// Values
-		node->AddValue("Key", SocketType::String, std::string(""));
+        refNodes.emplace_back(std::move(node));
 
-        return node;
+        // Adiciona callbacks para cada tipo de ação, permitindo o nó saber oque fazer quando entrar no editor.
+        AddSocketsCallbacks(editor, ptr);
+
+        ptr->Mount(*editor);
+    
+        return ptr;
 	}
 
-	Node* Compositor::MouseEventNode(UINodeEditor* editor)
+	Node* Compositor::OnUpdateNode(core::app::KodeshApplication& app, UINodeEditor* editor)
 	{
-		Node* node = BaseNode(editor, "MouseEventNode");
+		auto& refNodes = editor->m_Nodes;
 
-		// Inputs/Outputs
-		node->AddOutput(editor->GetNextId(), "MouseStatusOut", SocketType::Flow);
-		node->AddInput(editor->GetNextId(), "Test", SocketType::Bool);
+		auto node = std::make_unique<compositor::OnUpdateNode>(editor->GetNextId());
+		Node* ptr = node.get();
 
-		// Values
-		node->AddValue("Button", SocketType::String, std::string(""));
+        refNodes.emplace_back(std::move(node));
 
-        return node;
+        // Adiciona callbacks para cada tipo de ação, permitindo o nó saber oque fazer quando entrar no editor.
+        AddSocketsCallbacks(editor, ptr);
+
+        ptr->Mount(*editor);
+    
+        return ptr;
 	}
-
-	Node* Compositor::AlwaysEventNode(UINodeEditor* editor)
-	{
-		Node* node = BaseNode(editor, "AlwaysEventNode");
-
-		// Inputs/Outputs
-		node->AddOutput(editor->GetNextId(), "MouseStatusOut", SocketType::Flow);
-
-		// Values
-		//-----
-
-        return node;
-	}
-
-	//-------------------------------
-	// Captura da cena
-	//-------------------------------
-
-	Node* Compositor::GetEntityNode(UINodeEditor* editor)
-	{
-		Node* node = BaseNode(editor, "GetEntityNode");
-
-		// Inputs/Outputs
-		node->AddOutput(editor->GetNextId(), "MouseStatusOut", SocketType::Flow);
-
-		// Values
-		node->AddValue("Name", SocketType::String, std::string(""));
-
-        return node;
-	}
-
-	Node* Compositor::TestOutputNode(UINodeEditor* editor)
-	{
-		Node* node = BaseNode(editor, "TestOutputNode");
-
-		// Inputs/Outputs
-		node->AddInput(editor->GetNextId(), "Entradas", SocketType::Flow);
-
-        return node;
-	}
-	
 }
