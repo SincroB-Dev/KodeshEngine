@@ -34,9 +34,7 @@ namespace editor::nodes
 		Bool,
 		String,
 		
-		Entity,
-		
-		Button,
+		Object,
 		Function,
 		Delegate
 	};

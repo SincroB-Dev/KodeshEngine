@@ -60,7 +60,7 @@ namespace editor::nodes
             case SocketType::Int:      return ImColor( 68, 201, 156);
             case SocketType::Float:    return ImColor(147, 226,  74);
             case SocketType::String:   return ImColor(124,  21, 153);
-            case SocketType::Entity:   return ImColor( 51, 150, 215);
+            case SocketType::Object:   return ImColor( 51, 150, 215);
             case SocketType::Function: return ImColor(218,   0, 183);
             case SocketType::Delegate: return ImColor(255,  48,  48);
         }
@@ -78,7 +78,7 @@ namespace editor::nodes
             case SocketType::Int:      iconType = IconType::Circle; break;
             case SocketType::Float:    iconType = IconType::Circle; break;
             case SocketType::String:   iconType = IconType::Circle; break;
-            case SocketType::Entity:   iconType = IconType::Circle; break;
+            case SocketType::Object:   iconType = IconType::Circle; break;
             case SocketType::Function: iconType = IconType::Circle; break;
             case SocketType::Delegate: iconType = IconType::Square; break;
             default:
