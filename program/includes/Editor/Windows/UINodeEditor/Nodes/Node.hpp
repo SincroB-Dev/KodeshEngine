@@ -76,6 +76,7 @@ namespace editor::nodes
 		std::string Name;
 
 		Node* NodePtr;
+		std::vector<Socket*> SocketChilds;
 
 		SocketType Type;
 		SocketKind Kind;
