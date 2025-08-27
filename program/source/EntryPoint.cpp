@@ -12,7 +12,7 @@
 #include <memory>
 
 // Testes A/B
-#include "tests.hpp"
+#include "Sandbox.hpp"
 
 using namespace core::app;
 using namespace core::systems;

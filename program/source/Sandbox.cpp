@@ -1,4 +1,4 @@
-#include "tests.hpp"
+#include "Sandbox.hpp"
 
 #include <math.h>
 
@@ -249,12 +249,8 @@ namespace sandbox
 		auto nodeWin = std::make_unique<nodes::UINodeEditor>(app.GetRenderer());
 		auto loggerWin = std::make_unique<windows::UILogger>();
 
-		comp::Compositor::KeyboardEventNode(nodeWin.get());
-		comp::Compositor::MouseEventNode(nodeWin.get());
-		comp::Compositor::AlwaysEventNode(nodeWin.get());
-
-		comp::Compositor::GetEntityNode(nodeWin.get());
-		comp::Compositor::TestOutputNode(nodeWin.get());
+		comp::Compositor::InputEventNode(app, nodeWin.get());
+		comp::Compositor::OnUpdateNode(app, nodeWin.get());
 
 		ui.AddWindow(std::move(nodeWin)); // retorna um inteiro, o qual é a identificação da janela.
 		ui.AddWindow(std::move(loggerWin));
