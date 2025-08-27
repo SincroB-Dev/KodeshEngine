@@ -84,14 +84,24 @@ namespace editor::nodes
 		);
 	}
 
-	SocketValue& Node::AddValue(std::string key, SocketType type, SocketValue value)
+	SocketValue* Node::AddValue(std::string key, SocketType type, SocketValue value)
 	{
 		// Evita trabalho manual de incrementar nomes.
 		std::ostringstream oss;
 		oss << key << "###N" << static_cast<int>(ID.Get()) << "C" << s_NextUIID++;
 
 		DataSet.emplace(oss.str(), std::make_unique<NodeValue>(type, value));
-		return DataSet[oss.str()].get()->Value;
+		return &DataSet[oss.str()]->Value;
+	}
+
+	SocketValue* Node::GetValue(std::string key)
+	{
+		auto it = DataSet.find(key);
+		if (it != DataSet.end())
+		{
+			return &it->second->Value;
+		}
+		return nullptr;
 	}
 		
 	bool Node::LinkValueToOutput(std::string key, Socket* socket)

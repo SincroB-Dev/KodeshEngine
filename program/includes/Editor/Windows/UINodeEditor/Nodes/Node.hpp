@@ -167,7 +167,12 @@ namespace editor::nodes
 		/**
 		 * @brief Adiciona uma propriedade de valor ao node.
 		 **/
-		SocketValue& AddValue(std::string key, SocketType type, SocketValue value);
+		SocketValue* AddValue(std::string key, SocketType type, SocketValue value);
+
+		/**
+		 * @grief Retorna o ponteiro do valor de um node.
+		 **/
+		SocketValue* GetValue(std::string key);
 
 		/**
 		 * @brief Conecta uma propriedade de valor a um socket de entrada do node.
