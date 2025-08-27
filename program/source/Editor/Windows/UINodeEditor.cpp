@@ -169,14 +169,24 @@ namespace editor::nodes
         return false;
     }
 
-    bool UINodeEditor::CanCreateLink(Socket* a, Socket* b) const
+    bool UINodeEditor::CanCreateLink(Socket*& a, Socket*& b)
     {
-        return !(
-        	!a || !b || a == b || 
-    		 a->Kind == b->Kind ||
-    		 a->Type != b->Type || 
-    		 a->NodePtr == b->NodePtr
-		);
+        if (!a || !b || a == b ||     // Verifica se são nulos ou iguais
+            a->Kind == b->Kind ||     // Verifica se os tipos são diferentes (input/output)
+            a->Type != b->Type ||     // Verifica se carregam os mesmos tipos de dados
+            a->NodePtr == b->NodePtr  // Verifica se apontam para o mesmo proprietário
+        )
+        {
+            return false;
+        }
+
+        // Garantia de que a sempre será o socket de saída e b sempre será o socket de entrada.
+        if (a->Kind == SocketKind::Input)
+        {
+            std::swap(a, b);
+        }
+
+        return true;
     }
 
     //----------------------------------------
@@ -187,20 +197,20 @@ namespace editor::nodes
     {
         if (ine::BeginCreate())
         {
-            ine::PinId inputPinId, outputPinId;
+            ine::PinId pin1, pin2;
 
-            if (ine::QueryNewLink(&inputPinId, &outputPinId, ImVec4(1.0f, 0.0f, 0.0f, 1.0f)))
+            if (ine::QueryNewLink(&pin1, &pin2, ImVec4(0.4f, 1.0f, 0.1f, 1.0f)))
             {
-                if (inputPinId && outputPinId)
+                if (pin1 && pin2)
                 {
                     if (ine::AcceptNewItem())
                     {
-                        Socket* start = FindSocket(inputPinId);
-                        Socket* end = FindSocket(outputPinId);
+                        Socket* output = FindSocket(pin1);
+                        Socket* input = FindSocket(pin2);
 
-                        if (CanCreateLink(start, end))
+                        if (CanCreateLink(output, input))
                         {
-                            m_Links.push_back(Link(GetNextId(), inputPinId, outputPinId));
+                            m_Links.push_back(Link(GetNextId(), output->ID, input->ID));
                         }
                     }
                 }

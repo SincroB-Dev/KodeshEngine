@@ -65,9 +65,23 @@ namespace editor::nodes
 		bool IsSocketLinked(ine::PinId id) const;
 
 		/**
-		 * @brief Verifica se os sockets a e b podem ser linkados.
+		 * @brief Verifica se dois sockets podem ser conectados, garantindo que
+		 *        a conexão siga as regras da engine de nodes.
+		 *
+		 * Condições para a criação do link:
+		 *  - Nenhum dos sockets pode ser nulo.
+		 *  - Os sockets não podem ser o mesmo objeto.
+		 *  - Os sockets devem ter tipos de dado iguais (Type).
+		 *  - Os sockets devem ter Kind diferentes (input/output).
+		 *  - Os sockets não podem pertencer ao mesmo node (NodePtr).
+		 *
+		 * Além disso, a função ajusta os ponteiros de forma que o socket de saída
+		 * (Output) seja sempre o início da conexão e o socket de entrada (Input)
+		 * seja o fim. Se o socket de saída recebido for na verdade um Input, os
+		 * ponteiros são trocados para manter essa convenção, facilitando a leitura
+		 * e manipulação dos links posteriormente.
 		 */
-		bool CanCreateLink(Socket* a, Socket* b) const;
+		bool CanCreateLink(Socket*& a, Socket*& b);
 
 		/**
 		 * @brief Responsável por detectar e aplicar a criação de um novo link entre nós.
