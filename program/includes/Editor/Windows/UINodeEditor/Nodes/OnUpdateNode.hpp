@@ -22,11 +22,12 @@ namespace editor::nodes::compositor
 	{
 	public:
 		OnUpdateNode(ine::NodeId id): Node(id, "OnUpdate", ImColor(79, 107, 21)/*Verde Musgo*/)
-		{
-		}
+		{}
 
 		void Mount(UINodeEditor& editor) override;
 
 		void Evaluate() override;
+
+		NodeType GetType() const override { return NodeType::Blueprint | NodeType::MouseEvent; }// | NodeType::Action; }
 	};
 }

@@ -402,7 +402,7 @@ namespace editor::nodes
                 //-----------------------------
                 for (auto& node : m_Nodes)
                 {
-                    if (node->Type == NodeType::Blueprint)
+                    if (node->IsAnyType(NodeType::Blueprint))
                     {
                         RenderBlueprintNode(node.get());
                     }

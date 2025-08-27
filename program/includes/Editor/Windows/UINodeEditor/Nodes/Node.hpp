@@ -53,14 +53,39 @@ namespace editor::nodes
 	/**
 	 * @brief Indica o tipo de nó dentro do editor, cada nó tem uma finalidade diferente.
 	 **/
-	enum class NodeType
+	enum class NodeType: uint32_t
 	{
-		Blueprint, // Nó lógico principal
-		Simple, // Nó basico para operações diretas
-		Tree, // Nó hierarquico (Para decisões em arvore)
-		Comment, // Para organização visual
-		Houdini // Nó especial de integração externa
+		None      = 0,
+		Blueprint = 1 << 0, // Nó lógico principal
+		Simple    = 1 << 1, // Nó basico para operações diretas
+		Tree      = 1 << 2, // Nó hierarquico (Para decisões em arvore)
+		Comment   = 1 << 3, // Para organização visual
+		Houdini   = 1 << 4, // Nó especial de integração externa
+
+		KeyboardEvent = 1 << 8, // Indica que é um nó que captura eventos do teclado
+		MouseEvent    = 1 << 9, // Indica que é um nó que captura eventos do mouse
+		Action        = 1 << 10, // Indica que é um nó de ação, ele tem seu Evaluate chamado no OnUpdate da engine
 	};
+
+	/**
+	 * @brief Bitwise OR inclusivo.
+	 **/
+	inline NodeType operator | (NodeType a, NodeType b)
+	{
+		return static_cast<NodeType>(
+			static_cast<uint32_t>(a) | static_cast<uint32_t>(b)
+		);
+	} 
+
+	/**
+	 * @brief Bitwise AND comparativo
+	 **/
+	inline NodeType operator & (NodeType a, NodeType b)
+	{
+		return static_cast<NodeType>(
+			static_cast<uint32_t>(a) & static_cast<uint32_t>(b)
+		);
+	}
 
 	// --------------------------------------------
 	//  Estruturas, armazenamento de informações
@@ -173,7 +198,6 @@ namespace editor::nodes
 		// Setups visuais
 		//----------------------------
 		ImColor  Color;
-		NodeType Type;
 		ImVec2   Size;
 
 		//----------------------------
@@ -189,7 +213,7 @@ namespace editor::nodes
 		std::unordered_map<std::string, std::unique_ptr<NodeValue>> DataSet;
 
 		Node(ine::NodeId id, std::string name, ImColor Color = ImColor(255, 255, 255))
-			: ID(id), Name(name), Type(NodeType::Blueprint), Size(0, 0)
+			: ID(id), Name(name), Size(0, 0)
 		{}
 		~Node() = default;
 
@@ -202,6 +226,19 @@ namespace editor::nodes
 		 * @brief Função responsável pela ativação de filhos do pin flow.
 		 **/
 		virtual void Evaluate() {}
+
+		/**
+		 * @brief Retorna a tipagem do node.
+		 **/
+		virtual NodeType GetType() const { return NodeType::Blueprint; }
+
+		/**
+		 * @brief Verifica se o node possuí um tipo específico.
+		 **/
+		inline bool IsAnyType(NodeType type)
+		{
+			return (static_cast<uint32_t>(GetType()) & static_cast<uint32_t>(type)) != 0;
+		}
 
 	private:
 		static unsigned int s_NextUIID;
