@@ -36,6 +36,7 @@ namespace editor::nodes
 		
 		Entity,
 		
+		Button,
 		Function,
 		Delegate
 	};
