@@ -61,9 +61,8 @@ namespace editor::nodes
 		Comment   = 1 << 3, // Para organização visual
 		Houdini   = 1 << 4, // Nó especial de integração externa
 
-		KeyboardEvent = 1 << 8, // Indica que é um nó que captura eventos do teclado
-		MouseEvent    = 1 << 9, // Indica que é um nó que captura eventos do mouse
-		Action        = 1 << 10, // Indica que é um nó de ação, ele tem seu Evaluate chamado no OnUpdate da engine
+		InputEvent = 1 << 8, // Nó que trabalha com entrada de inputs de usuário (teclado, mouse, gamepad)
+		Action     = 1 << 10, // Indica que é um nó de ação, ele tem seu Evaluate chamado no OnUpdate da engine
 	};
 
 	/**
