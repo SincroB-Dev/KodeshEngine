@@ -84,8 +84,43 @@ namespace editor::nodes
 		);
 	}
 
+	bool Node::ValidateType(SocketType type, const SocketValue& v)
+	{
+		if (type == SocketType::Int)
+		{
+			return std::holds_alternative<int>(v);
+		}
+
+		else if (type == SocketType::Float)
+		{
+			return std::holds_alternative<float>(v);
+		}
+
+		else if (type == SocketType::Bool)
+		{
+			return std::holds_alternative<float>(v);
+		}
+
+		else if (type == SocketType::String)
+		{
+			return std::holds_alternative<std::string>(v);
+		}
+
+		else if (type == SocketType::Object)
+		{
+			return std::holds_alternative<std::any>(v);
+		}
+
+		return false;
+	}
+
 	SocketValue* Node::AddValue(std::string key, SocketType type, SocketValue value)
 	{
+		if (!ValidateType(type, value))
+		{
+			throw std::runtime_error("Type mismatch in Node::AddValue");
+		}
+
 		// Evita trabalho manual de incrementar nomes.
 		std::ostringstream oss;
 		oss << key << "###N" << static_cast<int>(ID.Get()) << "C" << s_NextUIID++;
@@ -94,12 +129,12 @@ namespace editor::nodes
 		return &DataSet[oss.str()]->Value;
 	}
 
-	SocketValue* Node::GetValue(std::string key)
+	NodeValue* Node::GetValue(std::string key)
 	{
 		auto it = DataSet.find(key);
 		if (it != DataSet.end())
 		{
-			return &it->second->Value;
+			return it->second.get();
 		}
 		return nullptr;
 	}
