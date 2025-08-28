@@ -98,7 +98,10 @@ build/%.o: %.cpp
 
 # Limpeza
 clean:
-	rm -rf build
+	rm -rf build/program &&\
+  mkdir -p build/program/source/Editor/UI/Fontes &&\
+  cp -r pre-build/* build/program/source/Editor/UI/Fontes/ &&\
+  rm -f build/program/source/Editor/UI/Fontes/*.md
 	
 run:
 	cd build;./app;cd ..
