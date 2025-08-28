@@ -5,7 +5,7 @@
 #include "Core/Application/KodeshApplication.hpp"
 
 #include "Core/Systems/SceneManager.hpp"
-#include "Core/Systems/UILayer.hpp"
+#include "Core/Systems/UILayerManager.hpp"
 #include "Core/Scene/Scene.hpp"
 
 #include "Core/ECS/Systems/RenderSystem.hpp"
@@ -21,11 +21,11 @@
 
 #include "Core/Input/KeyState.hpp"
 
-#include "Core/Systems/LogManager.hpp"
+#include "Core/Helpers/LogManager.hpp"
 #include "Core/Renderer/RenderCommand.hpp"
 
-#include "Core/Utils/Vector.hpp"
-#include "Core/Utils/Color.hpp"
+#include "Core/Maths/Vector.hpp"
+#include "Core/Maths/Color.hpp"
 
 #include "Platform/OpenGL/RendererFF.hpp"
 #include "Editor/UI/Fontes/MaterialIcons.hpp"
@@ -190,7 +190,7 @@ namespace sandbox
 		sm->AddScene("Scene");
 	}
 
-	void UserInterfaceModulation(KodeshApplication& app, UILayer& ui)
+	void UserInterfaceModulation(KodeshApplication& app, UILayerManager& ui)
 	{
 	    auto& tests = ui.AddLayoutMenubarItem((std::string(MICON_LABS) + "  Tests [A/B]").c_str());
 	    {
@@ -244,7 +244,7 @@ namespace sandbox
 	    }
 	}
 
-	void UserInterfaceWindows(KodeshApplication& app, UILayer& ui)
+	void UserInterfaceWindows(KodeshApplication& app, UILayerManager& ui)
 	{
 		auto nodeWin = std::make_unique<nodes::UINodeEditor>(app.GetRenderer());
 		auto loggerWin = std::make_unique<windows::UILogger>();

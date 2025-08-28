@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core/Utils/Vector4.hpp"
+#include "Core/Maths/Vector4.hpp"
 
 namespace core
 {

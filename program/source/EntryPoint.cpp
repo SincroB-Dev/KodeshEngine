@@ -4,9 +4,9 @@
 #include "Core/Application/KodeshApplication.hpp"
 
 #include "Core/Systems/SceneManager.hpp"
-#include "Core/Systems/UILayer.hpp"
+#include "Core/Systems/UILayerManager.hpp"
 
-#include "Core/Systems/LogManager.hpp"
+#include "Core/Helpers/LogManager.hpp"
 #include "Platform/OpenGL/RendererFF.hpp"
 
 #include <memory>
@@ -36,15 +36,15 @@ int main(int argc, char *argv[])
 
     // Registra sistemas (UInterface, SceneManager, AudioManager, Physics...)
     app.RegisterSystem<SceneManager>();
-    app.RegisterSystem<UILayer>("configs.json"/*path de configurações visuais*/);
+    app.RegisterSystem<UILayerManager>("configs.json"/*path de configurações visuais*/);
 
-    // Alguns subsistemas deve ser atualizados, como no caso de UILayer que utiliza
+    // Alguns subsistemas deve ser atualizados, como no caso de UILayerManager que utiliza
     // do SDL/GLFW para sua inicialização. (Atualmente apenas SDL foi implementado)
-    UILayer* ui = app.GetSystem<UILayer>();
+    UILayerManager* ui = app.GetSystem<UILayerManager>();
     
     ui->InitImGui((SDL_Window*)app.GetNativeWindow(), (SDL_GLContext*)app.GetContext());
 
-    // Construção dos menus superiores com o UILayer
+    // Construção dos menus superiores com o UILayerManager
     sandbox::UserInterfaceModulation(app, *ui);
     sandbox::UserInterfaceWindows(app, *ui);
 

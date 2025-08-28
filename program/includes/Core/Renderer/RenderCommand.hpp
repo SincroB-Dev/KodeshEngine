@@ -4,7 +4,7 @@
 #include <array>
 #include <vector>
 
-#include "Core/Utils/VertexInfo.hpp"
+#include "Core/Maths/VertexInfo.hpp"
 
 namespace core
 {

@@ -1,4 +1,4 @@
-#include "Core/Systems/LogManager.hpp"
+#include "Core/Helpers/LogManager.hpp"
 
 namespace core
 {

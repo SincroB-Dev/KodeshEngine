@@ -5,7 +5,7 @@
 #include <iostream>
 #include <cstring>
 
-#include "Core/Utils/Vector.hpp"
+#include "Core/Maths/Vector.hpp"
 
 extern "C" {
     #define STB_IMAGE_IMPLEMENTATION

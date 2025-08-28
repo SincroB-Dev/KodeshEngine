@@ -1,4 +1,4 @@
-#include "Core/Utils/Color.hpp"
+#include "Core/Maths/Color.hpp"
 
 using json = nlohmann::json;
 

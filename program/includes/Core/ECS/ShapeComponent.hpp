@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Core/ECS/IComponent.hpp"
-#include "Core/Utils/VertexInfo.hpp"
-#include "Core/Utils/Color.hpp"
+#include "Core/Maths/VertexInfo.hpp"
+#include "Core/Maths/Color.hpp"
 
 #include "Core/Renderer/RenderCommand.hpp"
 

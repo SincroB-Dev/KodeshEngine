@@ -1,4 +1,4 @@
-#include "Core/Systems/UILayer.hpp"
+#include "Core/Systems/UILayerManager.hpp"
 
 #include "Core/Events/TextInputEvent.hpp"
 #include "Core/Events/KeyboardEvent.hpp"
@@ -24,7 +24,7 @@ namespace core::systems
     /**
      * @todo this-> pode gerar dangling references caso UI seja destruída, migrar para weak->ptr.
      **/
-	UILayer::UILayer(events::EventDispatcher& dispatcher, input::InputManager& input, std::string configsPath)
+	UILayerManager::UILayerManager(events::EventDispatcher& dispatcher, input::InputManager& input, std::string configsPath)
 		: m_ImGuiInitialized(false), m_ConfigsPath(configsPath)
 	{
         // Registra os callbacks que vão para a interface, lembrando que ao registrar esses eventos
@@ -63,7 +63,7 @@ namespace core::systems
         });
 	}
 
-	void UILayer::OnEvent(events::Event& e)
+	void UILayerManager::OnEvent(events::Event& e)
 	{
         // Processa os eventos da UI
         ImGui_ImplSDL2_ProcessEvent((SDL_Event*)e.NativeEvent);
@@ -77,7 +77,7 @@ namespace core::systems
         }
 	}
 
-    void UILayer::InitImGui(SDL_Window* window, SDL_GLContext* context)
+    void UILayerManager::InitImGui(SDL_Window* window, SDL_GLContext* context)
     {
     	if (m_ImGuiInitialized)
     	{
@@ -106,7 +106,7 @@ namespace core::systems
         m_ImGuiInitialized = true;
     }
 
-    void UILayer::RenderTopMenu()
+    void UILayerManager::RenderTopMenu()
     {
         if (ImGui::BeginMainMenuBar())
         {
@@ -122,9 +122,9 @@ namespace core::systems
     }
 
     /*unused*/
-	void UILayer::Update(double deltaTime){}
+	void UILayerManager::Update(double deltaTime){}
 
-	void UILayer::Render(renderer::Renderer& renderer, int w, int h, double deltaTime)
+	void UILayerManager::Render(renderer::Renderer& renderer, int w, int h, double deltaTime)
 	{
         ImGui_ImplOpenGL2_NewFrame();
         ImGui_ImplSDL2_NewFrame();
@@ -142,33 +142,33 @@ namespace core::systems
         ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
 	}
 
-    UIMenuComponent& UILayer::AddLayoutMenubarItem(const std::string& Label)
+    UIMenuComponent& UILayerManager::AddLayoutMenubarItem(const std::string& Label)
     {
         return m_LayoutMenubar.emplace_back(
             UIMenuComponent(Label, "")
         );
     }
 
-    void UILayer::AddLayoutMenubarSeparator(editor::ui::UIMenuComponent& Menu)
+    void UILayerManager::AddLayoutMenubarSeparator(editor::ui::UIMenuComponent& Menu)
     {
         Menu.m_Childrens.emplace_back(
             std::make_unique<editor::ui::UISeparator>()
         );
     }
 
-    int UILayer::AddWindow(std::unique_ptr<windows::UIWindow> window)
+    int UILayerManager::AddWindow(std::unique_ptr<windows::UIWindow> window)
     {
         utils::UniqueID windowId = m_UniqueLayoutGen.CreateUniqueID();
         m_Windows[windowId.ID] = std::move(window);
         return windowId.ID;
     }
 
-    windows::UIWindow* UILayer::GetWindow(int id)
+    windows::UIWindow* UILayerManager::GetWindow(int id)
     {
         return m_Windows[id].get();
     }
 
-    void UILayer::WriteDefaultTheme(const std::string& path)
+    void UILayerManager::WriteDefaultTheme(const std::string& path)
     {
         json configs = app::KodeshApplication::GetConfigs();
 
@@ -230,7 +230,7 @@ namespace core::systems
         out << configs.dump(4);
     }
 
-    void UILayer::LoadTheme(const std::string& path, ImGuiStyle& style, ImVec4* colors)
+    void UILayerManager::LoadTheme(const std::string& path, ImGuiStyle& style, ImVec4* colors)
     {
         json configs = app::KodeshApplication::GetConfigs();
 
@@ -307,7 +307,7 @@ namespace core::systems
         setColor(ImGuiCol_TabUnfocusedActive, "TabUnfocusedActive");
     }
 
-    void UILayer::LoadFonts(const std::string& path, ImGuiIO& io) 
+    void UILayerManager::LoadFonts(const std::string& path, ImGuiIO& io) 
     {
         json configs = app::KodeshApplication::GetConfigs();
 
@@ -346,7 +346,7 @@ namespace core::systems
         }
     }
 
-    void UILayer::LoadMaterialIconsFont(ImGuiIO& io)
+    void UILayerManager::LoadMaterialIconsFont(ImGuiIO& io)
     {
         ImFontConfig cfg;
 

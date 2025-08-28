@@ -4,8 +4,8 @@
 #include "Core/ECS/Systems/InputSystem.hpp"
 #include "Core/ECS/Systems/GlobalSystem.hpp"
 
-#include "Core/Utils/Vector.hpp"
-#include "Core/Utils/Matrix4x4.hpp"
+#include "Core/Maths/Vector.hpp"
+#include "Core/Maths/Matrix4x4.hpp"
 
 namespace core
 {

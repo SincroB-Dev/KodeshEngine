@@ -1,5 +1,5 @@
 #include "Editor/Windows/UINodeEditor/Drawing.hpp"
-#include "Core/Helpers/ImGuiOperators.hpp"
+#include "Core/Maths/ImGuiOperators.hpp"
 
 namespace editor::nodes::drawing
 {

@@ -67,7 +67,7 @@ namespace core
 			std::unique_ptr<renderer::Renderer> m_Renderer;
 			std::unique_ptr<input::InputManager> m_InputManager;
 
-			// Subsystems (UILayer, SceneManager, AudioManager...)
+			// Subsystems (UILayerManager, SceneManager, AudioManager...)
 			std::vector<std::unique_ptr<systems::ISystem>> m_Systems;
 			std::unordered_map<std::type_index, systems::ISystem*> m_SystemsLookup;
 

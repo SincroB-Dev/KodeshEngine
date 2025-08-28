@@ -1,5 +1,5 @@
 #include "Editor/Windows/UINodeEditor/Widgets.hpp"
-#include "Core/Helpers/ImGuiOperators.hpp"
+#include "Core/Maths/ImGuiOperators.hpp"
 
 #include <imgui/imgui_internal.h>
 

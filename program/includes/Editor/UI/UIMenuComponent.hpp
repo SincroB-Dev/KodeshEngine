@@ -6,7 +6,7 @@
 
 namespace core::systems
 {
-	class UILayer;
+	class UILayerManager;
 }
 
 namespace editor::ui
@@ -35,6 +35,6 @@ namespace editor::ui
 
 		std::string m_Shortcut;
 
-		friend class core::systems::UILayer;
+		friend class core::systems::UILayerManager;
 	};
 }

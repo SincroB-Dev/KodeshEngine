@@ -1,6 +1,6 @@
 #include <ImGuiNodeEditor/imgui_node_editor.h>
 
-#include "Core/Systems/LogManager.hpp"
+#include "Core/Helpers/LogManager.hpp"
 #include "Editor/Windows/UINodeEditor.hpp"
 
 #include "Editor/Windows/UINodeEditor/Nodes/InputEventNode.hpp"

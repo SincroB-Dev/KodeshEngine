@@ -1,4 +1,4 @@
-#include "Core/Systems/LogManager.hpp"
+#include "Core/Helpers/LogManager.hpp"
 #include "Editor/Windows/UILogger.hpp"
 
 #include "Editor/UI/Fontes/MaterialIcons.hpp"

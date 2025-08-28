@@ -3,7 +3,7 @@
 #include "Core/Application/KodeshApplication.hpp"
 
 #include "Core/Systems/SceneManager.hpp"
-#include "Core/Systems/UILayer.hpp"
+#include "Core/Systems/UILayerManager.hpp"
 
 #include "Core/Renderer/Renderer.hpp"
 
@@ -76,12 +76,12 @@ namespace sandbox
 	/**
 	 * @brief Criação de interfaces para testes de usabilidade da engine.
 	 **/
-	void UserInterfaceModulation(KodeshApplication& app, UILayer& ui);
+	void UserInterfaceModulation(KodeshApplication& app, UILayerManager& ui);
 
 	/**
 	 * @brief Criação de interfaces do tipo janelas complexas, para testar ferramentas da engine.
 	 **/
-	void UserInterfaceWindows(KodeshApplication& app, UILayer& ui);
+	void UserInterfaceWindows(KodeshApplication& app, UILayerManager& ui);
 
 	/**
 	 * @brief Cria uma configuração inicial de cena, no sistema de gerenciamento de cenas

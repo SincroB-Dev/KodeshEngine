@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Core/Utils/Vector.hpp"
-#include "Core/Utils/Vector3.hpp"
-#include "Core/Utils/Vector4.hpp"
+#include "Core/Maths/Vector.hpp"
+#include "Core/Maths/Vector3.hpp"
+#include "Core/Maths/Vector4.hpp"
 
 namespace core
 {

@@ -8,6 +8,8 @@ SRC_DIRS = program/source \
              program/source/Core/Events \
              program/source/Core/Input \
              program/source/Core/Platform \
+             program/source/Core/Helpers \
+             program/source/Core/Maths \
              program/source/Core/ECS \
              program/source/Core/Renderer \
              program/source/Core/Resource \

@@ -1,4 +1,4 @@
-#include "Core/Utils/Vector3.hpp"
+#include "Core/Maths/Vector3.hpp"
 
 #include <cmath>
 

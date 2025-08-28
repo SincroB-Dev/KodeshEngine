@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "Core/Utils/Vector.hpp"
+#include "Core/Maths/Vector.hpp"
 
 namespace core
 {

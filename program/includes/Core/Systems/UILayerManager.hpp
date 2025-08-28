@@ -25,7 +25,7 @@
 namespace core::systems
 {
     /**
-     * @class UILayer
+     * @class UILayerManager
      * @brief Sistema responsável pela camada de interface gráfica (ImGui).
      *
      * - Captura eventos primeiro (antes da cena/game).
@@ -33,15 +33,15 @@ namespace core::systems
      * - Renderiza menus e layouts customizados.
      * - Oferece API para criação dinâmica de menus.
      */
-    class UILayer : public ISystem
+    class UILayerManager : public ISystem
     {
     public:
         /**
          * @brief Constrói a camada de UI.
          */
-        UILayer(events::EventDispatcher& dispatcher, input::InputManager& input, std::string configsPath);
+        UILayerManager(events::EventDispatcher& dispatcher, input::InputManager& input, std::string configsPath);
 
-        ~UILayer() 
+        ~UILayerManager() 
         {
         	std::cout << "[UI] Limpando mapa de fontes..." << std::endl;
         	m_Fonts.clear();
@@ -138,7 +138,7 @@ namespace core::systems
     // Template implementation
     // ------------------------------
     template<typename... Funcs>
-    editor::ui::UIMenuComponent& UILayer::AddLayoutMenubarItem(
+    editor::ui::UIMenuComponent& UILayerManager::AddLayoutMenubarItem(
         editor::ui::UIMenuComponent& menu,
         const std::string& label,
         const std::string& shortcut,
