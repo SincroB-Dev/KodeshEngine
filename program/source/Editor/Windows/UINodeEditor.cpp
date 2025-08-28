@@ -3,6 +3,8 @@
 #include "Core/Systems/LogManager.hpp"
 #include "Editor/Windows/UINodeEditor.hpp"
 
+#include "Editor/Windows/UINodeEditor/Nodes/InputEventNode.hpp"
+
 #include <iostream>
 #include <algorithm>
 #include <variant>
@@ -330,25 +332,49 @@ namespace editor::nodes
             // -----------
             // Corpo
             // -----------
+
+            // Marca se o corpo está vazio, se estiver preenche com Dummy, evitando desajuste de layout
+            bool isEmptyBody = true;
+
             ImGui::BeginGroup();
             {
-                // Desativa os shortcuts enquanto algum componente estiver em foco.
-                // Deve ser chamado pois o NodeEditor bloqueia todas as entradas de teclas.
+                // Desativa os shortcuts enquanto algum componente estiver em foco
+                // Deve ser chamado pois o NodeEditor bloqueia todas as entradas de teclas
                 ine::EnableShortcuts(!io.WantTextInput);
 
                 ImGui::PushItemWidth(150);
+
+                // Verifica se o objeto do é tipo de recebimento de input, caso seja adiciona
+                // seu botão correspondente.
+                if (node->IsAnyType(NodeType::InputEvent))
+                {
+                    ((compositor::InputEventNode*)node)->Button.Render();
+
+                    // Notifica que não precisa do dummy
+                    isEmptyBody = false;
+                }
 
                 for (auto& data : node->DataSet)
                 {
                     NodeValue* objVal = data.second.get();
 
+                    // Verifica como prioridade as propriedades anexadas ao node
                     if (objVal->Type == SocketType::Int ||
                         objVal->Type == SocketType::Float ||
                         objVal->Type == SocketType::Bool ||
                         objVal->Type == SocketType::String)
                     {
                         RenderValue(data.first.c_str(), objVal);
+
+                        // Notifica que não precisa do dummy
+                        isEmptyBody = false;
                     }
+                }
+
+                if (isEmptyBody)
+                {
+                    // Importante para evitar desajuste de layout
+                    ImGui::Dummy(ImVec2(150, 0));
                 }
 
                 ImGui::PopItemWidth();

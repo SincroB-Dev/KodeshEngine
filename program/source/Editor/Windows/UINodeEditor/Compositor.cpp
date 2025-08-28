@@ -1,5 +1,5 @@
 #include "Editor/Windows/UINodeEditor/Compositor.hpp"
-#include "Editor/Windows/UINodeEditor/Nodes/KeyboardEventNode.hpp"
+#include "Editor/Windows/UINodeEditor/Nodes/InputEventNode.hpp"
 #include "Editor/Windows/UINodeEditor/Nodes/OnUpdateNode.hpp"
 #include <ImGuiNodeEditor/imgui_node_editor.h>
 #include <memory>
@@ -33,7 +33,7 @@ namespace editor::nodes::compositor
 	{
 		auto& refNodes = editor->m_Nodes;
 
-		auto node = std::make_unique<compositor::KeyboardEventNode>(editor->GetNextId(), app.GetInputManager());
+		auto node = std::make_unique<compositor::InputEventNode>(editor->GetNextId(), app.GetInputManager());
 		Node* ptr = node.get();
 
         refNodes.emplace_back(std::move(node));
