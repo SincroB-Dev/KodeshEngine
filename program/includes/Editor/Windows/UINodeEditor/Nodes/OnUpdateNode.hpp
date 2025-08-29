@@ -28,6 +28,6 @@ namespace editor::nodes::compositor
 
 		void Evaluate() override;
 
-		NodeType GetType() const override { return NodeType::Blueprint; }
+		NodeType GetType() const override { return NodeType::Blueprint | NodeType::Action; }
 	};
 }
