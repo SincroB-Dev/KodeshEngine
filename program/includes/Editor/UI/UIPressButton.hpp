@@ -28,11 +28,8 @@ namespace editor::ui
 			: m_EmptyLabel(emptyLabel), m_AwaitingLabel(awaitingLabel),
 			  m_Type(type), m_IsAwaiting(false)
 		{
-			if (defaultCode > 0)
-			{
-				// Necessita ser chamado para a inclusão do título de captura.
-				SetCaptured(defaultCode);
-			}
+			// Necessita ser chamado para a inclusão do título de captura.
+			SetCaptured(defaultCode);
 		}
 
 		~UIPressButton()
