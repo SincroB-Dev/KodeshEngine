@@ -1,4 +1,6 @@
 #include "Editor/UI/UIPressButton.hpp"
+#include "Editor/UI/UITooltip.hpp"
+
 #include <imgui/imgui.h>
 
 namespace editor::ui
@@ -86,6 +88,11 @@ namespace editor::ui
 						ResetButtonState();
 					}
 				}
+			}
+
+			if (ImGui::IsItemHovered())
+			{
+				UITooltip::SetTooltip("Armazena entrada de eventos (teclado/mouse/gamepad) de\nusuário para uso posterior (in-game)");
 			}
 		}
 		ImGui::PopID();
