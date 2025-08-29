@@ -44,16 +44,14 @@ namespace editor::ui
 
 	void UIPressButton::ResetButtonState()
 	{
-		m_IsAwaiting = false;
-		s_CurrentAwaiting->m_Code = -1;
-		s_CurrentAwaiting = nullptr;
+		SetCaptured(-1);
 	}
 
 	void UIPressButton::Render()
 	{
 		std::string label = m_IsAwaiting
 							? m_AwaitingLabel
-							: m_Code >=0
+							: m_Code > 0
 								? m_Captured
 								: m_EmptyLabel;
 
