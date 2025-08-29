@@ -3,6 +3,8 @@
 #include "Core/Helpers/LogManager.hpp"
 #include "Editor/Windows/UINodeEditor.hpp"
 
+#include "Editor/UI/UITooltip.hpp"
+
 #include "Editor/Windows/UINodeEditor/Nodes/InputEventNode.hpp"
 
 #include <iostream>
@@ -16,6 +18,7 @@ using namespace core::renderer;
 namespace editor::nodes
 {
 	using namespace drawing;
+    using namespace ui;
 
 	UINodeEditor::UINodeEditor(Renderer& renderer)
 		: windows::UIWindow("[Compositor de Node Grafo : GameLogic]"),
@@ -279,6 +282,14 @@ namespace editor::nodes
             }
 
         }, objVal->Value);
+
+        if (!objVal->Help.empty())
+        {
+            if (ImGui::IsItemHovered())
+            {
+                UITooltip::SetTooltip(objVal->Help);
+            }
+        }
     }
 
     void UINodeEditor::RenderBlueprintNode(Node* node)
@@ -442,6 +453,20 @@ namespace editor::nodes
                 {
                     ine::Link(link->ID, link->Output->ID, link->Input->ID);
                 }
+
+                //---------------------------------
+                // Renderiza menus-popup/tooltips
+                //---------------------------------
+
+
+                // Inicio de seção diferida.
+                ine::Suspend();
+                {
+                    // Renderização da tooltip.
+                    UITooltip::Render();
+                }
+                ine::Resume();
+                // Fim de seção diferida.
 
                 // -----------------------------------------------------------------------
                 //  Controles de comportamento de criação/exclusão de links entre nodes
