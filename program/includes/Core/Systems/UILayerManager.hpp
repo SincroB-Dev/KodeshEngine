@@ -8,6 +8,8 @@
 #include "Core/Renderer/Renderer.hpp"
 #include "Core/Utils/UniqueIDGen.hpp"
 
+#include "Core/Helpers/LogManager.hpp"
+
 // Editor UI
 #include "Editor/UI/UIMenuComponent.hpp"
 #include "Editor/UI/UISeparator.hpp"
@@ -43,7 +45,7 @@ namespace core::systems
 
         ~UILayerManager() 
         {
-        	std::cout << "[UI] Limpando mapa de fontes..." << std::endl;
+        	LogManager::Log(LogType::Info, "Limpando fontes do editor...");
         	m_Fonts.clear();
         }
 

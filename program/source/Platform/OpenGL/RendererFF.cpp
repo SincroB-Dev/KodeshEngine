@@ -1,4 +1,5 @@
 #include "Platform/OpenGL/RendererFF.hpp"
+#include "Core/Helpers/LogManager.hpp"
 
 #include <algorithm>
 #include <vector>
@@ -16,6 +17,7 @@ extern "C" {
 // Utilização de vetores, para facilitar.
 using namespace core::mathutils;
 using namespace core::renderer;
+using namespace core::systems;
 
 namespace platform
 {
@@ -161,7 +163,7 @@ namespace platform
 	    unsigned char* data = stbi_load(texPath, &image.width, &image.height, &image.channels, 4); // força RGBA
 	    if (!data)
 	    {
-	        std::cout << "[RendererFF] Não foi possível carregar a imagem: " << texPath << std::endl;
+	        LogManager::Log(LogType::Error, "Não foi possível carregar a imagem: ", texPath);
 	        return 0;
 	    }
 

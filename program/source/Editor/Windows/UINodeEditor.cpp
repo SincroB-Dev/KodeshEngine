@@ -37,7 +37,7 @@ namespace editor::nodes
 	{
 		if (m_Context)
 	    {
-            std::cout << "[NodeEditor] Limpando context..." << std::endl;
+            LogManager::Log(LogType::Info, "Editor de nodes limpando context...");
 
 	        ine::DestroyEditor(m_Context);
 	        m_Context = nullptr;

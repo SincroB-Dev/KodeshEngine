@@ -62,14 +62,17 @@ namespace sandbox
 		PrimitiveType primitive, std::vector<utils::VertexInfo> vertices, Color color
 	)
 	{
+		LogManager::Log(LogType::Info, "Criando Entity...");
 		ecs::Entity object = er.CreateEntity();
 
+		LogManager::Log(LogType::Info, "Anexando componente <TransformComponent>...");
 		// Componente que armazena as transformações do objeto
 	    er.AddComponent<ecs::TransformComponent>(
 	        object, 
 	        position, scale, orderZ
 	    );
 
+		LogManager::Log(LogType::Info, "Anexando componente <ShapeComponent>...");
 	    // Componente responsável por enviar comandos para o renderizador
 	    er.AddComponent<ecs::ShapeComponent>(
 	        object,
@@ -82,6 +85,7 @@ namespace sandbox
 
 	ecs:: Entity CreateRect(ecs::EntityRegistry& er, Color color)
 	{
+		LogManager::Log(LogType::Info, "Preparando para criar Rect...");
 		return CreateBaseEntity(
 			er,
 			Vector(0.0f, 0.0f), Vector(1.0f, 1.0f), 0.0f,
@@ -97,6 +101,7 @@ namespace sandbox
 
 	ecs:: Entity CreateStar(ecs::EntityRegistry& er, int points, Color color)
 	{
+		LogManager::Log(LogType::Info, "Preparando para criar Estrela...");
 		std::vector<utils::VertexInfo> vertices;
 		float Re = 1.0f, Ri = 0.5f;
 
@@ -137,6 +142,7 @@ namespace sandbox
 
 	ecs:: Entity CreateCircle(ecs::EntityRegistry& er, int vcount, float size, Color color)
 	{
+		LogManager::Log(LogType::Info, "Preparando para criar Circulo...");
 		std::vector<utils::VertexInfo> vertices;
 		
 		for (int v=0; v<=vcount; v++)
@@ -159,11 +165,14 @@ namespace sandbox
 
 	ecs::Entity CreatePlayableEntity(ecs::EntityRegistry& entitiesManager, Color color)
 	{
+		LogManager::Log(LogType::Info, "Iniciando Entity Interativa...");
 		ecs::Entity playable = CreateRect(entitiesManager, color);
 
+		LogManager::Log(LogType::Info, "Anexando componente <InputComponent>...");
 		auto& input = entitiesManager.AddComponent<ecs::InputComponent>(playable);
 		auto* transform = entitiesManager.GetComponent<ecs::TransformComponent>(playable);
 
+		LogManager::Log(LogType::Info, "Anexando actions no <InputComponent>...");
 		input.AddAction("forward", SDLK_w, [transform](double dt){
 	        transform->position.y += 10.0f * dt;
 	    }, KeyStateEnum::Held);
@@ -187,6 +196,8 @@ namespace sandbox
 	{
 	    // Demo (Sandbox)
 	    SceneManager* sm = app.GetSystem<SceneManager>();
+
+		LogManager::Log(LogType::Info, "Criando cena inicial {Scene}...");
 		sm->AddScene("Scene");
 	}
 
@@ -246,13 +257,17 @@ namespace sandbox
 
 	void UserInterfaceWindows(KodeshApplication& app, UILayerManager& ui)
 	{
+		LogManager::Log(LogType::Info, "Construindo <UINodeEditor>...");
 		auto nodeWin = std::make_unique<nodes::UINodeEditor>(app.GetRenderer());
+		// Construção dos nodes.
+		{
+			comp::Compositor::InputEventNode(app, nodeWin.get());
+			comp::Compositor::OnUpdateNode(app, nodeWin.get());
+		}
+		ui.AddWindow(std::move(nodeWin));
+
+		LogManager::Log(LogType::Info, "Construindo <UILogger>...");
 		auto loggerWin = std::make_unique<windows::UILogger>();
-
-		comp::Compositor::InputEventNode(app, nodeWin.get());
-		comp::Compositor::OnUpdateNode(app, nodeWin.get());
-
-		ui.AddWindow(std::move(nodeWin)); // retorna um inteiro, o qual é a identificação da janela.
 		ui.AddWindow(std::move(loggerWin));
 	}
 }

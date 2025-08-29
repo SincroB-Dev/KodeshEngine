@@ -3,6 +3,7 @@
 #include "Core/Events/TextInputEvent.hpp"
 #include "Core/Events/KeyboardEvent.hpp"
 #include "Core/Events/MouseEvent.hpp"
+#include "Core/Helpers/LogManager.hpp"
 
 #include <imgui/backends/imgui_impl_sdl2.h>
 #include <imgui/backends/imgui_impl_opengl2.h>
@@ -243,7 +244,7 @@ namespace core::systems
         if (base == "dark") ImGui::StyleColorsDark();
         else if (base == "light") ImGui::StyleColorsLight();
         else if (base == "classic") ImGui::StyleColorsClassic();
-        else std::cout << "Atenção, chave 'based_on' deve ter um dos valores: dark, light, classic." << std::endl;
+        else LogManager::Log(LogType::Warning, "Atenção, chave 'based_on' deve ter um dos valores: dark, light, classic.");
 
         // aplica style
         style.WindowRounding   = theme["style"].value("WindowRounding", style.WindowRounding);
@@ -262,7 +263,7 @@ namespace core::systems
                     colors[idx] = ImVec4(c[0], c[1], c[2], c[3]);
                     return;
                 }
-                std::cout << "Chave de tema '" << key << "' incompleta." << std::endl;
+                LogManager::Log(LogType::Warning, "Chave de tema '", key, "' incompleta.");
                 return;
             }
             std::cout << "Atenção! Chave de tema '" << key << "' não encontrada." << std::endl;

@@ -53,7 +53,10 @@ namespace core
 
 			// Registra o close da janela
 			dispatcher.Register<WindowCloseEvent>(
-				[&](Event& e){ this->OnEvent(e); });
+				[&](Event& e){ 
+					this->OnEvent(e); 
+				}
+			);
 
 			// Registra o resize da janela
 			dispatcher.Register<WindowResizeEvent>(
@@ -61,7 +64,8 @@ namespace core
 					const WindowResizeEvent* we = dynamic_cast<const WindowResizeEvent*>(&e);
 					m_Window->SetWidth(we->GetWidth());
 					m_Window->SetHeight(we->GetHeight());
-				});
+				}
+			);
 		}
 
 		void KodeshApplication::UseRenderer(std::unique_ptr<renderer::Renderer> r)

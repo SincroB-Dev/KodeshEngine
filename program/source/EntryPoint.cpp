@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 
     // Logger não deve ser registrado como um subsystem, pois ele
     // é apenas um storage system.
-    LogManager::Main = new LogManager();
+    LogManager::Create();
 
     // Renderizador Fixed-Functions OpenGL
     std::unique_ptr<RendererFF> renderer = std::make_unique<RendererFF>();
@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
     app.Run();
 
     // Apaga o logmanager
-    delete LogManager::Main;
+    LogManager::Destroy();
 
     return 0;
 }

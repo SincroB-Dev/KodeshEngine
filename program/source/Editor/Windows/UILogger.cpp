@@ -21,7 +21,7 @@ namespace editor::windows
 
 		// Caso o logger não tenha sido instanciado, a janela
 		// informa que não tem logger disponível.
-		if (LogManager::Main == nullptr)
+		if (!LogManager::HasLogger())
 		{
             ImGui::TextUnformatted("Nenhuma instancia de logs definida.");
 
