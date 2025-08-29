@@ -114,7 +114,7 @@ namespace editor::nodes
 		return false;
 	}
 
-	SocketValue* Node::AddValue(std::string key, SocketType type, SocketValue value)
+	SocketValue* Node::AddValue(std::string key, SocketType type, SocketValue value, std::string help)
 	{
 		if (!ValidateType(type, value))
 		{
@@ -125,7 +125,7 @@ namespace editor::nodes
 		std::ostringstream oss;
 		oss << key << "###N" << static_cast<int>(ID.Get()) << "C" << s_NextUIID++;
 
-		DataSet.emplace(oss.str(), std::make_unique<NodeValue>(type, value));
+		DataSet.emplace(oss.str(), std::make_unique<NodeValue>(type, value, help));
 		return &DataSet[oss.str()]->Value;
 	}
 

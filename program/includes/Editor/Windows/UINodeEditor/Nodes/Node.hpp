@@ -122,6 +122,8 @@ namespace editor::nodes
 		SocketValue Value;
 		char InputBuffer[256];
 
+		std::string Help;
+
 		/**
 		 * @brief Retorna o valor inteiro, garantindo sempre um valor.
 		 **/
@@ -221,8 +223,8 @@ namespace editor::nodes
 			return nullptr;
 		}
 
-		NodeValue(SocketType type, SocketValue value)
-			: SocketPtr(nullptr), Type(type), Value(value)
+		NodeValue(SocketType type, SocketValue value, std::string help = "")
+			: SocketPtr(nullptr), Type(type), Value(value), Help(help)
 		{}
 	};
 
@@ -264,7 +266,7 @@ namespace editor::nodes
 		/**
 		 * @brief Adiciona uma propriedade de valor ao node.
 		 **/
-		SocketValue* AddValue(std::string key, SocketType type, SocketValue value);
+		SocketValue* AddValue(std::string key, SocketType type, SocketValue value, std::string help = "");
 
 		/**
 		 * @grief Retorna o ponteiro do valor de um node.
