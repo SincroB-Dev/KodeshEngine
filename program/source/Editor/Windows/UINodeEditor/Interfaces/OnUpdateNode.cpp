@@ -1,4 +1,4 @@
-#include "Editor/Windows/UINodeEditor/Nodes/OnUpdateNode.hpp"
+#include "Editor/Windows/UINodeEditor/Interfaces/OnUpdateNode.hpp"
 #include "Editor/Windows/UINodeEditor.hpp"
 #include "Core/Utils/Metadata.hpp"
 

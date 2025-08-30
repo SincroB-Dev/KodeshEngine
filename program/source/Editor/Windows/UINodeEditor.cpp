@@ -5,7 +5,7 @@
 
 #include "Editor/UI/UITooltip.hpp"
 
-#include "Editor/Windows/UINodeEditor/Nodes/InputEventNode.hpp"
+#include "Editor/Windows/UINodeEditor/Interfaces/InputEventNode.hpp"
 
 #include <iostream>
 #include <algorithm>

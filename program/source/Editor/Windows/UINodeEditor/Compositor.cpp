@@ -1,6 +1,6 @@
 #include "Editor/Windows/UINodeEditor/Compositor.hpp"
-#include "Editor/Windows/UINodeEditor/Nodes/InputEventNode.hpp"
-#include "Editor/Windows/UINodeEditor/Nodes/OnUpdateNode.hpp"
+#include "Editor/Windows/UINodeEditor/Interfaces/InputEventNode.hpp"
+#include "Editor/Windows/UINodeEditor/Interfaces/OnUpdateNode.hpp"
 #include <ImGuiNodeEditor/imgui_node_editor.h>
 #include <memory>
 

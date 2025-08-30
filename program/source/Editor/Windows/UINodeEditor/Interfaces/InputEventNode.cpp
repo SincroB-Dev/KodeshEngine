@@ -1,4 +1,4 @@
-#include "Editor/Windows/UINodeEditor/Nodes/InputEventNode.hpp"
+#include "Editor/Windows/UINodeEditor/Interfaces/InputEventNode.hpp"
 #include "Editor/Windows/UINodeEditor.hpp"
 
 #include "Core/Utils/Metadata.hpp"
