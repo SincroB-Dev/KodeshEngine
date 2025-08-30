@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Editor/Windows/UINodeEditor/Node/NodeEnums.hpp"
+#include "Editor/Windows/UINodeEditor/Node/NodeEnums.hpp" // Já incluí o metadata
 #include "Editor/Windows/UINodeEditor/Node/Socket.hpp"
 
 #include <string>
@@ -18,10 +18,20 @@ namespace editor::nodes
 		Socket* SocketPtr;
 
 		core::MetaType Type;
+		const core::TypeDescriptor* Descriptor;
+
 		SocketValue Value;
 		char InputBuffer[256];
 
 		std::string Help;
+
+		NodeValue(core::MetaType type, SocketValue value, std::string help = "")
+			: SocketPtr(nullptr), Type(type), Descriptor(nullptr), Value(value), Help(help)
+		{}
+
+		NodeValue(const core::TypeDescriptor* descriptor, SocketValue value, std::string help = "")
+			: SocketPtr(nullptr), Type(descriptor->Type), Descriptor(descriptor), Value(value), Help(help)
+		{}
 
 		/**
 		 * @brief Retorna o valor inteiro, garantindo sempre um valor.
@@ -121,9 +131,5 @@ namespace editor::nodes
 
 			return nullptr;
 		}
-
-		NodeValue(core::MetaType type, SocketValue value, std::string help = "")
-			: SocketPtr(nullptr), Type(type), Value(value), Help(help)
-		{}
 	};
 }
