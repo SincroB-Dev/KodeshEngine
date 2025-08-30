@@ -72,7 +72,10 @@ namespace editor::ui
 		// Identificador único do botão, evitando o uso do UniqueID para componentes de interface
 		ImGui::PushID(this);
 		{
-			if (ImGui::Button(label.c_str(), ImVec2(80, 25)) && !m_IsAwaiting)
+			float width = ImGui::CalcItemWidth(); // pega o que PushItemWidth definir, ou tamanho default
+    		width = (width < 80) ? 80 : width;
+
+			if (ImGui::Button(label.c_str(), ImVec2(width, 25)) && !m_IsAwaiting)
 			{
 				if (s_CurrentAwaiting == nullptr)
 				{
