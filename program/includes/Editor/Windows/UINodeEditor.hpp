@@ -5,7 +5,7 @@
 
 #include <ImGuiNodeEditor/imgui_node_editor.h>
 
-#include "Editor/Windows/UINodeEditor/Nodes/Node.hpp"
+#include "Editor/Windows/UINodeEditor/Node/Node.hpp"
 
 #include "Core/Utils/Metadata.hpp"
 #include "Core/Renderer/Renderer.hpp"

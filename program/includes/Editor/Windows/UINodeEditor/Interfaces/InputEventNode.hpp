@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Editor/Windows/UINodeEditor/Nodes/Node.hpp"
+#include "Editor/Windows/UINodeEditor/Node/Node.hpp"
 #include "Editor/UI/UIPressButton.hpp"
 #include "Core/Input/InputManager.hpp"
 
