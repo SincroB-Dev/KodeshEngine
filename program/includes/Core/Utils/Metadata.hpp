@@ -2,6 +2,7 @@
 
 #include <cstddef> // size_t
 #include <iterator>
+#include <array>
 
 #define ENUM_VALUE(name) { #name, static_cast<int>(T::name) }
 
@@ -41,6 +42,15 @@ namespace core
 	    constexpr Span(T* first, T* last) noexcept : data_(first), size_(last - first) {}
 
 	    template<size_t N>
+		constexpr Span(std::array<value_type, N>& arr) noexcept
+		    : data_(arr.data()), size_(N) {}
+
+		// Construtor a partir de std::array const
+		template<size_t N>
+		constexpr Span(const std::array<value_type, N>& arr) noexcept
+		    : data_(arr.data()), size_(N) {}
+
+	    template<size_t N>
 	    constexpr Span(T (&arr)[N]) noexcept : data_(arr), size_(N) {}
 
 	    constexpr iterator begin() const noexcept { return data_; }
@@ -63,11 +73,9 @@ namespace core
 	    int value;
 	};
 
-	// T -> MetaType
-	template<typename T>
 	struct TypeDescriptor
 	{
-	    T type;
+	    MetaType type;
 	    const char* typeName;
 
 	    // Para enums
@@ -81,7 +89,7 @@ namespace core
 	struct EnumRegistry; // default vazio
 
 	template<typename T>
-	inline constexpr TypeDescriptor<T> MakeEnumDescriptor(const char* typeName) 
+	inline constexpr TypeDescriptor MakeEnumDescriptor(const char* typeName) 
 	{
 	    return TypeDescriptor
 	    {
