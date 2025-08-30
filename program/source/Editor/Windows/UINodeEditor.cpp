@@ -253,36 +253,68 @@ namespace editor::nodes
     //----------------------------------
     void UINodeEditor::RenderValue(const char* label, NodeValue* objVal)
     {
-        std::visit([&](auto& v){
-            using T = std::decay_t<decltype(v)>;
-
-            if constexpr (std::is_same_v<T, int>)
+        // Caso seja um enum, ele vai construir um botão para assumir valores.
+        if (objVal->Type == core::MetaType::Enum && objVal->Descriptor != nullptr)
+        {
+            ImGui::PushID(&objVal);
+            
+            if (ImGui::BeginCombo("", EnumToString(*objVal->Descriptor, objVal->GetIntValue()))) 
             {
-                ImGui::InputInt(label, &v);
+                widgets::UINodePopup::OpenPopup(
+                    [objVal]()
+                    {
+                        for (auto& e : objVal->Descriptor->EnumEntries)
+                        {
+                            if (ImGui::Selectable(e.Name, e.Value == objVal->GetIntValue()))
+                            {
+                                objVal->Value = e.Value;
+                                widgets::UINodePopup::Close();
+                            }
+                        }
+                    }, 1
+                );
+                ImGui::CloseCurrentPopup();
+                ImGui::EndCombo();
             }
-            else if constexpr (std::is_same_v<T, float>)
-            {
-                ImGui::InputFloat(label, &v);
-            }
-            else if constexpr (std::is_same_v<T, bool>)
-            {
-                ImGui::Checkbox(label, &v);
-            }
 
-            else if constexpr (std::is_same_v<T, std::string>)
-            {
-                // O ImGui precisa de buffer para a manipulação de strings, pois ele
-                // trabalha com char[]
-                strncpy(objVal->InputBuffer, v.c_str(), sizeof(objVal->InputBuffer));
+            ImGui::PopID();
+        }
 
-                if (ImGui::InputText(label, objVal->InputBuffer, sizeof(objVal->InputBuffer)))
+        // Caso seja outros tipos primitivos.
+        else
+        {
+            std::visit([&](auto& v){
+                using T = std::decay_t<decltype(v)>;
+
+                if constexpr (std::is_same_v<T, int>)
                 {
-                    v = objVal->InputBuffer; // Atualização da string variant;
+                    ImGui::InputInt(label, &v);
                 }
-            }
+                else if constexpr (std::is_same_v<T, float>)
+                {
+                    ImGui::InputFloat(label, &v);
+                }
+                else if constexpr (std::is_same_v<T, bool>)
+                {
+                    ImGui::Checkbox(label, &v);
+                }
 
-        }, objVal->Value);
+                else if constexpr (std::is_same_v<T, std::string>)
+                {
+                    // O ImGui precisa de buffer para a manipulação de strings, pois ele
+                    // trabalha com char[]
+                    strncpy(objVal->InputBuffer, v.c_str(), sizeof(objVal->InputBuffer));
 
+                    if (ImGui::InputText(label, objVal->InputBuffer, sizeof(objVal->InputBuffer)))
+                    {
+                        v = objVal->InputBuffer; // Atualização da string variant;
+                    }
+                }
+
+            }, objVal->Value);
+        }
+
+        // Faz a tooltip
         if (!objVal->Help.empty())
         {
             if (ImGui::IsItemHovered())
@@ -373,7 +405,8 @@ namespace editor::nodes
                     if (objVal->Type == core::MetaType::Int ||
                         objVal->Type == core::MetaType::Float ||
                         objVal->Type == core::MetaType::Bool ||
-                        objVal->Type == core::MetaType::String)
+                        objVal->Type == core::MetaType::String ||
+                        objVal->Type == core::MetaType::Enum)
                     {
                         RenderValue(data.first.c_str(), objVal);
 
@@ -462,6 +495,9 @@ namespace editor::nodes
                 // Inicio de seção diferida.
                 ine::Suspend();
                 {
+                    // Renderização de popups.
+                    widgets::UINodePopup::Render();
+
                     // Renderização da tooltip.
                     UITooltip::Render();
                 }
