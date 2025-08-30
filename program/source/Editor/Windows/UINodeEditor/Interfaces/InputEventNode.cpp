@@ -13,7 +13,7 @@ namespace editor::nodes::compositor
 		// Usado apenas como meio de entrada para a chamada de seu evaluate.
 		AddInput(editor.GetNextId(), "Call", core::MetaType::Flow);
 
-		AddValue("KeyState", core::MetaType::Object, KeyStateEnum::Pressed, "Armazena entradas do usuário para uso posterior.");
+		AddValue("KeyState", &core::KeyStateEnumDescriptor, KeyStateEnum::Pressed, "Indica o status que a tecla deve ter para ativar seu flow.");
 
 		AddOutput(editor.GetNextId(), "Evaluate", core::MetaType::Flow);
 	}
