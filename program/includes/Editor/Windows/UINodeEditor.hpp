@@ -6,6 +6,8 @@
 #include <ImGuiNodeEditor/imgui_node_editor.h>
 
 #include "Editor/Windows/UINodeEditor/Nodes/Node.hpp"
+
+#include "Core/Utils/Metadata.hpp"
 #include "Core/Renderer/Renderer.hpp"
 
 #include <imgui/imgui.h>
@@ -38,7 +40,7 @@ namespace editor::nodes
 		/**
 		 * @brief Pega a cor correspondente ao socket.
 		 **/
-		ImColor GetIconColor(SocketType socketType);
+		ImColor GetIconColor(core::MetaType socketType);
 
 		/**
 		 * @brief Desenha o icone correspondente ao socket, também o preenche quando conectado.

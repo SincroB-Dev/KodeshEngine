@@ -2,6 +2,9 @@
 
 #include <ostream>
 #include <iostream>
+#include <array>
+
+#include "Core/Utils/Metadata.hpp"
 
 namespace core::input
 {
@@ -31,5 +34,21 @@ namespace core::input
 
 	private:
 		KeyStateEnum m_State;
+	};
+}
+
+namespace core
+{
+	/**
+	 * @brief Registro manual de metadados.
+	 **/
+	template<>
+	struct EnumRegistry<input::KeyStateEnum> {
+	    static constexpr std::array<EnumEntry, 4> entries = {{
+	        {"Idle", static_cast<int>(input::KeyStateEnum::Idle)},
+	        {"Pressed", static_cast<int>(input::KeyStateEnum::Pressed)},
+	        {"Held", static_cast<int>(input::KeyStateEnum::Held)},
+	        {"Released", static_cast<int>(input::KeyStateEnum::Released)}
+	    }};
 	};
 }

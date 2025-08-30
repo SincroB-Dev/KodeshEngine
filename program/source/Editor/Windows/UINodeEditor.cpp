@@ -55,19 +55,19 @@ namespace editor::nodes
     //------------------------------
     // Estética
     //------------------------------
-	ImColor UINodeEditor::GetIconColor(SocketType socketType)
+	ImColor UINodeEditor::GetIconColor(core::MetaType socketType)
     {
         switch (socketType)
         {
             default:
-            case SocketType::Flow:     return ImColor(255, 255, 255);
-            case SocketType::Bool:     return ImColor(220,  48,  48);
-            case SocketType::Int:      return ImColor( 68, 201, 156);
-            case SocketType::Float:    return ImColor(147, 226,  74);
-            case SocketType::String:   return ImColor(124,  21, 153);
-            case SocketType::Object:   return ImColor( 51, 150, 215);
-            case SocketType::Function: return ImColor(218,   0, 183);
-            case SocketType::Delegate: return ImColor(255,  48,  48);
+            case core::MetaType::Flow:     return ImColor(255, 255, 255);
+            case core::MetaType::Bool:     return ImColor(220,  48,  48);
+            case core::MetaType::Int:      return ImColor( 68, 201, 156);
+            case core::MetaType::Float:    return ImColor(147, 226,  74);
+            case core::MetaType::String:   return ImColor(124,  21, 153);
+            case core::MetaType::Object:   return ImColor( 51, 150, 215);
+            case core::MetaType::Function: return ImColor(218,   0, 183);
+            case core::MetaType::Delegate: return ImColor(255,  48,  48);
         }
     };
 
@@ -78,14 +78,14 @@ namespace editor::nodes
         color.Value.w = alpha / 255.0f;
         switch (socket.Type)
         {
-            case SocketType::Flow:     iconType = IconType::Flow;   break;
-            case SocketType::Bool:     iconType = IconType::Circle; break;
-            case SocketType::Int:      iconType = IconType::Circle; break;
-            case SocketType::Float:    iconType = IconType::Circle; break;
-            case SocketType::String:   iconType = IconType::Circle; break;
-            case SocketType::Object:   iconType = IconType::Circle; break;
-            case SocketType::Function: iconType = IconType::Circle; break;
-            case SocketType::Delegate: iconType = IconType::Square; break;
+            case core::MetaType::Flow:     iconType = IconType::Flow;   break;
+            case core::MetaType::Bool:     iconType = IconType::Circle; break;
+            case core::MetaType::Int:      iconType = IconType::Circle; break;
+            case core::MetaType::Float:    iconType = IconType::Circle; break;
+            case core::MetaType::String:   iconType = IconType::Circle; break;
+            case core::MetaType::Object:   iconType = IconType::Circle; break;
+            case core::MetaType::Function: iconType = IconType::Circle; break;
+            case core::MetaType::Delegate: iconType = IconType::Square; break;
             default:
                 return;
         }
@@ -370,10 +370,10 @@ namespace editor::nodes
                     NodeValue* objVal = data.second.get();
 
                     // Verifica como prioridade as propriedades anexadas ao node
-                    if (objVal->Type == SocketType::Int ||
-                        objVal->Type == SocketType::Float ||
-                        objVal->Type == SocketType::Bool ||
-                        objVal->Type == SocketType::String)
+                    if (objVal->Type == core::MetaType::Int ||
+                        objVal->Type == core::MetaType::Float ||
+                        objVal->Type == core::MetaType::Bool ||
+                        objVal->Type == core::MetaType::String)
                     {
                         RenderValue(data.first.c_str(), objVal);
 

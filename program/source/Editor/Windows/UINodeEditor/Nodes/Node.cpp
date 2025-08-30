@@ -7,7 +7,7 @@ namespace editor::nodes
 {
  	unsigned int Node::s_NextUIID = 0;
 
-	Socket* Node::AddInput(ine::PinId id, std::string name, SocketType type)
+	Socket* Node::AddInput(ine::PinId id, std::string name, core::MetaType type)
 	{
 		Inputs.emplace_back(std::make_unique<Socket>(id, name, type));
 
@@ -24,7 +24,7 @@ namespace editor::nodes
 		return socket;
 	}
 	
-	Socket* Node::AddOutput(ine::PinId id, std::string name, SocketType type)
+	Socket* Node::AddOutput(ine::PinId id, std::string name, core::MetaType type)
 	{
 		Outputs.emplace_back(std::make_unique<Socket>(id, name, type));
 
@@ -84,29 +84,29 @@ namespace editor::nodes
 		);
 	}
 
-	bool Node::ValidateType(SocketType type, const SocketValue& v)
+	bool Node::ValidateType(core::MetaType type, const SocketValue& v)
 	{
-		if (type == SocketType::Int)
+		if (type == core::MetaType::Int)
 		{
 			return std::holds_alternative<int>(v);
 		}
 
-		else if (type == SocketType::Float)
+		else if (type == core::MetaType::Float)
 		{
 			return std::holds_alternative<float>(v);
 		}
 
-		else if (type == SocketType::Bool)
+		else if (type == core::MetaType::Bool)
 		{
 			return std::holds_alternative<float>(v);
 		}
 
-		else if (type == SocketType::String)
+		else if (type == core::MetaType::String)
 		{
 			return std::holds_alternative<std::string>(v);
 		}
 
-		else if (type == SocketType::Object)
+		else if (type == core::MetaType::Object)
 		{
 			return std::holds_alternative<std::any>(v);
 		}
@@ -114,7 +114,7 @@ namespace editor::nodes
 		return false;
 	}
 
-	SocketValue* Node::AddValue(std::string key, SocketType type, SocketValue value, std::string help)
+	SocketValue* Node::AddValue(std::string key, core::MetaType type, SocketValue value, std::string help)
 	{
 		if (!ValidateType(type, value))
 		{

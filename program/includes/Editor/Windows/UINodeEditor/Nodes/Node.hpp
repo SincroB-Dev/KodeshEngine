@@ -3,6 +3,8 @@
 #include <imgui/imgui.h>
 #include <ImGuiNodeEditor/imgui_node_editor.h>
 
+#include "Core/Utils/Metadata.hpp"
+
 #include <string>
 #include <vector>
 #include <variant>
@@ -21,24 +23,6 @@ namespace editor::nodes
 	// ----------------------------------------
 	//  Enumeradores, controle de informação
 	// ----------------------------------------
-
-	/**
-	 * @brief Define os tipos de dados que podem passar pelos sockets de um nó 
-	 * 		 (Ponto onde a informação entra e sai) 
-	 **/
-	enum class SocketType
-	{
-		Flow,
-		
-		Int,
-		Float,
-		Bool,
-		String,
-		
-		Object,
-		Function,
-		Delegate
-	};
 
 	/**
 	 * @brief Especifica a natureza do socket, entrada ou saída de informações.
@@ -102,10 +86,10 @@ namespace editor::nodes
 		Node* NodePtr;
 		std::vector<Socket*> SocketChilds;
 
-		SocketType Type;
+		core::MetaType Type;
 		SocketKind Kind;
 
-		Socket(ine::PinId id, std::string name, SocketType type)
+		Socket(ine::PinId id, std::string name, core::MetaType type)
 			: ID(id), Name(name), NodePtr(nullptr), Type(type), Kind(SocketKind::Input)
 		{}
 	};
@@ -118,7 +102,7 @@ namespace editor::nodes
 		// Socket responsável pela saída/entrada dos dados, caso nullptr, o valor fica armazenado no node.
 		Socket* SocketPtr;
 
-		SocketType Type;
+		core::MetaType Type;
 		SocketValue Value;
 		char InputBuffer[256];
 
@@ -223,7 +207,7 @@ namespace editor::nodes
 			return nullptr;
 		}
 
-		NodeValue(SocketType type, SocketValue value, std::string help = "")
+		NodeValue(core::MetaType type, SocketValue value, std::string help = "")
 			: SocketPtr(nullptr), Type(type), Value(value), Help(help)
 		{}
 	};
@@ -246,12 +230,12 @@ namespace editor::nodes
 		/**
 		 * @brief Adiciona uma entrada de dados. (Chamando o callback OnAddInput)
 		 **/
-		Socket* AddInput(ine::PinId id, std::string name, SocketType type);
+		Socket* AddInput(ine::PinId id, std::string name, core::MetaType type);
 
 		/**
 		 * @brief Adiciona uma saída de dados. (Chamando o callback OnAddOutput)
 		 **/
-		Socket* AddOutput(ine::PinId id, std::string name, SocketType type);
+		Socket* AddOutput(ine::PinId id, std::string name, core::MetaType type);
 
 		/**
 		 * @brief Remove uma entrada de dados. (Chamando o callback OnRemoveInput)
@@ -266,7 +250,7 @@ namespace editor::nodes
 		/**
 		 * @brief Adiciona uma propriedade de valor ao node.
 		 **/
-		SocketValue* AddValue(std::string key, SocketType type, SocketValue value, std::string help = "");
+		SocketValue* AddValue(std::string key, core::MetaType type, SocketValue value, std::string help = "");
 
 		/**
 		 * @grief Retorna o ponteiro do valor de um node.
@@ -349,7 +333,7 @@ namespace editor::nodes
 		/**
 		 * @brief Faz a validação do tipo que será inserido.
 		 **/
-		bool ValidateType(SocketType type, const SocketValue& v);
+		bool ValidateType(core::MetaType type, const SocketValue& v);
 
 	private:
 		static unsigned int s_NextUIID;

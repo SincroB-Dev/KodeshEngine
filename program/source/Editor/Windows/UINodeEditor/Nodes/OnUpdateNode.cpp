@@ -1,11 +1,12 @@
 #include "Editor/Windows/UINodeEditor/Nodes/OnUpdateNode.hpp"
 #include "Editor/Windows/UINodeEditor.hpp"
+#include "Core/Utils/Metadata.hpp"
 
 namespace editor::nodes::compositor
 {
 	void OnUpdateNode::Mount(UINodeEditor& editor)
 	{
-		AddOutput(editor.GetNextId(), "OnEvent", SocketType::Flow);
+		AddOutput(editor.GetNextId(), "OnEvent", core::MetaType::Flow);
 	}
 
 	void OnUpdateNode::Evaluate()
