@@ -51,4 +51,7 @@ namespace core
 	        {"Released", static_cast<int>(input::KeyStateEnum::Released)}
 	    }};
 	};
+
+	static constexpr auto KeyStateEnumDescriptor = 
+		MakeEnumDescriptor<input::KeyStateEnum>("KeyStateEnum");
 }
