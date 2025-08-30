@@ -1,5 +1,9 @@
 #pragma once
 
+#include <array>
+
+#include "Core/Utils/Metadata.hpp"
+
 namespace editor::nodes
 {
 	/**
@@ -46,4 +50,37 @@ namespace editor::nodes
 			static_cast<uint32_t>(a) & static_cast<uint32_t>(b)
 		);
 	}
+}
+
+namespace core
+{
+	/**
+	 * @brief Registro manual de metadados.
+	 **/
+	template<>
+	struct EnumRegistry<editor::nodes::SocketKind> {
+		static constexpr std::array<EnumEntry, 2> entries = {{
+			{"Input", static_cast<int>(editor::nodes::SocketKind::Input)},
+	        {"Output", static_cast<int>(editor::nodes::SocketKind::Output)}
+		}};
+	};
+
+	/**
+	 * @brief Registro manual de metadados.
+	 **/
+	template<>
+	struct EnumRegistry<editor::nodes::NodeType> {
+	    static constexpr std::array<EnumEntry, 8> entries = {{
+	        {"None", static_cast<int>(editor::nodes::NodeType::None)},
+
+	        {"Blueprint", static_cast<int>(editor::nodes::NodeType::Blueprint)},
+	        {"Simple", static_cast<int>(editor::nodes::NodeType::Simple)},
+	        {"Tree", static_cast<int>(editor::nodes::NodeType::Tree)},
+	        {"Comment", static_cast<int>(editor::nodes::NodeType::Comment)},
+	        {"Houdini", static_cast<int>(editor::nodes::NodeType::Houdini)},
+
+	        {"InputEvent", static_cast<int>(editor::nodes::NodeType::InputEvent)},
+	        {"Action", static_cast<int>(editor::nodes::NodeType::Action)}
+	    }};
+	};
 }
