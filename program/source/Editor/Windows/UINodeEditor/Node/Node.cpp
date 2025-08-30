@@ -106,7 +106,7 @@ namespace editor::nodes
 			return std::holds_alternative<std::string>(v);
 		}
 
-		else if (type == core::MetaType::Object)
+		else if (type == core::MetaType::Object || type == core::MetaType::Enum)
 		{
 			return std::holds_alternative<std::any>(v);
 		}
@@ -126,6 +126,21 @@ namespace editor::nodes
 		oss << key << "###N" << static_cast<int>(ID.Get()) << "C" << s_NextUIID++;
 
 		DataSet.emplace(oss.str(), std::make_unique<NodeValue>(type, value, help));
+		return &DataSet[oss.str()]->Value;
+	}
+
+	SocketValue* Node::AddValue(std::string key, const core::TypeDescriptor* descriptor, SocketValue value, std::string help)
+	{
+		if (!ValidateType(descriptor->Type, value))
+		{
+			throw std::runtime_error("Type mismatch in Node::AddValue (using TypeDescriptor)");
+		}
+
+		// Evita trabalho manual de incrementar nomes.
+		std::ostringstream oss;
+		oss << key << "###N" << static_cast<int>(ID.Get()) << "C" << s_NextUIID++;
+
+		DataSet.emplace(oss.str(), std::make_unique<NodeValue>(descriptor, value, help));
 		return &DataSet[oss.str()]->Value;
 	}
 

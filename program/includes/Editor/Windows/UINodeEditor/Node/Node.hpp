@@ -63,6 +63,12 @@ namespace editor::nodes
 		SocketValue* AddValue(std::string key, core::MetaType type, SocketValue value, std::string help = "");
 
 		/**
+		 * @brief Adiciona uma propriedade de valor ao node, utilizando o typedescriptor.
+		 **/
+		SocketValue* AddValue(std::string key, const core::TypeDescriptor* descriptor, SocketValue value, std::string help = "");
+
+
+		/**
 		 * @grief Retorna o ponteiro do valor de um node.
 		 **/
 		NodeValue* GetValue(std::string key);
