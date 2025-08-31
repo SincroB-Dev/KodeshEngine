@@ -66,6 +66,16 @@ namespace editor::ui
 		void SetCaptured(int code = -1);
 		
 		/**
+		 * @brief Retorna o tipo de captura.
+		 **/
+		UserInputEnum GetType() { return m_Type; }
+
+		/**
+		 * @brief Seta o tipo de captura, limpando o m_Code.
+		 **/
+		void SetType(UserInputEnum type) { SetCaptured(-1); m_Type = type; }
+
+		/**
 		 * @brief Faz um reset em propriedades essenciais do botão, sendo m_IsAwaiting, m_Code, 
 		 * 		  e também reseta a singletron s_CurrentAwaiting.
 		 **/
