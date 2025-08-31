@@ -3,6 +3,10 @@
 #include <sstream>
 #include <string>
 
+#include "Core/Helpers/LogManager.hpp"
+
+using namespace core::systems;
+
 namespace editor::nodes
 {
  	unsigned int Node::s_NextUIID = 0;
@@ -15,6 +19,8 @@ namespace editor::nodes
 
 		socket->NodePtr = this;
         socket->Kind = SocketKind::Input;
+
+        LogManager::Log(LogType::EDebug, "node: ", this->Name, " socket kind: ", core::EnumToString(core::SocketKindDescriptor, static_cast<int>(socket->Kind)));
 
 		if (OnAddInput)
 		{
@@ -32,6 +38,8 @@ namespace editor::nodes
 
 		socket->NodePtr = this;
         socket->Kind = SocketKind::Output;
+
+        LogManager::Log(LogType::EDebug, "node: ", this->Name, "socket kind: ", core::EnumToString(core::SocketKindDescriptor, static_cast<int>(socket->Kind)));
 
 		if (OnAddOutput)
 		{
