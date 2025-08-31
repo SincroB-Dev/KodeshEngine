@@ -67,7 +67,7 @@ namespace core::systems
          * @brief Efetua um log na instancia singletron.
          **/
         template<typename... Args>
-        static void Log(LogType type, Args&... msgs);
+        static void Log(LogType type, const Args&... msgs);
 
         /**
          * @brief Captura de listagem de logs do Main.
@@ -81,7 +81,7 @@ namespace core::systems
     };
 
     template<typename... Args>
-    void LogManager::Log(LogType type, Args&... msg)
+    void LogManager::Log(LogType type, const Args&... msg)
     {
         if (Main != nullptr)
         {
