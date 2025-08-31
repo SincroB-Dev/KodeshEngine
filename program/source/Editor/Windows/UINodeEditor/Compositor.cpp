@@ -1,6 +1,7 @@
 #include "Editor/Windows/UINodeEditor/Compositor.hpp"
 #include "Editor/Windows/UINodeEditor/Interfaces/InputEventNode.hpp"
 #include "Editor/Windows/UINodeEditor/Interfaces/OnUpdateNode.hpp"
+
 #include <ImGuiNodeEditor/imgui_node_editor.h>
 #include <memory>
 
@@ -29,11 +30,17 @@ namespace editor::nodes::compositor
 	// Inputs básicos
 	//-----------------------------
 
-	Node* Compositor::InputEventNode(core::app::KodeshApplication& app, UINodeEditor* editor)
-	{
+	Node* Compositor::InputEventNode(
+        core::app::KodeshApplication& app, UINodeEditor* editor, 
+        int code, core::input::KeyStateEnum state, ui::UserInputEnum userInput
+    ) {
 		auto& refNodes = editor->m_Nodes;
 
-		auto node = std::make_unique<compositor::InputEventNode>(editor->GetNextId(), app.GetInputManager());
+		auto node = std::make_unique<compositor::InputEventNode>(
+            editor->GetNextId(), app.GetInputManager(), 
+            code, state, userInput
+        );
+
 		Node* ptr = node.get();
 
         refNodes.emplace_back(std::move(node));
