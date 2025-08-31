@@ -18,8 +18,8 @@ namespace editor::ui
 
 			    if (ImGui::IsKeyPressed(imguiKey))
 			    {
-			    	if ((m_Type == UIPressButtonType::Keyboard && key >= ImGuiKey_MouseLeft) ||
-			    		(m_Type == UIPressButtonType::MouseButton && key < ImGuiKey_MouseLeft))
+			    	if ((m_Type == UserInputEnum::Keyboard && key >= ImGuiKey_MouseLeft) ||
+			    		(m_Type == UserInputEnum::MouseButton && key < ImGuiKey_MouseLeft))
 			    	{
 			    		SetCaptured(-1);
 			    		break;

@@ -26,7 +26,7 @@ namespace editor::nodes::compositor
 
 		InputEventNode(ine::NodeId id, core::input::InputManager& inputs)
 			: Node(id, "InputEventNode", ImColor(21, 89, 107)/*Azul Levemente Escuro*/),
-			Button(ui::UIPressButtonType::Keyboard, "<Empty>", "<Press Key>"),
+			Button(ui::UserInputEnum::Keyboard, "<Empty>", "<Press Key>"),
 			m_InputManager(inputs)
 		{}
 
