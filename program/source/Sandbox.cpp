@@ -189,6 +189,11 @@ namespace sandbox
 	        transform->position.x += 10.0f * dt;
 	    }, KeyStateEnum::Held);
 
+	    std::cout << SDLK_w << std::endl;
+	    std::cout << SDLK_a << std::endl;
+	    std::cout << SDLK_s << std::endl;
+	    std::cout << SDLK_d << std::endl;
+
 	    return playable;
 	}
 
