@@ -191,7 +191,7 @@ namespace editor::nodes
             std::swap(a, b);
         }
 
-        return true;
+        return !IsSocketLinked(b->ID);
     }
 
     //----------------------------------------
