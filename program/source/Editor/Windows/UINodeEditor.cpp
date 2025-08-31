@@ -7,10 +7,14 @@
 
 #include "Editor/Windows/UINodeEditor/Interfaces/InputEventNode.hpp"
 
+#include "Core/Maths/ImGuiOperators.hpp"
+
 #include <iostream>
 #include <algorithm>
 #include <variant>
 #include <string>
+
+#include <imgui/imgui_internal.h>
 
 using namespace core::systems;
 using namespace core::renderer;
@@ -55,6 +59,19 @@ namespace editor::nodes
     //------------------------------
     // Estética
     //------------------------------
+    ImColor UINodeEditor::GetHeaderColor(Node* node, int opacity)
+    {
+        // Verde Musgo para eventos do tipo OnUpdate/OnStart/OnDestroy
+        if (node->IsAnyType(NodeType::Action))          return ImColor(102, 128,  51, opacity);
+        // Azul Acinzentado para Inputs de usuário
+        else if (node->IsAnyType(NodeType::InputEvent)) return ImColor( 02, 128, 153, opacity);
+        // [Reservado] Vermelho Sangue para scripts Lua
+        // [Reservado] Laranja Escuro para saídas de resultado
+
+        // Cor branca neutra para itens não classificados.
+        return ImColor(255,255,255,opacity);
+    }
+
 	ImColor UINodeEditor::GetIconColor(core::MetaType socketType)
     {
         switch (socketType)
@@ -324,6 +341,55 @@ namespace editor::nodes
         }
     }
 
+    void UINodeEditor::RenderHeader(Node* node, ImVec4 headerColorVec, float paddingX, float paddingTop, float headerHeight)
+    {
+        // Posição e largura do node
+        ImVec2 nodePos = ImGui::GetItemRectMin();
+        float nodeWidth = ImGui::GetItemRectSize().x;
+
+        // Retângulo do header
+        ImVec2 headerMin(nodePos.x + paddingX, nodePos.y + paddingTop);
+        ImVec2 headerMax(nodePos.x + nodeWidth - paddingX, nodePos.y + headerHeight);
+
+        auto alpha = ImGui::GetStyle().Alpha;
+        ImU32 headerColor = ImGui::ColorConvertFloat4ToU32(
+            ImVec4(headerColorVec.x, headerColorVec.y, headerColorVec.z, headerColorVec.w * alpha)
+        );
+
+        auto drawList = ine::GetNodeBackgroundDrawList(node->ID);
+        const float halfBorder = ine::GetStyle().NodeBorderWidth * 0.5f;
+
+        if ((headerMax.x > headerMin.x) && (headerMax.y > headerMin.y) && m_HeaderBackground)
+        {
+            // UVs
+            const float texW = static_cast<float>(m_Renderer.GetTextureWidth(m_HeaderBackground));
+            const float texH = static_cast<float>(m_Renderer.GetTextureHeight(m_HeaderBackground));
+            ImVec2 uv((headerMax.x - headerMin.x) / (4.0f * texW), (headerMax.y - headerMin.y) / (4.0f * texH));
+
+            // Draw header image arredondado
+            drawList->AddImageRounded(
+                m_HeaderBackground,
+                headerMin - ImVec2(paddingX - halfBorder, paddingTop - halfBorder),
+                headerMax + ImVec2(paddingX - halfBorder, 0),
+                ImVec2(0.0f, 0.0f), uv,
+    #if IMGUI_VERSION_NUM > 18101
+                headerColor, ine::GetStyle().NodeRounding, ImDrawFlags_RoundCornersTop
+    #else
+                headerColor, ine::GetStyle().NodeRounding, 1 | 2
+    #endif
+            );
+
+            // Linha de separação sutil
+            drawList->AddLine(
+                ImVec2(headerMin.x - (paddingX - halfBorder), headerMax.y - 0.5f),
+                ImVec2(headerMax.x + (paddingX - halfBorder), headerMax.y - 0.5f),
+                ImColor(255, 255, 255, static_cast<int>(96.0f * alpha / 3.0f)),
+                1.0f
+            );
+        }
+    }
+
+
     void UINodeEditor::RenderBlueprintNode(Node* node)
     {
         auto& io = ImGui::GetIO();
@@ -445,6 +511,9 @@ namespace editor::nodes
         ImGui::EndGroup();
 
         ine::EndNode();
+
+        // Trabalha no header do node
+        RenderHeader(node, GetHeaderColor(node));
     }
 
 	void UINodeEditor::OnImGuiRender()

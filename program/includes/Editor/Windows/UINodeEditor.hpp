@@ -38,6 +38,12 @@ namespace editor::nodes
 		int GetNextId();
 
 		/**
+		 * @brief Pega a cor correspondente ao tipo de node, a cor do header poderá indicar
+		 * 		  status, tipo, ou até mesmo ativação.
+		 **/
+		ImColor GetHeaderColor(Node* nodeType, int opacity = 200);
+
+		/**
 		 * @brief Pega a cor correspondente ao socket.
 		 **/
 		ImColor GetIconColor(core::MetaType socketType);
@@ -113,6 +119,11 @@ namespace editor::nodes
 		 * @brief Desenha os campos editaveis do node. 
 		 **/
 		void RenderValue(const char* label, NodeValue* value);
+
+		/**
+		 * @brief Coloca uma imagem de fundo no header do node 
+		 **/
+		void RenderHeader(Node* node, ImVec4 headerColorVec, float paddingX = 8.0f, float paddingTop = 4.0f, float headerHeight = 28.0f);
 
 		/**
 		 * @brief Desenha um nó de blueprint (GameLogic). 
