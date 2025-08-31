@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Editor/UI/UIComponent.hpp"
 #include "Core/Utils/UniqueIDGen.hpp"
 #include "Core/Utils/Metadata.hpp"
