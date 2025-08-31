@@ -108,6 +108,6 @@ namespace core
 		}};
 	};
 
-	static constexpr auto UserInputEnumDescriptor = 
+	static inline constexpr auto UserInputEnumDescriptor = 
 		MakeEnumDescriptor<editor::ui::UserInputEnum>("UserInputEnum");
 }

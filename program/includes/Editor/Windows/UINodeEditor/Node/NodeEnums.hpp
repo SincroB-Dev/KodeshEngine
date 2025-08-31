@@ -65,7 +65,7 @@ namespace core
 		}};
 	};
 
-	static constexpr auto SocketKindDescriptor =
+	static inline constexpr auto SocketKindDescriptor =
 		MakeEnumDescriptor<editor::nodes::SocketKind>("SocketKind");
 
 	/**
@@ -87,6 +87,6 @@ namespace core
 	    }};
 	};
 
-	static constexpr auto NodeTypeDescriptor = 
+	static inline constexpr auto NodeTypeDescriptor = 
 		MakeEnumDescriptor<editor::nodes::NodeType>("NodeType");
 }

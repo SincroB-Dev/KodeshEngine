@@ -52,6 +52,6 @@ namespace core
 	    }};
 	};
 
-	static constexpr auto KeyStateEnumDescriptor = 
+	static inline constexpr auto KeyStateEnumDescriptor = 
 		MakeEnumDescriptor<input::KeyStateEnum>("KeyStateEnum");
 }
