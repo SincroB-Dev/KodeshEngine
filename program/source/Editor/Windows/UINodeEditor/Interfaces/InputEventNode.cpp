@@ -15,13 +15,13 @@ namespace editor::nodes::compositor
 
 		AddValue(
 			"UserInput", 
-			&core::UserInputEnumDescriptor, static_cast<int>(ui::UserInputEnum::Keyboard), 
+			&core::UserInputEnumDescriptor, static_cast<int>(Button.GetType()), 
 			"Indica qual o tipo de entrada (teclado/mouse/gamepad)."
 		);
 
 		AddValue(
 			"InputState", 
-			&core::KeyStateEnumDescriptor, static_cast<int>(KeyStateEnum::Pressed), 
+			&core::KeyStateEnumDescriptor, static_cast<int>(State), 
 			"Indica o status que a tecla deve ter para ativar seu flow."
 		);
 

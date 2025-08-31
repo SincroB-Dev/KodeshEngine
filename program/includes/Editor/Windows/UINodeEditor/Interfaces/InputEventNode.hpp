@@ -23,11 +23,16 @@ namespace editor::nodes::compositor
 	{
 	public:
 		ui::UIPressButton Button;
+		core::input::KeyStateEnum State;
 
-		InputEventNode(ine::NodeId id, core::input::InputManager& inputs)
+		InputEventNode(ine::NodeId id, core::input::InputManager& inputs, 
+				int defaultKey = -1, 
+				core::input::KeyStateEnum state = core::input::KeyStateEnum::Idle, 
+				ui::UserInputEnum userInput = ui::UserInputEnum::Keyboard
+			)
 			: Node(id, "InputEventNode", ImColor(21, 89, 107)/*Azul Levemente Escuro*/),
-			Button(ui::UserInputEnum::Keyboard, "<Empty>", "<Press Key>"),
-			m_InputManager(inputs)
+			Button(userInput, "<Empty>", "<Press Key>", defaultKey),
+			State(state), m_InputManager(inputs)
 		{}
 
 		void Mount(UINodeEditor& editor) override;
