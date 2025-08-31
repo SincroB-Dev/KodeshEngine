@@ -203,16 +203,27 @@ namespace editor::nodes
             a->NodePtr == b->NodePtr  // Verifica se apontam para o mesmo proprietário
         )
         {
+            LogManager::Log(LogType::EDebug, "Conexão inválida! ");
             return false;
         }
 
         // Garantia de que a sempre será o socket de saída e b sempre será o socket de entrada.
         if (a->Kind == SocketKind::Input)
         {
+            LogManager::Log(LogType::EDebug, "Invertendo conexão de sockets! ");
             std::swap(a, b);
         }
 
-        return !IsSocketLinked(b->ID);
+        for (auto& link : m_Links)
+        {
+            if (link->Output->ID == a->ID && link->Input->ID == b->ID)
+            {
+                LogManager::Log(LogType::EDebug, "Sockets já linkados!");
+                return false;
+            }
+        }
+
+        return true;
     }
 
     //----------------------------------------
