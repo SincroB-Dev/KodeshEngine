@@ -44,5 +44,11 @@ namespace editor::nodes::compositor
 		 * @brief Node que sempre vai entregar uma saída verdadeira, ativando sempre aquele conectado. 
 		 **/
 		static Node* OnUpdateNode(core::app::KodeshApplication& app, UINodeEditor* editor);
+
+
+		//----------------------------
+		// Conexões
+		//----------------------------
+		static void Connect(UINodeEditor* editor, Socket* output, Socket* input);
 	};
 }

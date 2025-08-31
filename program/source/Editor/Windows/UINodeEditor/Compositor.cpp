@@ -69,4 +69,12 @@ namespace editor::nodes::compositor
     
         return ptr;
 	}
+
+    void Compositor::Connect(UINodeEditor* editor, Socket* output, Socket* input)
+    {
+        if (editor->CanCreateLink(output, input))
+        {
+            editor->m_Links.push_back(std::make_unique<Link>(editor->GetNextId(), output, input));
+        }
+    }
 }
