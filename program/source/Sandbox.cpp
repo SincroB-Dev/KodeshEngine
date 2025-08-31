@@ -266,15 +266,19 @@ namespace sandbox
 		auto nodeWin = std::make_unique<nodes::UINodeEditor>(app.GetRenderer());
 		// Construção dos nodes.
 		{
-
 			// Conversão de teclas na mão por enquanto, teclas + (magic number 449)
 			// sendo a distancia fixa de SDLK para ImGuiKeyCode.
-			comp::Compositor::InputEventNode(app, nodeWin.get(), SDLK_w + 449);
-			comp::Compositor::InputEventNode(app, nodeWin.get(), SDLK_a + 449);
-			comp::Compositor::InputEventNode(app, nodeWin.get(), SDLK_s + 449);
-			comp::Compositor::InputEventNode(app, nodeWin.get(), SDLK_d + 449);
+			auto inputW = comp::Compositor::InputEventNode(app, nodeWin.get(), SDLK_w + 449);
+			auto inputA = comp::Compositor::InputEventNode(app, nodeWin.get(), SDLK_a + 449);
+			auto inputS = comp::Compositor::InputEventNode(app, nodeWin.get(), SDLK_s + 449);
+			auto inputD = comp::Compositor::InputEventNode(app, nodeWin.get(), SDLK_d + 449);
 			
-			comp::Compositor::OnUpdateNode(app, nodeWin.get());
+			auto onUpdate = comp::Compositor::OnUpdateNode(app, nodeWin.get());
+			
+			comp::Compositor::Connect(nodeWin.get(), onUpdate->Outputs[0].get(), inputW->Inputs[0].get());
+			comp::Compositor::Connect(nodeWin.get(), onUpdate->Outputs[0].get(), inputA->Inputs[0].get());
+			comp::Compositor::Connect(nodeWin.get(), onUpdate->Outputs[0].get(), inputS->Inputs[0].get());
+			comp::Compositor::Connect(nodeWin.get(), onUpdate->Outputs[0].get(), inputD->Inputs[0].get());
 		}
 		ui.AddWindow(std::move(nodeWin));
 
