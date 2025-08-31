@@ -2,6 +2,7 @@
 #include "Core/Utils/UniqueIDGen.hpp"
 
 #include <functional>
+#include <array>
 
 namespace editor::ui
 {
@@ -93,4 +94,19 @@ namespace editor::ui
 		// Usado para evitar que mais de um botão entre no estado de espera de um key code.
 		static UIPressButton* s_CurrentAwaiting;
 	};
+}
+
+namespace core
+{
+	template<>
+	struct EnumRegistry<editor::ui::UIPressButtonType> {
+		static constexpr std::array<EnumEntry, 3> entries = {{
+			{ "Keyboard", editor::ui::Keyboard },
+			{ "MouseButton", editor::ui::MouseButton },
+			{ "JoyButton", editor::ui::JoyButton }
+		}};
+	};
+
+	static constexpr auto UIPressButtonTypeDescriptor = 
+		MakeEnumDescriptor<editor::ui::UIPressButtonType>("UIPressButtonType");
 }
