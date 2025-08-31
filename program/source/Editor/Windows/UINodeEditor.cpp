@@ -1,12 +1,10 @@
 #include <ImGuiNodeEditor/imgui_node_editor.h>
 
-#include "Core/Helpers/LogManager.hpp"
-#include "Editor/Windows/UINodeEditor.hpp"
-
 #include "Editor/UI/UITooltip.hpp"
-
+#include "Editor/Windows/UINodeEditor.hpp"
 #include "Editor/Windows/UINodeEditor/Interfaces/InputEventNode.hpp"
 
+#include "Core/Helpers/LogManager.hpp"
 #include "Core/Maths/ImGuiOperators.hpp"
 
 #include <iostream>
@@ -182,11 +180,17 @@ namespace editor::nodes
     bool UINodeEditor::IsSocketLinked(ine::PinId id) const
     {
         if (!id)
+        {
             return false;
+        }
 
         for (auto& link : m_Links)
+        {
             if (link->Output->ID == id || link->Input->ID == id)
+            {
                 return true;
+            }
+        }
 
         return false;
     }
