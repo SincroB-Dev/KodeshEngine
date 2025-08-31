@@ -1,0 +1,47 @@
+#pragma once
+
+#include "Editor/Windows/UINodeEditor/Node/Node.hpp"
+#include "Editor/UI/UIPressButton.hpp"
+#include "Core/Input/InputManager.hpp"
+
+#include <ImGuiNodeEditor/imgui_node_editor.h>
+
+namespace ine = ax::NodeEditor;
+
+namespace editor::nodes
+{
+	class UINodeEditor;
+}
+
+namespace editor::nodes::compositor
+{
+	/**
+	 * @brief Este node é chamado em todo frame da do game, ele é o principal
+	 * 		  responsável por desencadear a corrente de eventos que ocorrem.
+	 **/
+	class InputEventNode : public Node
+	{
+	public:
+		ui::UIPressButton Button;
+		core::input::KeyStateEnum State;
+
+		InputEventNode(ine::NodeId id, core::input::InputManager& inputs, 
+				int defaultKey = -1, 
+				core::input::KeyStateEnum state = core::input::KeyStateEnum::Idle, 
+				ui::UserInputEnum userInput = ui::UserInputEnum::Keyboard
+			)
+			: Node(id, "InputEventNode", ImColor(21, 89, 107)/*Azul Levemente Escuro*/),
+			Button(userInput, "<Empty>", "<Press Key>", defaultKey),
+			State(state), m_InputManager(inputs)
+		{}
+
+		void Mount(UINodeEditor& editor) override;
+
+		void Evaluate() override;
+
+		NodeType GetType() const override { return NodeType::Blueprint | NodeType::InputEvent; }
+
+	private:
+		core::input::InputManager& m_InputManager;
+	};
+}
