@@ -1,7 +1,12 @@
 #include "Editor/UI/UIPressButton.hpp"
 #include "Editor/UI/UITooltip.hpp"
 
+#include "Core/Helpers/LogManager.hpp"
+
+#include <string>
 #include <imgui/imgui.h>
+
+using namespace core::systems;
 
 namespace editor::ui
 {
@@ -40,6 +45,11 @@ namespace editor::ui
         m_IsAwaiting = false;
 
         s_CurrentAwaiting = nullptr;
+
+        if (code > 0)
+        {
+        	LogManager::Log(LogType::EDebug, "keycode: ", std::to_string(code), " keyname: ", m_Captured);
+        }
 	}
 
 	void UIPressButton::ResetButtonState()
