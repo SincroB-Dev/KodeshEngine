@@ -13,14 +13,24 @@ namespace editor::nodes::compositor
 		// Usado apenas como meio de entrada para a chamada de seu evaluate.
 		AddInput(editor.GetNextId(), "Call", core::MetaType::Flow);
 
-		AddValue("KeyState", &core::KeyStateEnumDescriptor, KeyStateEnum::Pressed, "Indica o status que a tecla deve ter para ativar seu flow.");
+		AddValue(
+			"UserInput", 
+			&core::UserInputEnumDescriptor, static_cast<int>(ui::UserInputEnum::Keyboard), 
+			"Indica qual o tipo de entrada (teclado/mouse/gamepad)."
+		);
+
+		AddValue(
+			"InputState", 
+			&core::KeyStateEnumDescriptor, static_cast<int>(KeyStateEnum::Pressed), 
+			"Indica o status que a tecla deve ter para ativar seu flow."
+		);
 
 		AddOutput(editor.GetNextId(), "Evaluate", core::MetaType::Flow);
 	}
 
 	void InputEventNode::Evaluate()
 	{
-		KeyStateEnum state = *GetValue("KeyState")->GetObjectPtr<KeyStateEnum>();
+		KeyStateEnum state = *GetValue("InputState")->GetObjectPtr<KeyStateEnum>();
 
 		if (m_InputManager.GetState(Button.GetCode()) == state)
 		{
