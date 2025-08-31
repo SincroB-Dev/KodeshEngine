@@ -266,7 +266,14 @@ namespace sandbox
 		auto nodeWin = std::make_unique<nodes::UINodeEditor>(app.GetRenderer());
 		// Construção dos nodes.
 		{
-			comp::Compositor::InputEventNode(app, nodeWin.get());
+
+			// Conversão de teclas na mão por enquanto, teclas + (magic number 449)
+			// sendo a distancia fixa de SDLK para ImGuiKeyCode.
+			comp::Compositor::InputEventNode(app, nodeWin.get(), SDLK_w + 449);
+			comp::Compositor::InputEventNode(app, nodeWin.get(), SDLK_a + 449);
+			comp::Compositor::InputEventNode(app, nodeWin.get(), SDLK_s + 449);
+			comp::Compositor::InputEventNode(app, nodeWin.get(), SDLK_d + 449);
+			
 			comp::Compositor::OnUpdateNode(app, nodeWin.get());
 		}
 		ui.AddWindow(std::move(nodeWin));
