@@ -27,8 +27,9 @@ namespace editor::nodes
 		Comment   = 1 << 3, // Para organização visual
 		Houdini   = 1 << 4, // Nó especial de integração externa
 
-		InputEvent = 1 << 8, // Nó que trabalha com entrada de inputs de usuário (teclado, mouse, gamepad)
+		InputEvent = 1 << 8,  // Nó que trabalha com entrada de inputs de usuário (teclado, mouse, gamepad)
 		Action     = 1 << 10, // Indica que é um nó de ação, ele tem seu Evaluate chamado no OnUpdate da engine
+		Result     = 1 << 11  // Indica que é um nó de resultados.
 	};
 
 	/**
@@ -73,7 +74,7 @@ namespace core
 	 **/
 	template<>
 	struct EnumRegistry<editor::nodes::NodeType> {
-	    static constexpr std::array<EnumEntry, 8> entries = {{
+	    static constexpr std::array<EnumEntry, 9> entries = {{
 	        {"None", static_cast<int>(editor::nodes::NodeType::None)},
 
 	        {"Blueprint", static_cast<int>(editor::nodes::NodeType::Blueprint)},
@@ -83,7 +84,8 @@ namespace core
 	        {"Houdini", static_cast<int>(editor::nodes::NodeType::Houdini)},
 
 	        {"InputEvent", static_cast<int>(editor::nodes::NodeType::InputEvent)},
-	        {"Action", static_cast<int>(editor::nodes::NodeType::Action)}
+	        {"Action", static_cast<int>(editor::nodes::NodeType::Action)},
+	        {"Result", static_cast<int>(editor::nodes::NodeType::Result)}
 	    }};
 	};
 
