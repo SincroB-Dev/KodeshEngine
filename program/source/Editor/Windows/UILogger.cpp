@@ -63,7 +63,7 @@ namespace editor::windows
                 case LogType::Info:    color = ImVec4(0.4f, 1.0f, 0.4f, 1.0f); icon = MICON_INFO; break;
                 case LogType::Warning: color = ImVec4(1.0f, 0.9f, 0.0f, 1.0f); icon = MICON_WARNING; break;
                 case LogType::Error:   color = ImVec4(1.0f, 0.4f, 0.4f, 1.0f); icon = MICON_ERROR; break;
-                case LogType::EDebug:   color = ImVec4(1.0f, 0.4f, 0.4f, 1.0f); icon = MICON_BUG_REPORT; break;
+                case LogType::EDebug:  color = ImVec4(1.0f, 0.7f, 0.3f, 1.0f); icon = MICON_BUG_REPORT; break;
             }
 
             ImGui::PushStyleColor(ImGuiCol_Text, color);
