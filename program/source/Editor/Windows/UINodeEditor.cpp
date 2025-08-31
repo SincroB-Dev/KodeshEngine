@@ -64,7 +64,8 @@ namespace editor::nodes
         // Azul Acinzentado para Inputs de usuário
         else if (node->IsAnyType(NodeType::InputEvent)) return ImColor( 02, 128, 153, opacity);
         // [Reservado] Vermelho Sangue para scripts Lua
-        // [Reservado] Laranja Escuro para saídas de resultado
+        // Laranja Escuro para saídas de resultado
+        else if (node->IsAnyType(NodeType::Result))     return ImColor(204,  85,   0, opacity);
 
         // Cor branca neutra para itens não classificados.
         return ImColor(255,255,255,opacity);
