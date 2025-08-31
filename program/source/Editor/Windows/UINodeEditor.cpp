@@ -253,11 +253,11 @@ namespace editor::nodes
     //----------------------------------
     void UINodeEditor::RenderValue(const char* label, NodeValue* objVal)
     {
+        ImGui::PushID(objVal);
+
         // Caso seja um enum, ele vai construir um botão para assumir valores.
         if (objVal->Type == core::MetaType::Enum && objVal->Descriptor != nullptr)
         {
-            ImGui::PushID(&objVal);
-            
             if (ImGui::BeginCombo("", EnumToString(*objVal->Descriptor, objVal->GetIntValue()))) 
             {
                 widgets::UINodePopup::OpenPopup(
@@ -276,8 +276,6 @@ namespace editor::nodes
                 ImGui::CloseCurrentPopup();
                 ImGui::EndCombo();
             }
-
-            ImGui::PopID();
         }
 
         // Caso seja outros tipos primitivos.
@@ -313,6 +311,8 @@ namespace editor::nodes
 
             }, objVal->Value);
         }
+
+        ImGui::PopID();
 
         // Faz a tooltip
         if (!objVal->Help.empty())
