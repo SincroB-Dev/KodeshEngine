@@ -86,7 +86,7 @@ namespace editor::nodes
 
 	bool Node::ValidateType(core::MetaType type, const SocketValue& v)
 	{
-		if (type == core::MetaType::Int)
+		if (type == core::MetaType::Int || type == core::MetaType::Enum)
 		{
 			return std::holds_alternative<int>(v);
 		}
@@ -106,7 +106,7 @@ namespace editor::nodes
 			return std::holds_alternative<std::string>(v);
 		}
 
-		else if (type == core::MetaType::Object || type == core::MetaType::Enum)
+		else if (type == core::MetaType::Object)
 		{
 			return std::holds_alternative<std::any>(v);
 		}
