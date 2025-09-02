@@ -35,8 +35,8 @@ int main(int argc, char *argv[])
     app.UseRenderer(std::move(renderer));
 
     // Registra sistemas (UInterface, SceneManager, AudioManager, Physics...)
-    app.RegisterSystem<SceneManager>();
-    app.RegisterSystem<UILayerManager>("configs.json"/*path de configurações visuais*/);
+    app.RegisterSystem<SceneManager>(KodeshModeEnum::EDIT_MODE | KodeshModeEnum::PLAY_MODE);
+    app.RegisterSystem<UILayerManager>(KodeshModeEnum::EDIT_MODE, "configs.json"/*path de configurações visuais*/);
 
     // Alguns subsistemas deve ser atualizados, como no caso de UILayerManager que utiliza
     // do SDL/GLFW para sua inicialização. (Atualmente apenas SDL foi implementado)
