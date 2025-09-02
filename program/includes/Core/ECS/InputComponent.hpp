@@ -13,7 +13,7 @@ namespace core
 {
 	namespace ecs
 	{
-		using ComponentCallbackFn = std::function<void(double&/*deltatime*/)>;
+		using ComponentCallbackFn = std::function<void(EntityRegistry& entities, double&/*deltatime*/)>;
 
 		struct InputAction
 		{
