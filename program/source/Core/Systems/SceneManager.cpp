@@ -34,12 +34,6 @@ namespace core
 			// Adiciona o sistema de renderização da cena
     		scn->AddRenderSystem(std::make_unique<ecs::RenderSystem>(GetRenderQueue()));
 
-    		// Adiciona outros sistemas a cena / Esses sistemas somente serão adicionados quando requisitado
-    		// devido eles funcionarem apenas no modo play da engine, e o scene manager não faz ideia nenhuma
-    		// de em qual estado a engine está.
-    		// scn->AddSystem(std::make_unique<ecs::GlobalSystem>());
-    		// scn->AddSystem(std::make_unique<ecs::InputSystem>(GetInputManager()));
-
 			m_Scenes.push_back(std::move(scn));
 
 			return m_ActiveScene;
@@ -132,6 +126,10 @@ namespace core
 
 		        // Adiciona o renderizador apontando o render queue para o clone
 		        sceneClone->AddRenderSystem(std::make_unique<ecs::RenderSystem>(clone->GetRenderQueue()));
+
+		        // Adiciona os sistemas na cópia. (Ainda sistemas fixos, deverá ser refatorado para adição de sistemas dinâmicos)
+		        sceneClone->AddSystem(std::make_unique<ecs::GlobalSystem>());
+				sceneClone->AddSystem(std::make_unique<ecs::InputSystem>(GetInputManager()));
 
 		        if (scene.get() == m_ActiveScene) {
 		            activeMatch = sceneClone.get();
