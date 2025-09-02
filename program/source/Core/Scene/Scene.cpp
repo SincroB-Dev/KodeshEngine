@@ -22,6 +22,12 @@ namespace core
 			}
 		}
 
+		std::unique_ptr<Scene> Scene::GetClone()
+		{
+			std::unique_ptr<Scene> clone(new Scene(m_Name, m_Registry));
+			return clone;
+		}
+
 		void Scene::AddSystem(std::unique_ptr<ISystem> system)
 		{
 			m_Systems.push_back(std::move(system));

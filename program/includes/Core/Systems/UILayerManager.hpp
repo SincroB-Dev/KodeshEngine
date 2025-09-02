@@ -65,6 +65,12 @@ namespace core::systems
         void Render(renderer::Renderer& renderer, int w, int h, double deltaTime) override;
 
         /**
+         * @brief Ele não trabalha com um clone compĺeto, apenas alguns itens serão clonados,
+         *        portanto, atualmente o clone retorna um ponteiro vazio.
+         **/
+        std::unique_ptr<ISystem> GetClone() override;
+
+        /**
          * @brief Inicializa o ImGui com suporte ao SDL2/OpenGL.
          */
         void InitImGui(SDL_Window* window, SDL_GLContext* context);

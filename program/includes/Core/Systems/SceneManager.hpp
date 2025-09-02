@@ -24,6 +24,7 @@ namespace core
 		{
 		public:
 			SceneManager(events::EventDispatcher& dispatcher, input::InputManager& input);
+			SceneManager(input::InputManager& input); // Construtor sem inclusão de callbacks de eventos. ()
 
 			scene::Scene* AddScene(const std::string& name);
 			scene::Scene* GetScene(const std::string& name);
@@ -33,6 +34,13 @@ namespace core
 
 			void Update(double deltaTime) override;
 			void Render(renderer::Renderer& renderer, int w, int h, double deltaTime) override;
+
+			/**
+			 * @brief Retorna um clone funcional do scene manager, como scenes serão construídas
+			 * 		  e seus sistemas não serão executados, estes serão dispachados para serem
+			 * 		  executados no clone.
+			 **/
+			std::unique_ptr<ISystem> GetClone() override;
 
 			renderer::RenderQueue& GetRenderQueue() { return m_RenderQueue; }
 			input::InputManager& GetInputManager() { return ka_InputManager; }

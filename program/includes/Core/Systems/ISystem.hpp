@@ -14,6 +14,8 @@ namespace core
 
 			virtual void OnEvent(events::Event& e) {} // Fluxo de eventos, opcional;
 
+			virtual std::unique_ptr<ISystem> GetClone() = 0;
+
 			virtual void Update(double deltaTime) = 0; // Aplicação da lógica
 			virtual void Render(renderer::Renderer& renderer, int w, int h, double deltaTime) = 0; // Aplicação de desenhos
 		};
