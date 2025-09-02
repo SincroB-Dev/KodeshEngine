@@ -170,29 +170,27 @@ namespace sandbox
 
 		LogManager::Log(LogType::Info, "Anexando componente <InputComponent>...");
 		auto& input = entitiesManager.AddComponent<ecs::InputComponent>(playable);
-		auto* transform = entitiesManager.GetComponent<ecs::TransformComponent>(playable);
 
 		LogManager::Log(LogType::Info, "Anexando actions no <InputComponent>...");
-		input.AddAction("forward", SDLK_w, [transform](double dt){
+		input.AddAction("forward", SDLK_w, [playable](ecs::EntityRegistry& entities, double dt){
+			auto* transform = entities.GetComponent<ecs::TransformComponent>(playable);
 	        transform->position.y += 10.0f * dt;
 	    }, KeyStateEnum::Held);
 
-	    input.AddAction("back", SDLK_s, [transform](double dt){
+	    input.AddAction("back", SDLK_s, [playable](ecs::EntityRegistry& entities, double dt){
+	    	auto* transform = entities.GetComponent<ecs::TransformComponent>(playable);
 	        transform->position.y -= 10.0f * dt;
 	    }, KeyStateEnum::Held);
 
-	    input.AddAction("left", SDLK_a, [transform](double dt){
+	    input.AddAction("left", SDLK_a, [playable](ecs::EntityRegistry& entities, double dt){
+	    	auto* transform = entities.GetComponent<ecs::TransformComponent>(playable);
 	        transform->position.x -= 10.0f * dt;
 	    }, KeyStateEnum::Held);
 
-	    input.AddAction("right", SDLK_d, [transform](double dt){
+	    input.AddAction("right", SDLK_d, [playable](ecs::EntityRegistry& entities, double dt){
+	    	auto* transform = entities.GetComponent<ecs::TransformComponent>(playable);
 	        transform->position.x += 10.0f * dt;
 	    }, KeyStateEnum::Held);
-
-	    std::cout << SDLK_w << std::endl;
-	    std::cout << SDLK_a << std::endl;
-	    std::cout << SDLK_s << std::endl;
-	    std::cout << SDLK_d << std::endl;
 
 	    return playable;
 	}
