@@ -9,8 +9,9 @@ namespace core::events
 	 **/
 	enum class KodeshModeEnum: uint32_t
 	{
-		EDIT_MODE = 0,     // Modo em que a engine não executa sistemas de cenas, ela é propria para edição.
-		PLAY_MODE = 1 << 0 // Modo em que o jogo está em execução, ao entrar nesse modo é feito um backup do gerenciador de cenas.
+		NONE      = 0,		// Modo neutro para comparativos.
+		EDIT_MODE = 1 << 0, // Modo em que a engine não executa sistemas de cenas, ela é propria para edição.
+		PLAY_MODE = 1 << 1  // Modo em que o jogo está em execução, ao entrar nesse modo é feito um backup do gerenciador de cenas.
 	};
 
 	/**
