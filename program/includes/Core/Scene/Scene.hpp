@@ -21,7 +21,7 @@ namespace core
 		class Scene
 		{
 		public:
-			Scene(const std::string& name): m_Name() {}
+			Scene(const std::string& name): m_Name(name) {}
 			~Scene() {}
 
 			inline ecs::EntityRegistry& GetRegistry() { return m_Registry; }
