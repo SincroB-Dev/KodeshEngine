@@ -18,6 +18,7 @@ namespace core::ecs
     {
         virtual ~IPool() = default;
         virtual void Erase(uint32_t id) = 0;
+        virtual std::unique_ptr<IPool> GetClone() const = 0;
     };
 
     template<typename T>
@@ -28,6 +29,13 @@ namespace core::ecs
         void Erase(uint32_t id) override
         {
             data.erase(id);
+        }
+
+        std::unique_ptr<IPool> GetClone() const override
+        {
+            auto copy = std::make_unique<ComponentPool<T>>();
+            copy->data = data;
+            return copy;
         }
     };
 
@@ -67,6 +75,25 @@ namespace core::ecs
 			{
 			    pair.second->Erase(id);
 			}
+        }
+
+        // Clona as pools diretamente em m_ComponentPools.
+        inline void CopyPools(const std::unordered_map<std::type_index, std::unique_ptr<IPool>>& original)
+        {
+            m_ComponentPools.clear();
+
+            for (const auto& [type, pool] : original) 
+            {
+                m_ComponentPools[type] = pool->GetClone(); // polimórfico
+            }
+        }
+
+        // Faz uma cópia de componentstorage, já clonando as pools.
+        inline ComponentStorage GetCopy() const 
+        {
+            ComponentStorage copy;
+            copy.CopyPools(m_ComponentPools);
+            return copy;
         }
 
     private:
@@ -118,8 +145,8 @@ namespace core::ecs
         if (it == m_ComponentPools.end())
         {
             auto pool = std::make_unique<ComponentPool<T>>();
-            auto& ref = pool->data; // guardamos ref antes de mover
-            m_ComponentPools.emplace(typeIndex, std::move(pool));
+            auto& ref = pool->data;
+            m_ComponentPools[typeIndex] = std::move(pool);
             return ref;
         }
 

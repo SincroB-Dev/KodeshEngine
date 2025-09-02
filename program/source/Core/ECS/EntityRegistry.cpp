@@ -25,5 +25,10 @@ namespace core
 		{
 			return m_Entities;
 		}
+
+		EntityRegistry EntityRegistry::GetCopy() const 
+        {
+            return EntityRegistry(m_Entities, m_ComponentStorage.GetCopy(), m_NextID);
+        }
 	}
 }

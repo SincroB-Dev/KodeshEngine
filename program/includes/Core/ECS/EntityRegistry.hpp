@@ -59,7 +59,22 @@ namespace core::ecs
         // Verifica se a entidade ainda é válida
         bool IsAlive(const Entity& e) const;
 
+        // Cria um clone do entity registry.
+        EntityRegistry GetCopy() const;
+
+        EntityRegistry()
+            : m_Entities(), m_NextID(), m_ComponentStorage() {}
+
     private:
+        // construtor privado para clone
+        EntityRegistry(const std::vector<Entity>& entities,
+                       const ComponentStorage& storage,
+                       const utils::UniqueIDGen& idGen)
+            : m_Entities(entities)
+            , m_NextID(idGen.GetCopy()) // inicializa manualmente
+            , m_ComponentStorage(storage.GetCopy())
+        {}
+
         std::vector<Entity> m_Entities;
 
         utils::UniqueIDGen m_NextID;
