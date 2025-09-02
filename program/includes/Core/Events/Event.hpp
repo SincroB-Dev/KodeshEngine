@@ -12,7 +12,8 @@ namespace core::events
 		None = 0,
 		WindowClose, WindowResize,
 		KeyPressed, KeyReleased, TextInput,
-		MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled
+		MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled,
+		KodeshModeChanged
 	};
 
 	/**
