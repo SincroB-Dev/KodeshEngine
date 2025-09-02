@@ -44,5 +44,10 @@ namespace core
 		{
 			return unique.ID < m_Generations.size() && m_Generations[unique.ID] == unique.Generation;
 		}
+
+		UniqueIDGen UniqueIDGen::GetCopy() const
+		{
+	        return UniqueIDGen(m_NextID.load(), m_Generations, m_FreeList);
+	    }
 	}
 }
