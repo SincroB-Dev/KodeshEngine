@@ -143,6 +143,11 @@ namespace core::systems
         ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
 	}
 
+    std::unique_ptr<ISystem> UILayerManager::GetClone()
+    {
+        return nullptr; // Sem clone, pois não será utilizado em outros modos (por enquanto)
+    }
+
     UIMenuComponent& UILayerManager::AddLayoutMenubarItem(const std::string& Label)
     {
         return m_LayoutMenubar.emplace_back(

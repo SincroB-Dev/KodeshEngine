@@ -21,7 +21,7 @@ namespace core
 		class Scene
 		{
 		public:
-			Scene(const std::string& name): m_Name() {}
+			Scene(const std::string& name): m_Name(name) {}
 			~Scene() {}
 
 			inline ecs::EntityRegistry& GetRegistry() { return m_Registry; }
@@ -30,6 +30,8 @@ namespace core
 
 			void Update(double deltaTime);
 			void Render(renderer::Renderer& renderer, double deltaTime);
+
+			std::unique_ptr<Scene> GetClone();
 
 			void AddSystem(std::unique_ptr<ecs::ISystem> system);
 			void AddRenderSystem(std::unique_ptr<ecs::ISystem> renderSystem);
@@ -41,6 +43,13 @@ namespace core
 
 			std::vector<std::unique_ptr<ecs::ISystem>> m_Systems;
 			std::vector<std::unique_ptr<ecs::ISystem>> m_RenderSystems;
+
+		private:
+		    // construtor de clone
+		    Scene(const std::string& name, const ecs::EntityRegistry& registry)
+		        : m_Name(name)
+		        , m_Registry(registry.GetCopy()) // aqui inicializa diretamente, por conter atomic, não permite cópia nem move padrão por =.
+		    {}
 		};
 	}
 }

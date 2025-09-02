@@ -37,11 +37,23 @@ namespace core
 			// Verifica se o id ainda é válido
 			bool IsAlive(const UniqueID& unique) const;
 
+		    // método de cópia manual
+		    UniqueIDGen GetCopy() const;
+
 		private:
 			// Controle de geração de identificador único
 			std::atomic<uint32_t> m_NextID;
 			std::vector<uint32_t> m_Generations;
 			std::queue<uint32_t> m_FreeList;
+
+		private:
+			// construtor de inicialização manual para clone
+		    UniqueIDGen(uint32_t nextID, const std::vector<uint32_t>& generations,
+		                const std::queue<uint32_t>& freeList)
+		        : m_NextID(nextID)
+		        , m_Generations(generations)
+		        , m_FreeList(freeList)
+		    {}
 		};
 	}
 }

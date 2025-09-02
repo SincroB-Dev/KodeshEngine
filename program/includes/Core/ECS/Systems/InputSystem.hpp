@@ -34,7 +34,7 @@ namespace core
 			            {
 			            	for (auto& callback : action.second.callbacks)
 			            	{
-			                	callback(deltaTime);
+			                	callback(registry, deltaTime);
 			            	}
 			            }
 			        }
