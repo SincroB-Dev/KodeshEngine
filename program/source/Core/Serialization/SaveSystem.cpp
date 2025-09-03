@@ -19,7 +19,7 @@ namespace core::serialization
 
 		root["version"] = Current.ToString();
 		
-		events::SaveProjectEvent saveEvent(root);
+		events::SaveProjectEvent saveEvent(root["data"]);
 		ke_Dispatcher.Dispatch(saveEvent);
 
 		std::ofstream file(path);
@@ -32,7 +32,7 @@ namespace core::serialization
         json root;
         file >> root;
 
-		events::LoadProjectEvent loadEvent(root);
+		events::LoadProjectEvent loadEvent(root["data"]);
 		ke_Dispatcher.Dispatch(loadEvent);
     }
 }
