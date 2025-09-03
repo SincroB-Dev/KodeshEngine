@@ -60,6 +60,9 @@ namespace core::ecs
         template<typename T>
         bool HasComponent(uint32_t id);
 
+        // Verifica se a entidade possuí um componente, verificação sem template.
+        bool HasComponent(std::type_index tidx, uint32_t id);
+
         // Remove o componente
         template<typename T>
         void RemoveComponent(uint32_t id);
