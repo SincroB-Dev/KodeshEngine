@@ -18,6 +18,8 @@
 
 #include "Core/Events/EventDispatcher.hpp"
 #include "Core/Events/KeyboardEvent.hpp"
+#include "Core/Events/SaveSystemEvent.hpp"
+#include "Core/Serialization/SaveSystem.hpp"
 
 #include "Core/Input/KeyState.hpp"
 
@@ -44,6 +46,7 @@ using namespace core::mathutils;
 using namespace core::utils;
 using namespace core::renderer;
 using namespace core::input;
+using namespace core::serialization;
 using namespace core;
 
 using namespace editor;
@@ -206,6 +209,26 @@ namespace sandbox
 
 	void UserInterfaceModulation(KodeshApplication& app, UILayerManager& ui)
 	{
+		auto& arquivo = ui.AddLayoutMenubarItem("Arquivo");
+		{
+			auto& projeto = ui.AddLayoutMenubarItem(arquivo, "Projeto", "");
+	    	{
+	    		ui.AddLayoutMenubarItem(projeto, "Salvar Projeto", "Ctrl+S",
+	    			[&app](){
+						serialization::SaveSystem TestSave(app.GetWindow().GetDispatcher());
+	    				TestSave.Save("save-test.json");
+	    			}
+    			);
+
+	    		ui.AddLayoutMenubarItem(projeto, "Carregar Projeto", "Ctrl+O",
+	    			[&app](){
+						serialization::SaveSystem TestSave(app.GetWindow().GetDispatcher());
+	    				TestSave.Load("save-test.json");
+	    			}
+    			);
+	    	}
+		}
+
 	    auto& tests = ui.AddLayoutMenubarItem((std::string(MICON_LABS) + "  Tests [A/B]").c_str());
 	    {
 	    	auto& add = ui.AddLayoutMenubarItem(tests, "Adicionar", "");
