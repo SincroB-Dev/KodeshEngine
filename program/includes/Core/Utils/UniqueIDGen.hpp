@@ -31,6 +31,9 @@ namespace core
 			// Cria um novo objeto, reutilizando o ID se possível
 			UniqueID CreateUniqueID();
 
+			// Retorna o ultimo ID gerado.
+			uint32_t LastGeneratedID() const;
+
 			// Marca o objeto como destruído e libera o ID
 			bool DestroyID(const UniqueID& unique);
 
@@ -39,6 +42,12 @@ namespace core
 
 		    // método de cópia manual
 		    UniqueIDGen GetCopy() const;
+
+		    // Consulta quantas gerações um ID já teve.
+		    const std::vector<uint32_t>& GetGenerations() const;
+
+		    // Consulta fila de IDs liberados.
+		    std::queue<uint32_t> GetFreeList() const;
 
 		private:
 			// Controle de geração de identificador único
