@@ -1,11 +1,17 @@
 #pragma once
 
 #include <vector>
+#include <typeindex>
 
 #include "Core/ECS/Entity.hpp"
 #include "Core/ECS/IComponent.hpp"
 #include "Core/ECS/ComponentStorage.hpp"
 #include "Core/Utils/UniqueIDGen.hpp"
+
+namespace core::systems
+{
+    class SceneManager;
+}
 
 namespace core::ecs
 {
@@ -31,6 +37,13 @@ namespace core::ecs
         bool HasComponent(Entity e)
         {
             return m_ComponentStorage.HasComponent<T>(e.ID);
+        }
+
+        // Ferifica se a entidade possuí um componente, porém essa verificação 
+        // é utilizando o id da classe, ao invez de templates.
+        bool HasComponent(std::type_index Tidx, Entity e)
+        {
+            return m_ComponentStorage.HasComponent(Tidx, e.ID);
         }
 
         // Remove o componente
@@ -79,5 +92,8 @@ namespace core::ecs
 
         utils::UniqueIDGen m_NextID;
         ComponentStorage m_ComponentStorage;
+
+        // Torna o gerenciador de cenas confiável a acessar dados sensíveis, necessário para save...
+        friend class systems::SceneManager;
     };
 }
