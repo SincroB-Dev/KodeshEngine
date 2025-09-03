@@ -43,6 +43,8 @@ namespace core
 			}
 
 			InputComponent() {}
+
+			InputComponent(const InputComponent& input) {}
 		};
 	}
 }

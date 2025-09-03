@@ -36,6 +36,9 @@ namespace core
 				float                          orderZ
 			) : textureID(texID), color(color),
 				primitive(primitive), vertices(vertices), orderZ(orderZ) {}
+
+			ShapeComponent(const ShapeComponent& shape) 
+				: ShapeComponent(shape.textureID, shape.color, shape.primitive, shape.vertices, shape.orderZ) {}
 		};
 	}
 }

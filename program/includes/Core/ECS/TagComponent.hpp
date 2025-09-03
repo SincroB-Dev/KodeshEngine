@@ -16,6 +16,9 @@ namespace core
 
 			TagComponent(std::string name, std::string tag)
 				: tag(tag), name(name) {}
+
+			TagComponent(const TagComponent& tag)
+				: TagComponent(tag.tag, tag.name) {}
 		};
 	}
 }

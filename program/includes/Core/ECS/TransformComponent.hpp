@@ -17,6 +17,9 @@ namespace core
 
 			TransformComponent(mathutils::Vector position, mathutils::Vector scale, float rotation)
 				: position(position), scale(scale), rotation(rotation) {}
+
+			TransformComponent(const TransformComponent& transform)
+				: TransformComponent(transform.position, transform.scale, transform.rotation) {}
 		};
 	}
 }
