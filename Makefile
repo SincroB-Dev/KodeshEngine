@@ -14,6 +14,7 @@ SRC_DIRS = program/source \
              program/source/Core/Renderer \
              program/source/Core/Resource \
              program/source/Core/Scene \
+             program/source/Core/Serialization \
              program/source/Core/Systems \
              program/source/Core/Utils \
            program/source/Platform/ \
