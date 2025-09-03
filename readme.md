@@ -14,6 +14,7 @@ KodeshEngine/
 |     |--- Renderer/       # Abstração do render (SDL/OpenGL)
 |     |--- Resources/      # Gerenciamento de assets (texturas, shaders, fontes)
 |     |--- Scene/          # Relacionamentos expressos com a scene
+|     |--- Serialization/  # Controle de serialização de dados para save/load
 |     |--- Systems/        # Gerenciadores específicos (UI, Physics, Audio)
 |     +--- Utils/          # Helpers, logging, math, time
 |
