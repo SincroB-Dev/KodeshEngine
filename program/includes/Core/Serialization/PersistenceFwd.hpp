@@ -14,4 +14,11 @@ namespace core::serialization::persistence
 
 	template<typename T>
 	T DeserializeComponent(const nlohmann::json&);
+
+	//-------------------------------
+	// Systems (SceneManager, UILayoutManager, ...)
+	//-------------------------------
+
+	template<typename T>
+	nlohmann::json SerializeSystem(const T&);
 }
