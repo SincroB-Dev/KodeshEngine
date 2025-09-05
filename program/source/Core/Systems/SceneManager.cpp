@@ -7,6 +7,10 @@
 #include "Core/Maths/Vector.hpp"
 #include "Core/Maths/Matrix4x4.hpp"
 
+#include "Core/Events/SaveSystemEvent.hpp"
+
+#include "Core/Serialization/Persistence/JsonSceneManager.hpp"
+
 namespace core
 {
 	using namespace renderer;
@@ -18,7 +22,14 @@ namespace core
 		SceneManager::SceneManager(events::EventDispatcher& dispatcher, input::InputManager& input)
 			: ka_InputManager(input)
 		{
-			// Registrar callbacks se necessário;
+			// Registra callbacks de Save/Load de projeto.
+			dispatcher.Register<events::SaveProjectEvent>(
+				[&](events::Event& e) {
+					events::SaveProjectEvent* spe = dynamic_cast<events::SaveProjectEvent*>(&e);
+
+					spe->operator[]("project") = serialization::persistence::SerializeSystem(*this);
+				}
+			);
 		}
 
 		SceneManager::SceneManager(input::InputManager& input)

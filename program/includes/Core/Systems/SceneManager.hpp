@@ -11,7 +11,10 @@
 #include "Core/Renderer/RenderQueue.hpp"
 #include "Core/Renderer/Renderer.hpp"
 
+#include "Core/Serialization/PersistenceFwd.hpp"
+
 #include <memory>
+#include <nlohmann/json.hpp>
 
 namespace core
 {
@@ -56,6 +59,9 @@ namespace core
 
 			// Apontamento para o gerenciador de inputs (ka_ indica que vem do core, KodeshApplication)
 			input::InputManager& ka_InputManager;
+
+			// Friendship com serializadores/deserializadores
+	    	friend nlohmann::json serialization::persistence::SerializeSystem<SceneManager>(const SceneManager&);
 		};
 	}
 }

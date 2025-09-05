@@ -2,11 +2,17 @@
 
 #include <vector>
 #include <typeindex>
+#include <nlohmann/json.hpp>
 
 #include "Core/ECS/Entity.hpp"
 #include "Core/ECS/IComponent.hpp"
 #include "Core/ECS/ComponentStorage.hpp"
 #include "Core/Utils/UniqueIDGen.hpp"
+
+#include "Core/Serialization/PersistenceFwd.hpp"
+
+#include "Core/Events/EventDispatcher.hpp"
+#include "Core/Input/InputManager.hpp"
 
 namespace core::systems
 {
@@ -93,7 +99,7 @@ namespace core::ecs
         utils::UniqueIDGen m_NextID;
         ComponentStorage m_ComponentStorage;
 
-        // Torna o gerenciador de cenas confiável a acessar dados sensíveis, necessário para save...
-        friend class systems::SceneManager;
+        // Tornar especializadores friend de classes para que seja mais simples a serialização/deserialização
+        friend nlohmann::json serialization::persistence::SerializeSystem<systems::SceneManager>(const systems::SceneManager&);
     };
 }
