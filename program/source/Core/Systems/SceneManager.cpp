@@ -27,7 +27,8 @@ namespace core
 				[&](events::Event& e) {
 					events::SaveProjectEvent* spe = dynamic_cast<events::SaveProjectEvent*>(&e);
 
-					spe->operator[]("project") = serialization::persistence::SerializeSystem(*this);
+					// Atenção! Sempre utilizar GetSystemName() para recuperação e armazenamento de dados, para manter consistencia.
+					spe->operator[](GetSystemName()) = serialization::persistence::SerializeSystem(*this);
 				}
 			);
 		}

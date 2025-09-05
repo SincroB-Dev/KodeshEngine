@@ -48,6 +48,11 @@ namespace core
 			renderer::RenderQueue& GetRenderQueue() { return m_RenderQueue; }
 			input::InputManager& GetInputManager() { return ka_InputManager; }
 
+			/**
+			 * @brief Nome estilizado do sistema, significa que em sua serialização será salvo em "<Project>"
+			 **/
+			const char* GetSystemName() const override { return "<Project>"; }
+
 		private:
 			// Cena ativa e coleção
 			scene::Scene* m_ActiveScene;
