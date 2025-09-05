@@ -74,6 +74,9 @@ namespace core::serialization
 		void DeserializeComponents(const ecs::Entity& entity, ecs::EntityRegistry& registry, nlohmann::json& jsonComponents);
 
 	private:
+		/**
+		 * @brief Armazena entradas de serialização/deserialização de componentes ECS. 
+		 **/
 		std::vector<ComponentSerializerEntry> m_ComponentSerializers;
 	};
 
