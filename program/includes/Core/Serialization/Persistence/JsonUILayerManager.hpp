@@ -2,7 +2,7 @@
 
 #include "Core/Systems/UILayerManager.hpp"
 
-#include "Core/Serialization/SerializerRegistry/ComponentsRegistry.hpp"
+#include "Core/Serialization/PersistenceRegistry.hpp"
 
 #include <nlohmann/json.hpp>
 

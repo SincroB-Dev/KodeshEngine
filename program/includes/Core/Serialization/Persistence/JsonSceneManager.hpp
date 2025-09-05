@@ -2,7 +2,7 @@
 
 #include "Core/Systems/SceneManager.hpp"
 
-#include "Core/Serialization/SerializerRegistry/ComponentsRegistry.hpp"
+#include "Core/Serialization/PersistenceRegistry.hpp"
 
 #include <nlohmann/json.hpp>
 
@@ -35,7 +35,7 @@ namespace core::serialization::persistence
 				nlohmann::json jsonComponents = {};
 
 				// Serializa os componentes em json objects (jsonComponents)
-				ComponentsRegistry::Instance()
+				PersistenceRegistry::Instance()
 					.SerializeComponents(entt, registry, jsonComponents);
 
 				jsonEntities.push_back({

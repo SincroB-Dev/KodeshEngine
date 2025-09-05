@@ -36,22 +36,22 @@ namespace core::serialization
 	    ComponentDeserializeFn Deserialize;
 	};
 
-	class ComponentsRegistry
+	class PersistenceRegistry
 	{
 		// Construtor privado.
-		ComponentsRegistry() {};
+		PersistenceRegistry() {};
 
 	public:
 		/**
 		 * @brief Como um registrador que deve ser o mesmo desde o inicio até o fim do programa,
 		 * 		  então ele é um singletron forçado. 
 		 **/
-		static inline ComponentsRegistry& Instance()
+		static inline PersistenceRegistry& Instance()
 		{
-			static ComponentsRegistry csr;
+			static PersistenceRegistry csr;
 			// Reserva 8 slots para entrada de componentes, futuramente aumentar para diminuir interações,
 			// considerando que o uso de vectors está cada vez maior no software.
-			csr.m_Serializers.reserve(8);
+			csr.m_ComponentSerializers.reserve(8);
 			return csr;
 		}
 
@@ -74,11 +74,11 @@ namespace core::serialization
 		void DeserializeComponents(const ecs::Entity& entity, ecs::EntityRegistry& registry, nlohmann::json& jsonComponents);
 
 	private:
-		std::vector<ComponentSerializerEntry> m_Serializers;
+		std::vector<ComponentSerializerEntry> m_ComponentSerializers;
 	};
 
 	template<typename T>
-	void ComponentsRegistry::RegisterComponent(const std::string& name)
+	void PersistenceRegistry::RegisterComponent(const std::string& name)
 	{
 		ComponentSerializerEntry Entry{
 			name, typeid(T),
@@ -97,6 +97,6 @@ namespace core::serialization
 	        }
 		};
 
-    	m_Serializers.push_back(std::move(Entry));
+    	m_ComponentSerializers.push_back(std::move(Entry));
 	}
 }

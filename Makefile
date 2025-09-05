@@ -16,7 +16,6 @@ SRC_DIRS = program/source \
              program/source/Core/Scene \
              program/source/Core/Serialization \
               program/source/Core/Serialization/Persistence \
-              program/source/Core/Serialization/SerializerRegistry \
               program/source/Core/Serialization/Migration \
              program/source/Core/Systems \
              program/source/Core/Utils \

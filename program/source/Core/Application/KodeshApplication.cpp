@@ -14,7 +14,7 @@
 
 #include "Core/Helpers/LogManager.hpp"
 
-#include "Core/Serialization/SerializerRegistry/ComponentsRegistry.hpp"
+#include "Core/Serialization/PersistenceRegistry.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -118,7 +118,7 @@ namespace core
 
 		void KodeshApplication::RegisterComponentSerializers()
 		{
-			auto& rcs = serialization::ComponentsRegistry::Instance();
+			auto& rcs = serialization::PersistenceRegistry::Instance();
 
 			rcs.RegisterComponent<ecs::TransformComponent>("<TransformComponent>");
 			rcs.RegisterComponent<ecs::ShapeComponent>("<ShapeComponent>");
