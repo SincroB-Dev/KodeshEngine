@@ -44,7 +44,8 @@ namespace core
 
 			InputComponent() {}
 
-			InputComponent(const InputComponent& input) {}
+			InputComponent(const InputComponent& input)
+				: actions(input.actions) {}
 		};
 	}
 }
