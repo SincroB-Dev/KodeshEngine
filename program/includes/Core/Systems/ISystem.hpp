@@ -18,6 +18,11 @@ namespace core
 
 			virtual void Update(double deltaTime) = 0; // Aplicação da lógica
 			virtual void Render(renderer::Renderer& renderer, int w, int h, double deltaTime) = 0; // Aplicação de desenhos
+
+			/**
+			 * @brief Nome do sistema, mais utilizado para recuperar informações salvas.
+			 **/
+			virtual const char* GetSystemName() const { return "<ISystem>"; }
 		};
 	}
 }
