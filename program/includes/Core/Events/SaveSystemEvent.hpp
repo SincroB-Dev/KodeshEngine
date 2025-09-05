@@ -14,6 +14,9 @@ namespace core::events
 		SaveProjectEvent(nlohmann::json& data)
 			: m_Data(data) {}
 
+		// Consulta de dados
+		nlohmann::json GetData() const { return m_Data; }
+
 		EventType GetEventType() const override { return EventType::SaveProject; }
 
 	    // operador[] para chave string → retorna referência para json interno
@@ -53,6 +56,9 @@ namespace core::events
 			: m_Data(data) {}
 
 		EventType GetEventType() const override { return EventType::LoadProject; }
+
+		// Consulta de dados
+		nlohmann::json GetData() const { return m_Data; }
 
 	    // operador[] para chave string → retorna referência para json interno
 	    nlohmann::json& operator[](const std::string& key)
