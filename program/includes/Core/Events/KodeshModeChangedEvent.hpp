@@ -11,7 +11,9 @@ namespace core::events
 	{
 		NONE      = 0,		// Modo neutro para comparativos.
 		EDIT_MODE = 1 << 0, // Modo em que a engine não executa sistemas de cenas, ela é propria para edição.
-		PLAY_MODE = 1 << 1  // Modo em que o jogo está em execução, ao entrar nesse modo é feito um backup do gerenciador de cenas.
+		PLAY_MODE = 1 << 1, // Modo em que o jogo está em execução, ao entrar nesse modo é feito um backup do gerenciador de cenas.
+
+		SWAPPING  = 1 << 2 // Swapping é reservado da engine, ele é utilizado para recarregar sistemas sem afetar sistemas funcionais, tudo é carregado em swapping, e depois'é lançado para o modo atual da engine.
 	};
 
 	/**
