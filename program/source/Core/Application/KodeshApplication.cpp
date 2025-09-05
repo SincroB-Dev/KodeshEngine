@@ -117,7 +117,9 @@ namespace core
 
 		void KodeshApplication::SwitchMode(KodeshModeEnum mode)
 		{
-			if (m_Mode == mode)
+			if (m_Mode == mode || /* Ignora caso de igualdade de modos */ 
+				mode == KodeshModeEnum::SWAPPING /* Ignora o modo swapping, este é apenas para carregamentos */
+			) 
 			{
 				return;
 			}
@@ -129,6 +131,7 @@ namespace core
 				{
 					// Se certifica de apagar o mode antes de iniciar cópias.
 					m_Systems.erase(mode);
+					m_SystemsLookup.erase(mode);
 
 					// Aqui deverá iniciar o backup dos sistemas que utilizam PLAY_MODE, serão jogados para outra pilha 
 					// de sistemas na mesma ordem em que estão, assim é possível iniciar sistemas duas vezes.
@@ -137,11 +140,15 @@ namespace core
 						// Impede que sistemas que não podem ser utilizados em determinado modo, não sejam copiados.
 						if ((subsystem.Modes & mode) != KodeshModeEnum::NONE)
 						{
-							std::unique_ptr sys = subsystem.System->GetClone();
+							std::unique_ptr<systems::ISystem> sys = subsystem.System->GetClone();
+
+							// Insere o sistema em lookup do modo correspondente
+							m_SystemsLookup[mode][subsystem.Tidx] = sys.get();
 
 							m_Systems[mode].push_back(SystemManager{
 								std::move(sys),
 								subsystem.Modes,
+								subsystem.Tidx,
 								true // Agora ele é temporário pois é uma cópia.
 							});
 						}
