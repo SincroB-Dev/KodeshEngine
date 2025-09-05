@@ -5,10 +5,16 @@
 #include "Core/Events/WindowEvent.hpp"
 #include "Core/Events/MouseEvent.hpp"
 #include "Core/Events/KeyboardEvent.hpp"
+#include "Core/Events/SaveSystemEvent.hpp"
 #include "Core/Events/KodeshModeChangedEvent.hpp"
 #include "Core/Application/KodeshApplication.hpp"
 
+#include "Core/ECS/TransformComponent.hpp"
+#include "Core/ECS/ShapeComponent.hpp"
+
 #include "Core/Helpers/LogManager.hpp"
+
+#include "Core/Serialization/SerializerRegistry/ComponentsRegistry.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -108,6 +114,17 @@ namespace core
 					SwitchMode(kmc->GetNewMode());
 				}
 			);
+		}
+
+		void KodeshApplication::RegisterComponentSerializers()
+		{
+			auto& rcs = serialization::ComponentsRegistry::Instance();
+
+			rcs.RegisterComponent<ecs::TransformComponent>("<TransformComponent>");
+			rcs.RegisterComponent<ecs::ShapeComponent>("<ShapeComponent>");
+			rcs.RegisterComponent<ecs::TagComponent>("<TagComponent>");
+			rcs.RegisterComponent<ecs::LifetimeComponent>("<LifetimeComponent>");
+			rcs.RegisterComponent<ecs::InputComponent>("<InputComponent>");
 		}
 
 		void KodeshApplication::UseRenderer(std::unique_ptr<renderer::Renderer> r)

@@ -31,8 +31,10 @@ int main(int argc, char *argv[])
 
     // Renderizador Fixed-Functions OpenGL
     std::unique_ptr<RendererFF> renderer = std::make_unique<RendererFF>();
-
     app.UseRenderer(std::move(renderer));
+
+    // Registra serializers/deserializers de componentes para uso em save/load data.
+    app.RegisterComponentSerializers();
 
     // Registra sistemas (UInterface, SceneManager, AudioManager, Physics...)
     app.RegisterSystem<SceneManager>(KodeshModeEnum::EDIT_MODE | KodeshModeEnum::PLAY_MODE);
@@ -51,9 +53,10 @@ int main(int argc, char *argv[])
     // Criação da primeira cena da engine
     sandbox::InitialScene(app, *renderer.get());
 
-    // Registra callbacks
+    // Registra callbacks, deve ser registrado por ultimo para que a interface receba callbacks e os consuma em primeiro plano.
     app.RegisterWindowCallbacks();
 
+    // Roda a aplicação.
     app.Run();
 
     // Apaga o logmanager
