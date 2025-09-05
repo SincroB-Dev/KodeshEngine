@@ -10,12 +10,18 @@
 
 #include <memory>
 #include <vector>
+#include <typeindex>
+#include <functional>
+#include <any>
+#include <tuple>
 #include <nlohmann/json.hpp>
 
 #include <SDL2/SDL.h>
 #include "Platform/SDL/SDLWindow.hpp"
 
 #include "Core/Events/KodeshModeChangedEvent.hpp"
+
+#include "Core/Systems/SceneManager.hpp"
 
 namespace core
 {
@@ -30,6 +36,7 @@ namespace core
 		{
 			std::unique_ptr<systems::ISystem> System; // Sistema em sí.
 			events::KodeshModeEnum Modes; // Modos que o sistema é executado.
+			std::type_index Tidx; // Index do tipo de sistema.
 			bool IsTemporary; // Indica ao gerenciador se este é um sistema temporário (deve ser apagado quando não estiver em execução), ou, fixo.
 		};
 
@@ -53,6 +60,7 @@ namespace core
 			T* RegisterSystem(events::KodeshModeEnum modes, Args&&... args);
 
 			void RegisterWindowCallbacks();
+			void RegisterComponentSerializers();
 
 			void UseRenderer(std::unique_ptr<renderer::Renderer> r);
 
@@ -83,6 +91,13 @@ namespace core
 
 			static nlohmann::json GetConfigs();
 			static const char* GetConfigsFilepath();
+
+		private:
+			/**
+			 * @brief Tira sistemas carregados em swap, e os coloca no modo de edição, chamado no fim de cada frame
+			 *        foi pensado para garantir que ninguém esteja usando algum sistema durante sua recarga.
+			 **/
+			void SwapSystems();
 
 		private:
 			std::unique_ptr<Window> m_Window;
@@ -122,6 +137,7 @@ namespace core
 				SystemManager {
 					std::move(subsys),
 					modes, // Modos em que o sistema pode existir. (Não é feito aqui o controle do que pode ser executado...)
+					typeid(T), // Tipo do sistema para utilização futura.
 					false // Sistemas registrados nunca devem ser temporários, essa flag apenas é modificada em atos de cópia para novos modos.
 				}
 			);

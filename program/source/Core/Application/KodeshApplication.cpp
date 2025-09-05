@@ -188,6 +188,36 @@ namespace core
 			}
 		}
 
+		void KodeshApplication::SwapSystems()
+		{
+			// Verifica se há sistemas pendentes a serem recarregados.
+			if (m_Systems.count(KodeshModeEnum::SWAPPING))
+			{
+				// Economia de custos para diversos sistemas, a ideia é fazer um lookup temporario
+				std::unordered_map<std::type_index, size_t> editMap;
+				auto& editSystems = m_Systems[KodeshModeEnum::EDIT_MODE];
+
+				for (size_t i = 0; i < editSystems.size(); ++i)
+				{
+				    editMap[editSystems[i].Tidx] = i;
+				}
+
+				// Passa pelo swapping para fazer as trocas.
+				for (auto& swapsys : m_Systems[KodeshModeEnum::SWAPPING]) 
+				{
+				    auto it = editMap.find(swapsys.Tidx);
+
+				    if (it != editMap.end()) 
+				    {
+				        editSystems[it->second].System = std::move(swapsys.System);
+				    }
+				}
+
+				// Limpeza
+				m_Systems.erase(KodeshModeEnum::SWAPPING);
+			}
+		}
+
 		void KodeshApplication::Run()
 		{
 			m_InputManager->RegisterEventsOnDispatcher(m_Window->GetDispatcher());
@@ -227,6 +257,9 @@ namespace core
 						);
 					}
 				}
+
+				// 5. Atualização de sistemas pré carregados em swapping
+				SwapSystems();
 			}
 		}
 
