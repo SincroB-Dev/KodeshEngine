@@ -15,4 +15,8 @@ namespace core::serialization::persistence
 
 	    return workspace;
 	}
+
+	template<>
+	inline void DeserializeSystem<systems::UILayerManager>(systems::UILayerManager* uilayer, const nlohmann::json &data)
+	{}
 }
