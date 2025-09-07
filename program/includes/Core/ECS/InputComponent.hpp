@@ -43,6 +43,9 @@ namespace core
 			}
 
 			InputComponent() {}
+
+			InputComponent(const InputComponent& input)
+				: actions(input.actions) {}
 		};
 	}
 }

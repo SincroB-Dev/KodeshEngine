@@ -25,6 +25,12 @@ namespace core
 			return UniqueID(id, m_Generations[id]);
 		}
 
+		// Retorna o ultimo ID gerado.
+		uint32_t UniqueIDGen::LastGeneratedID() const
+		{
+			return m_NextID.load();
+		}
+
 		// Marca a geração como destruída e libera o ID
 		bool UniqueIDGen::DestroyID(const UniqueID& unique)
 		{
@@ -45,9 +51,22 @@ namespace core
 			return unique.ID < m_Generations.size() && m_Generations[unique.ID] == unique.Generation;
 		}
 
+		// Pega uma cópia do gerador, geralmente utilizado para troca de modos.
 		UniqueIDGen UniqueIDGen::GetCopy() const
 		{
 	        return UniqueIDGen(m_NextID.load(), m_Generations, m_FreeList);
+	    }
+
+	    // Consulta quantas gerações um ID já teve.
+	    const std::vector<uint32_t>& UniqueIDGen::GetGenerations() const
+	    {
+	    	return m_Generations;
+	    }
+
+	    // Consulta fila de IDs liberados.
+	    std::queue<uint32_t> UniqueIDGen::GetFreeList() const
+	    {
+	    	return m_FreeList;
 	    }
 	}
 }

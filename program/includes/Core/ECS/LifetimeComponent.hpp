@@ -19,6 +19,8 @@ namespace core
 			bool dead = false;
 
 			LifetimeComponent(double lifetime): lifetime(lifetime) {}
+
+			LifetimeComponent(const LifetimeComponent& lf): LifetimeComponent(lf.lifetime) {}
 		};
 	}
 }

@@ -1,11 +1,23 @@
 #pragma once
 
 #include <vector>
+#include <typeindex>
+#include <nlohmann/json.hpp>
 
 #include "Core/ECS/Entity.hpp"
 #include "Core/ECS/IComponent.hpp"
 #include "Core/ECS/ComponentStorage.hpp"
 #include "Core/Utils/UniqueIDGen.hpp"
+
+#include "Core/Serialization/PersistenceFwd.hpp"
+
+#include "Core/Events/EventDispatcher.hpp"
+#include "Core/Input/InputManager.hpp"
+
+namespace core::systems
+{
+    class SceneManager;
+}
 
 namespace core::ecs
 {
@@ -31,6 +43,13 @@ namespace core::ecs
         bool HasComponent(Entity e)
         {
             return m_ComponentStorage.HasComponent<T>(e.ID);
+        }
+
+        // Ferifica se a entidade possuí um componente, porém essa verificação 
+        // é utilizando o id da classe, ao invez de templates.
+        bool HasComponent(std::type_index Tidx, Entity e)
+        {
+            return m_ComponentStorage.HasComponent(Tidx, e.ID);
         }
 
         // Remove o componente
@@ -75,9 +94,19 @@ namespace core::ecs
             , m_ComponentStorage(storage.GetCopy())
         {}
 
+        /**
+         * @brief Cria uma nova entidade, utilizado apenas por carregamentos. 
+         **/
+        ecs::Entity CreateEntity(ecs::Entity e);
+
+    private:
         std::vector<Entity> m_Entities;
 
         utils::UniqueIDGen m_NextID;
         ComponentStorage m_ComponentStorage;
+
+        // Tornar especializadores friend de classes para que seja mais simples a serialização/deserialização
+        friend nlohmann::json serialization::persistence::SerializeSystem<systems::SceneManager>(const systems::SceneManager&);
+        friend void serialization::persistence::DeserializeSystem<systems::SceneManager>(systems::SceneManager*, const nlohmann::json &);
     };
 }

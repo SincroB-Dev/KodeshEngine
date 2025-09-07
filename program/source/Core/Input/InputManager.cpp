@@ -9,38 +9,44 @@ namespace core::input
 	void InputManager::RegisterEventsOnDispatcher(events::EventDispatcher& dispatcher)
 	{
 		// key events
-		dispatcher.Register<events::KeyPressedEvent>([this](events::Event& e) {
-			auto& ke = static_cast<events::KeyPressedEvent&>(e);
-			m_Keys[ke.GetKeyCode()].Press();
+		dispatcher.Register<events::KeyPressedEvent>(this,
+			[this](events::Event& e) {
+				auto& ke = static_cast<events::KeyPressedEvent&>(e);
+				m_Keys[ke.GetKeyCode()].Press();
 		});
 
-		dispatcher.Register<events::KeyReleasedEvent>([this](events::Event& e) {
-			auto& ke = static_cast<events::KeyReleasedEvent&>(e);
-			m_Keys[ke.GetKeyCode()].Release();
+		dispatcher.Register<events::KeyReleasedEvent>(this,
+			[this](events::Event& e) {
+				auto& ke = static_cast<events::KeyReleasedEvent&>(e);
+				m_Keys[ke.GetKeyCode()].Release();
 		});
 
 		// mouse events
-		dispatcher.Register<events::MouseButtonPressedEvent>([this](events::Event& e) {
-			auto& me = static_cast<events::MouseButtonPressedEvent&>(e);
-			m_MouseButtons[me.GetButton()] = true;
+		dispatcher.Register<events::MouseButtonPressedEvent>(this,
+			[this](events::Event& e) {
+				auto& me = static_cast<events::MouseButtonPressedEvent&>(e);
+				m_MouseButtons[me.GetButton()] = true;
 		});
 
-		dispatcher.Register<events::MouseButtonReleasedEvent>([this](events::Event& e) {
-			auto& me = static_cast<events::MouseButtonReleasedEvent&>(e);
-			m_MouseButtons[me.GetButton()] = false;
+		dispatcher.Register<events::MouseButtonReleasedEvent>(this,
+			[this](events::Event& e) {
+				auto& me = static_cast<events::MouseButtonReleasedEvent&>(e);
+				m_MouseButtons[me.GetButton()] = false;
 		});
 
-		dispatcher.Register<events::MouseMovedEvent>([this](events::Event& e) {
-			auto& me = static_cast<events::MouseMovedEvent&>(e);
-			if (e.Handled)
-			m_MouseX = me.GetX();
-			m_MouseY = me.GetY();
+		dispatcher.Register<events::MouseMovedEvent>(this,
+			[this](events::Event& e) {
+				auto& me = static_cast<events::MouseMovedEvent&>(e);
+				if (e.Handled)
+				m_MouseX = me.GetX();
+				m_MouseY = me.GetY();
 		});
 
-		dispatcher.Register<events::MouseScrolledEvent>([this](events::Event& e) {
-			auto& me = static_cast<events::MouseScrolledEvent&>(e);
-			m_ScrollX = me.GetXOffset();
-			m_ScrollY = me.GetYOffset();
+		dispatcher.Register<events::MouseScrolledEvent>(this,
+			[this](events::Event& e) {
+				auto& me = static_cast<events::MouseScrolledEvent&>(e);
+				m_ScrollX = me.GetXOffset();
+				m_ScrollY = me.GetYOffset();
 		});
 	}
 

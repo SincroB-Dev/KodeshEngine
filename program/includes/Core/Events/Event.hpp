@@ -13,7 +13,8 @@ namespace core::events
 		WindowClose, WindowResize,
 		KeyPressed, KeyReleased, TextInput,
 		MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled,
-		KodeshModeChanged
+		KodeshModeChanged,
+		SaveProject, LoadProject
 	};
 
 	/**

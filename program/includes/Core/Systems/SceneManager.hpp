@@ -11,7 +11,11 @@
 #include "Core/Renderer/RenderQueue.hpp"
 #include "Core/Renderer/Renderer.hpp"
 
+#include "Core/Serialization/PersistenceFwd.hpp"
+
 #include <memory>
+#include <functional>
+#include <nlohmann/json.hpp>
 
 namespace core
 {
@@ -25,6 +29,7 @@ namespace core
 		public:
 			SceneManager(events::EventDispatcher& dispatcher, input::InputManager& input);
 			SceneManager(input::InputManager& input); // Construtor sem inclusão de callbacks de eventos. ()
+			~SceneManager();
 
 			scene::Scene* AddScene(const std::string& name);
 			scene::Scene* GetScene(const std::string& name);
@@ -45,6 +50,11 @@ namespace core
 			renderer::RenderQueue& GetRenderQueue() { return m_RenderQueue; }
 			input::InputManager& GetInputManager() { return ka_InputManager; }
 
+			/**
+			 * @brief Nome estilizado do sistema, significa que em sua serialização será salvo em "<Project>"
+			 **/
+			const char* GetSystemName() const override { return "<Project>"; }
+
 		private:
 			// Cena ativa e coleção
 			scene::Scene* m_ActiveScene;
@@ -56,6 +66,12 @@ namespace core
 
 			// Apontamento para o gerenciador de inputs (ka_ indica que vem do core, KodeshApplication)
 			input::InputManager& ka_InputManager;
+
+			std::vector<std::function<void()>> m_OnDestroyList;
+
+			// Friendship com serializadores/deserializadores
+	    	friend nlohmann::json serialization::persistence::SerializeSystem<SceneManager>(const SceneManager&);
+        	friend void serialization::persistence::DeserializeSystem<systems::SceneManager>(systems::SceneManager*, const nlohmann::json &);
 		};
 	}
 }

@@ -11,6 +11,12 @@ namespace core
 			return m_Entities.back();
 		}
 
+		ecs::Entity EntityRegistry::CreateEntity(ecs::Entity e)
+		{
+			m_Entities.push_back(e);
+			return m_Entities.back();
+		}
+
 		// Marca a entidade como destruída e libera o ID
 		void EntityRegistry::DestroyEntity(ecs::Entity e)
 		{

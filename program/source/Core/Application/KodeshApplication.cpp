@@ -5,8 +5,12 @@
 #include "Core/Events/WindowEvent.hpp"
 #include "Core/Events/MouseEvent.hpp"
 #include "Core/Events/KeyboardEvent.hpp"
+#include "Core/Events/SaveSystemEvent.hpp"
 #include "Core/Events/KodeshModeChangedEvent.hpp"
 #include "Core/Application/KodeshApplication.hpp"
+
+#include "Core/ECS/TransformComponent.hpp"
+#include "Core/ECS/ShapeComponent.hpp"
 
 #include "Core/Helpers/LogManager.hpp"
 
@@ -57,7 +61,7 @@ namespace core
 			EventDispatcher& dispatcher = m_Window->GetDispatcher();
 
 			// Registra o close da janela
-			dispatcher.Register<WindowCloseEvent>(
+			dispatcher.Register<WindowCloseEvent>(this,
 				[&](Event& e){ 
 					// Saída da engine.
 					if (e.GetEventType() == EventType::WindowClose)
@@ -69,7 +73,7 @@ namespace core
 			);
 
 			// Registra o resize da janela
-			dispatcher.Register<WindowResizeEvent>(
+			dispatcher.Register<WindowResizeEvent>(this,
 				[&](Event& e){ 
 					const WindowResizeEvent* we = dynamic_cast<const WindowResizeEvent*>(&e);
 					m_Window->SetWidth(we->GetWidth());
@@ -78,7 +82,7 @@ namespace core
 			);
 
 			// Registra o teclado para a engine.
-			dispatcher.Register<KeyPressedEvent>(
+			dispatcher.Register<KeyPressedEvent>(this,
 				[&](Event& e){ 
 					// Troca de modos.
 					if (e.GetEventType() == EventType::KeyPressed)
@@ -102,12 +106,67 @@ namespace core
 			);
 
 			// Registra a troca de modos da engine.
-			dispatcher.Register<KodeshModeChangedEvent>(
+			dispatcher.Register<KodeshModeChangedEvent>(this,
 				[&](Event& e){ 
 					const KodeshModeChangedEvent* kmc = dynamic_cast<const KodeshModeChangedEvent*>(&e);
 					SwitchMode(kmc->GetNewMode());
 				}
 			);
+
+			// Registra o carregamento de projetos.
+			dispatcher.Register<LoadProjectEvent>(this,
+				[&](Event& e) {
+					const LoadProjectEvent* lpe = dynamic_cast<const LoadProjectEvent*>(&e);
+
+					// Vai para o estado padrão da engine antes de começar qualquer trabalho de carga.
+					SwitchMode(KodeshModeEnum::EDIT_MODE);
+
+					// 1. Faz uma cópia dos dados json para uso.
+					auto data = lpe->GetData();
+
+					// 1.1 Faz uma conferencia para saber o dado json é realmente um objeto, mesmo sendo objeto
+					//     sem essa conferencia costuma dar problema no fim do laço.
+					if (data.is_object())
+					{
+						for (auto& [key, value] : data.items())
+						{
+							// 2. Procura o sistema que confere com o sistema que está em fase de carregamento
+							auto oldsys = std::find_if(m_Systems[GetMode()].begin(), m_Systems[GetMode()].end(),
+								[&key](const SystemManager& sysm) { return sysm.System->GetSystemName() == key; }
+							);
+
+							// 2.1 Caso o sistema exista (sempre vai existir mas é bom ter cuidados)
+							if (oldsys != m_Systems[GetMode()].end())
+							{
+								// 3. Cria um novo sistema utilizando o deserializador correto.
+								auto newsys = serialization::PersistenceRegistry::Instance()
+									.DeserializeSystem(key, GetWindow().GetDispatcher(), GetInputManager(), value);
+
+								// 4. Empilha o carregamento para a lista de swapping, ela cuida de carregar devidamente o sistema no editmode.
+								m_Systems[KodeshModeEnum::SWAPPING].push_back(
+									SystemManager{
+										std::move(newsys),
+										oldsys->Modes,
+										oldsys->Tidx,
+										true // Temporário pois será transferido para EditMode assim que o frame tiver terminado.
+									}
+								);
+							}
+						}
+					}
+				}
+			);
+		}
+
+		void KodeshApplication::RegisterComponentSerializers()
+		{
+			auto& rcs = serialization::PersistenceRegistry::Instance();
+
+			rcs.RegisterComponent<ecs::TransformComponent>("<TransformComponent>");
+			rcs.RegisterComponent<ecs::ShapeComponent>("<ShapeComponent>");
+			rcs.RegisterComponent<ecs::TagComponent>("<TagComponent>");
+			rcs.RegisterComponent<ecs::LifetimeComponent>("<LifetimeComponent>");
+			rcs.RegisterComponent<ecs::InputComponent>("<InputComponent>");
 		}
 
 		void KodeshApplication::UseRenderer(std::unique_ptr<renderer::Renderer> r)
@@ -117,7 +176,9 @@ namespace core
 
 		void KodeshApplication::SwitchMode(KodeshModeEnum mode)
 		{
-			if (m_Mode == mode)
+			if (m_Mode == mode || /* Ignora caso de igualdade de modos */ 
+				mode == KodeshModeEnum::SWAPPING /* Ignora o modo swapping, este é apenas para carregamentos */
+			) 
 			{
 				return;
 			}
@@ -129,6 +190,7 @@ namespace core
 				{
 					// Se certifica de apagar o mode antes de iniciar cópias.
 					m_Systems.erase(mode);
+					m_SystemsLookup.erase(mode);
 
 					// Aqui deverá iniciar o backup dos sistemas que utilizam PLAY_MODE, serão jogados para outra pilha 
 					// de sistemas na mesma ordem em que estão, assim é possível iniciar sistemas duas vezes.
@@ -137,11 +199,15 @@ namespace core
 						// Impede que sistemas que não podem ser utilizados em determinado modo, não sejam copiados.
 						if ((subsystem.Modes & mode) != KodeshModeEnum::NONE)
 						{
-							std::unique_ptr sys = subsystem.System->GetClone();
+							std::unique_ptr<systems::ISystem> sys = subsystem.System->GetClone();
+
+							// Insere o sistema em lookup do modo correspondente
+							m_SystemsLookup[mode][subsystem.Tidx] = sys.get();
 
 							m_Systems[mode].push_back(SystemManager{
 								std::move(sys),
 								subsystem.Modes,
+								subsystem.Tidx,
 								true // Agora ele é temporário pois é uma cópia.
 							});
 						}
@@ -161,6 +227,39 @@ namespace core
 					m_Mode = mode;
 					return;
 				}
+			}
+		}
+
+		void KodeshApplication::SwapSystems()
+		{
+			// Verifica se há sistemas pendentes a serem recarregados.
+			if (m_Systems.count(KodeshModeEnum::SWAPPING))
+			{
+				// Economia de custos para diversos sistemas, a ideia é fazer um lookup temporario
+				std::unordered_map<std::type_index, size_t> editMap;
+				auto& editSystems = m_Systems[KodeshModeEnum::EDIT_MODE];
+
+				for (size_t i = 0; i < editSystems.size(); ++i)
+				{
+				    editMap[editSystems[i].Tidx] = i;
+				}
+
+				// Passa pelo swapping para fazer as trocas.
+				for (auto& swapsys : m_Systems[KodeshModeEnum::SWAPPING]) 
+				{
+				    auto it = editMap.find(swapsys.Tidx);
+
+				    if (it != editMap.end()) 
+				    {
+				    	auto& sys = editSystems[it->second];
+
+				        sys.System = std::move(swapsys.System);
+				        m_SystemsLookup[GetMode()][sys.Tidx] = sys.System.get();
+				    }
+				}
+
+				// Limpeza
+				m_Systems.erase(KodeshModeEnum::SWAPPING);
 			}
 		}
 
@@ -203,6 +302,9 @@ namespace core
 						);
 					}
 				}
+
+				// 5. Atualização de sistemas pré carregados em swapping
+				SwapSystems();
 			}
 		}
 

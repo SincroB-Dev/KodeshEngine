@@ -10,13 +10,13 @@ namespace core
 {
 	namespace renderer
 	{
-		enum class PrimitiveType
+		enum class PrimitiveType: uint8_t
 		{
-			Triangles,
-			Lines,
-			TriangleFan,
-			Quads,
-			Polygon
+			Triangles   = 0,
+			Lines       = 1,
+			TriangleFan = 2,
+			Quads       = 3,
+			Polygon     = 4
 		};
 
 		struct ImageInfo

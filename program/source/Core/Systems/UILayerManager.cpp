@@ -33,35 +33,49 @@ namespace core::systems
         // o layout deve ser o primeiro a registrar seus eventos.
 
         // text input event
-        dispatcher.Register<events::TextInputEvent>([this](events::Event& e){
-            this->OnEvent(e);
-        });
+        dispatcher.Register<events::TextInputEvent>(this,
+            [this](events::Event& e){
+                this->OnEvent(e);
+            }
+        );
 
         // key events
-        dispatcher.Register<events::KeyPressedEvent>([this](events::Event& e) {
-            this->OnEvent(e);
-        });
+        dispatcher.Register<events::KeyPressedEvent>(this,
+            [this](events::Event& e) {
+                this->OnEvent(e);
+            }
+        );
 
-        dispatcher.Register<events::KeyReleasedEvent>([this](events::Event& e) {
-            this->OnEvent(e);
-        });
+        dispatcher.Register<events::KeyReleasedEvent>(this,
+            [this](events::Event& e) {
+                this->OnEvent(e);
+            }
+        );
 
         // mouse events
-        dispatcher.Register<events::MouseButtonPressedEvent>([this](events::Event& e) {
-            this->OnEvent(e);
-        });
+        dispatcher.Register<events::MouseButtonPressedEvent>(this,
+            [this](events::Event& e) {
+                this->OnEvent(e);
+            }
+        );
 
-        dispatcher.Register<events::MouseButtonReleasedEvent>([this](events::Event& e) {
-            this->OnEvent(e);
-        });
+        dispatcher.Register<events::MouseButtonReleasedEvent>(this,
+            [this](events::Event& e) {
+                this->OnEvent(e);
+            }
+        );
 
-        dispatcher.Register<events::MouseMovedEvent>([this](events::Event& e) {
-            this->OnEvent(e);
-        });
+        dispatcher.Register<events::MouseMovedEvent>(this,
+            [this](events::Event& e) {
+                this->OnEvent(e);
+            }
+        );
 
-        dispatcher.Register<events::MouseScrolledEvent>([this](events::Event& e) {
-            this->OnEvent(e);
-        });
+        dispatcher.Register<events::MouseScrolledEvent>(this,
+            [this](events::Event& e) {
+                this->OnEvent(e);
+            }
+        );
 	}
 
 	void UILayerManager::OnEvent(events::Event& e)
