@@ -21,4 +21,7 @@ namespace core::serialization::persistence
 
 	template<typename T>
 	nlohmann::json SerializeSystem(const T&);
+
+	template<typename T>
+	void DeserializeSystem(T* sm, const nlohmann::json &data);
 }
