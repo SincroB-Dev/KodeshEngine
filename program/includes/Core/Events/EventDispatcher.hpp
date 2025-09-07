@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core/Events/Event.hpp"
+#include "Core/Utils/UniqueIDGen.hpp"
 
 #include <functional>
 #include <unordered_map>
@@ -11,44 +12,57 @@
 namespace core::events
 {
 	/**
+	 * @brief Callback de eventos. 
+	 **/
+	using EventCallbackFn = std::function<void(Event&)>;
+
+	/**
+	 * @brief Entrada de eventos, mais fácil para fazer filtragem. 
+	 **/
+	struct EventEntry
+	{
+		void* Owner;
+		EventCallbackFn Callback;
+		utils::UniqueID UID;
+	};
+
+	/**
 	 * @brief Centraliza todos os eventos em um vector, e os chama quando um evento
 	 *        for acionado pela interface responsável pela janela. 
 	 **/
 	class EventDispatcher
 	{
 	public:
-		using EventCallbackFn = std::function<void(Event&)>;
-
 		// Registra callback para um tipo especifico de evento
 		template<typename EventType>
-		void Register(const EventCallbackFn& callback);
+		void Register(void* owner, const EventCallbackFn& callback);
+
+		// Remoção de callback utilizando o uniqueid
+		void Unregister(utils::UniqueID id);
+
+		// Remoção de callback utilizando o proprietário (remove TODOS os callbacks com um determinado proprietário)
+		void Unregister(void* owner);
 
 		// Dispara o evento para todos os callbacks registrados
-		inline void Dispatch(Event& event)
-		{
-			auto it = m_Callbacks.find(typeid(event));
-			if (it != m_Callbacks.end())
-			{
-				for (auto& callback : it->second)
-				{
-					callback(event);
-					// Com isso dá para marcar event.Handled = true quando clicar em um botão
-					// evitando passar para scene.
-					if (event.Handled) break; // Interrompe se consumido;
-				}
-			}
-		}
+		void Dispatch(Event& event);
+
+		// Gerador de identificação de callbacks do sistema.
+		static utils::UniqueIDGen s_NextID;
 
 	private:
 		// Armazena uma lista de callbacks para cada tipo de evento.
-		std::unordered_map<std::type_index, std::vector<EventCallbackFn>> m_Callbacks;
+		std::unordered_map<std::type_index, std::vector<EventEntry>> m_Callbacks;
 	};
 
 	// Registra callback para um tipo especifico de evento
 	template<typename EventType>
-	inline void EventDispatcher::Register(const EventCallbackFn& callback)
+	inline void EventDispatcher::Register(void* owner, const EventCallbackFn& callback)
 	{
 		auto& vec = m_Callbacks[typeid(EventType)];
-		vec.push_back(callback);
+		vec.push_back(EventEntry{
+			owner,
+			callback,
+			s_NextID.CreateUniqueID()
+		});
 	}
 }
