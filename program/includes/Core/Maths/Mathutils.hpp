@@ -1,17 +1,17 @@
 #pragma once
 
-#include "Core/Maths/Vector.hpp"
-#include "Core/Maths/Vector3.hpp"
-#include "Core/Maths/Vector4.hpp"
+#include <glm/gtc/matrix_transform.hpp>
 
-namespace core
+namespace core::mathutils
 {
-    namespace mathutils
+    inline glm::mat4 OrthoAspect(float size, float width, float height) 
     {
-        Vector Normalized(Vector vec);
-        Vector3 Normalized(Vector3 vec);
-        Vector4 Normalized(Vector4 vec);
-
-        Vector Rotate(const Vector& v, float angleRad);
+        float aspect = width / height;
+        float half = size * 0.5f;
+        return glm::ortho(
+            -half * aspect, half * aspect,
+            -half, half,
+            -1.0f, 1.0f
+        );
     }
 }

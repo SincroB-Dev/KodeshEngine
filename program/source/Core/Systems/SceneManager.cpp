@@ -4,8 +4,8 @@
 #include "Core/ECS/Systems/InputSystem.hpp"
 #include "Core/ECS/Systems/GlobalSystem.hpp"
 
-#include "Core/Maths/Vector.hpp"
-#include "Core/Maths/Matrix4x4.hpp"
+#include "Core/Maths/Maths.hpp"
+#include "Core/Maths/Mathutils.hpp"
 
 #include "Core/Events/SaveSystemEvent.hpp"
 
@@ -116,7 +116,7 @@ namespace core
 			RendererFrameInfo info;
 
 			info.ViewportW = w; info.ViewportH = h;
-			info.ViewProjection = Matrix4x4::OrthoAspect(10.0f, w, h);
+			info.ViewProjection = mathutils::OrthoAspect(10.0f, w, h);
 
 			renderer.BeginFrame(info);
 

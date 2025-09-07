@@ -2,7 +2,7 @@
 
 #include "Core/ECS/IComponent.hpp"
 
-#include "Core/Maths/Vector.hpp"
+#include "Core/Maths/Maths.hpp"
 
 namespace core
 {

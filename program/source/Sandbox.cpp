@@ -26,7 +26,7 @@
 #include "Core/Helpers/LogManager.hpp"
 #include "Core/Renderer/RenderCommand.hpp"
 
-#include "Core/Maths/Vector.hpp"
+#include "Core/Maths/Maths.hpp"
 #include "Core/Maths/Color.hpp"
 
 #include "Platform/OpenGL/RendererFF.hpp"

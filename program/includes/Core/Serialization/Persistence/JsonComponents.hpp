@@ -13,7 +13,7 @@
 #include "Core/Renderer/Renderer.hpp"
 
 #include "Core/Maths/VertexInfo.hpp"
-#include "Core/Maths/Vector.hpp"
+#include "Core/Maths/Maths.hpp"
 #include "Core/Maths/Color.hpp"
 
 namespace core::serialization::persistence

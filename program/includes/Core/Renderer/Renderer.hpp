@@ -3,7 +3,7 @@
 #include "Core/Renderer/RenderCommand.hpp"
 #include "Core/Renderer/RenderQueue.hpp"
 
-#include "Core/Maths/Matrix4x4.hpp"
+#include "Core/Maths/Maths.hpp"
 
 namespace core
 {
