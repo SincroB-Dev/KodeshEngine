@@ -15,18 +15,27 @@ namespace core::serialization
         }
 	}
 
-	void PersistenceRegistry::DeserializeComponents(const ecs::Entity& entity, ecs::EntityRegistry& registry, nlohmann::json& jsonComponents)
+	void PersistenceRegistry::DeserializeComponents(const ecs::Entity& entity, ecs::EntityRegistry& registry, const nlohmann::json& jsonComponents)
 	{
-		for (auto& s : m_ComponentSerializers)
+		for (auto [key, value] : jsonComponents.items())
 		{
-        	systems::LogManager::Log(systems::LogType::EDebug, s.Name);
+			for (auto& s : m_ComponentSerializers)
+			{
+	            if (!value.is_null() && std::string(key) == s.Name) 
+	            {
+	            	s.Deserialize(entity, registry, value);
+	            }
+	        }
+		}
+	}
 
-            if (registry.HasComponent(s.Tidx, entity)) 
-            {
-            	systems::LogManager::Log(systems::LogType::EDebug, "Founded: ", s.Name);
+	std::unique_ptr<systems::ISystem> PersistenceRegistry::DeserializeSystem(const std::string& name, events::EventDispatcher& dispatcher, input::InputManager& input, const nlohmann::json& j)
+	{
+		if (m_SystemsDeserializers.count(name))
+		{
+			return m_SystemsDeserializers[name](dispatcher, input, j);
+		}
 
-                jsonComponents[s.Name] = s.Serialize(entity, registry);
-            }
-        }
+		return nullptr;
 	}
 }
