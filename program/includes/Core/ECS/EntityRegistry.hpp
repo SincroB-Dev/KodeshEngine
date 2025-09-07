@@ -94,6 +94,12 @@ namespace core::ecs
             , m_ComponentStorage(storage.GetCopy())
         {}
 
+        /**
+         * @brief Cria uma nova entidade, utilizado apenas por carregamentos. 
+         **/
+        ecs::Entity CreateEntity(ecs::Entity e);
+
+    private:
         std::vector<Entity> m_Entities;
 
         utils::UniqueIDGen m_NextID;
