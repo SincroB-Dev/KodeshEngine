@@ -23,7 +23,7 @@ namespace core
 			: ka_InputManager(input)
 		{
 			// Registra callbacks de Save/Load de projeto.
-			dispatcher.Register<events::SaveProjectEvent>(
+			dispatcher.Register<events::SaveProjectEvent>(this,
 				[&](events::Event& e) {
 					events::SaveProjectEvent* spe = dynamic_cast<events::SaveProjectEvent*>(&e);
 

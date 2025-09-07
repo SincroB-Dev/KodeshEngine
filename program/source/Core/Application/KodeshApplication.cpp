@@ -61,7 +61,7 @@ namespace core
 			EventDispatcher& dispatcher = m_Window->GetDispatcher();
 
 			// Registra o close da janela
-			dispatcher.Register<WindowCloseEvent>(
+			dispatcher.Register<WindowCloseEvent>(this,
 				[&](Event& e){ 
 					// Saída da engine.
 					if (e.GetEventType() == EventType::WindowClose)
@@ -73,7 +73,7 @@ namespace core
 			);
 
 			// Registra o resize da janela
-			dispatcher.Register<WindowResizeEvent>(
+			dispatcher.Register<WindowResizeEvent>(this,
 				[&](Event& e){ 
 					const WindowResizeEvent* we = dynamic_cast<const WindowResizeEvent*>(&e);
 					m_Window->SetWidth(we->GetWidth());
@@ -82,7 +82,7 @@ namespace core
 			);
 
 			// Registra o teclado para a engine.
-			dispatcher.Register<KeyPressedEvent>(
+			dispatcher.Register<KeyPressedEvent>(this,
 				[&](Event& e){ 
 					// Troca de modos.
 					if (e.GetEventType() == EventType::KeyPressed)
@@ -106,7 +106,7 @@ namespace core
 			);
 
 			// Registra a troca de modos da engine.
-			dispatcher.Register<KodeshModeChangedEvent>(
+			dispatcher.Register<KodeshModeChangedEvent>(this,
 				[&](Event& e){ 
 					const KodeshModeChangedEvent* kmc = dynamic_cast<const KodeshModeChangedEvent*>(&e);
 					SwitchMode(kmc->GetNewMode());
@@ -114,7 +114,7 @@ namespace core
 			);
 
 			// Registra o carregamento de projetos.
-			dispatcher.Register<LoadProjectEvent>(
+			dispatcher.Register<LoadProjectEvent>(this,
 				[&](Event& e) {
 					const LoadProjectEvent* lpe = dynamic_cast<const LoadProjectEvent*>(&e);
 
