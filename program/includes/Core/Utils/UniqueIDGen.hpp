@@ -49,6 +49,16 @@ namespace core
 		    // Consulta fila de IDs liberados.
 		    std::queue<uint32_t> GetFreeList() const;
 
+		    /**
+		     * @brief Limpeza do contador de identificações.
+		     **/
+		    void Set(uint32_t start, std::vector<uint32_t> gen, std::queue<uint32_t> fl)
+		    {
+		    	m_NextID.store(start, std::memory_order_relaxed);
+		    	m_Generations = gen;
+		    	m_FreeList = fl;
+		    }
+
 		private:
 			// Controle de geração de identificador único
 			std::atomic<uint32_t> m_NextID;
