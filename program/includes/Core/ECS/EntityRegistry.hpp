@@ -107,5 +107,6 @@ namespace core::ecs
 
         // Tornar especializadores friend de classes para que seja mais simples a serialização/deserialização
         friend nlohmann::json serialization::persistence::SerializeSystem<systems::SceneManager>(const systems::SceneManager&);
+        friend void serialization::persistence::DeserializeSystem<systems::SceneManager>(systems::SceneManager*, const nlohmann::json &);
     };
 }

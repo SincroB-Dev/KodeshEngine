@@ -67,6 +67,7 @@ namespace core
 
 			// Friendship com serializadores/deserializadores
 	    	friend nlohmann::json serialization::persistence::SerializeSystem<SceneManager>(const SceneManager&);
+        	friend void serialization::persistence::DeserializeSystem<systems::SceneManager>(systems::SceneManager*, const nlohmann::json &);
 		};
 	}
 }
