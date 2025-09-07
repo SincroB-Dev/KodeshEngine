@@ -23,6 +23,11 @@
 
 #include "Core/Systems/SceneManager.hpp"
 
+#include "Core/Serialization/PersistenceRegistry.hpp"
+
+#include "Core/Serialization/Persistence/JsonSceneManager.hpp"
+#include "Core/Serialization/Persistence/JsonUILayerManager.hpp"
+
 namespace core
 {
 	namespace app
@@ -130,6 +135,10 @@ namespace core
 			std::unique_ptr<T> subsys = std::make_unique<T>(dispatcher, input, std::forward<Args>(args)...);
 			
 			T* subsysPtr = subsys.get();
+
+			// Registro do sistema no deserializador
+			serialization::PersistenceRegistry::Instance()
+				.RegisterSystem<T>(subsysPtr->GetSystemName(), std::forward<Args>(args)...);
 
 			auto& pool = m_Systems[events::KodeshModeEnum::EDIT_MODE];
 
