@@ -14,8 +14,6 @@
 
 #include "Core/Helpers/LogManager.hpp"
 
-#include "Core/Serialization/PersistenceRegistry.hpp"
-
 #include <iostream>
 #include <fstream>
 
@@ -114,6 +112,50 @@ namespace core
 					SwitchMode(kmc->GetNewMode());
 				}
 			);
+
+			// Registra o carregamento de projetos.
+			dispatcher.Register<LoadProjectEvent>(
+				[&](Event& e) {
+					const LoadProjectEvent* lpe = dynamic_cast<const LoadProjectEvent*>(&e);
+
+					// Vai para o estado padrão da engine antes de começar qualquer trabalho de carga.
+					SwitchMode(KodeshModeEnum::EDIT_MODE);
+
+					// 1. Faz uma cópia dos dados json para uso.
+					auto data = lpe->GetData();
+
+					// 1.1 Faz uma conferencia para saber o dado json é realmente um objeto, mesmo sendo objeto
+					//     sem essa conferencia costuma dar problema no fim do laço.
+					if (data.is_object())
+					{
+						for (auto& [key, value] : data.items())
+						{
+							// 2. Procura o sistema que confere com o sistema que está em fase de carregamento
+							auto oldsys = std::find_if(m_Systems[GetMode()].begin(), m_Systems[GetMode()].end(),
+								[&key](const SystemManager& sysm) { return sysm.System->GetSystemName() == key; }
+							);
+
+							// 2.1 Caso o sistema exista (sempre vai existir mas é bom ter cuidados)
+							if (oldsys != m_Systems[GetMode()].end())
+							{
+								// 3. Cria um novo sistema utilizando o deserializador correto.
+								auto newsys = serialization::PersistenceRegistry::Instance()
+									.DeserializeSystem(key, GetWindow().GetDispatcher(), GetInputManager(), value);
+
+								// 4. Empilha o carregamento para a lista de swapping, ela cuida de carregar devidamente o sistema no editmode.
+								m_Systems[KodeshModeEnum::SWAPPING].push_back(
+									SystemManager{
+										std::move(newsys),
+										oldsys->Modes,
+										oldsys->Tidx,
+										true // Temporário pois será transferido para EditMode assim que o frame tiver terminado.
+									}
+								);
+							}
+						}
+					}
+				}
+			);
 		}
 
 		void KodeshApplication::RegisterComponentSerializers()
@@ -209,7 +251,10 @@ namespace core
 
 				    if (it != editMap.end()) 
 				    {
-				        editSystems[it->second].System = std::move(swapsys.System);
+				    	auto& sys = editSystems[it->second];
+
+				        sys.System = std::move(swapsys.System);
+				        m_SystemsLookup[GetMode()][sys.Tidx] = sys.System.get();
 				    }
 				}
 
