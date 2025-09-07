@@ -4,7 +4,12 @@
 
 #include "Core/Serialization/PersistenceRegistry.hpp"
 
+#include "Core/ECS/Entity.hpp"
+#include "Core/Utils/UniqueIDGen.hpp"
+
+#include <stdexcept>
 #include <nlohmann/json.hpp>
+#include <vector>
 
 namespace core::serialization::persistence
 {
@@ -68,5 +73,69 @@ namespace core::serialization::persistence
 		project["scenes"] = sceneList;
 
 	    return project;
+	}
+
+	template<>
+	inline void DeserializeSystem<systems::SceneManager>(systems::SceneManager* sm, const nlohmann::json &data)
+	{
+		if (data.is_object())
+		{
+			for (auto& jsonScene : data["scenes"])
+			{
+				auto* scene = sm->AddScene(jsonScene["name"].get<std::string>());
+				nlohmann::json cached_uidg = jsonScene["cached_uidg"];
+
+				// Entities da cena. (Entities são apenas IDs que permitem leitura mais fácil de dados).
+				auto& registry = scene->GetRegistry();
+
+				for (auto& jsonEntity : jsonScene["entities"])
+				{
+					// Cria um entity baseado no id e geração vindos do json.
+					auto entity = registry.CreateEntity(
+						ecs::Entity(utils::UniqueID(jsonEntity["id"].get<uint32_t>(), jsonEntity["generation"].get<uint32_t>()))
+					);
+
+					serialization::PersistenceRegistry::Instance()
+						.DeserializeComponents(entity, registry, jsonEntity["components"]);
+				}
+
+				std::queue<uint32_t> freeList;
+
+				if (cached_uidg.contains("free") && !cached_uidg["free"].is_null())
+				{
+					nlohmann::json jsonFree = cached_uidg["free"];
+
+					if (!jsonFree.is_array())
+					{
+						throw std::runtime_error("[<Project>]:scenes:[<Scene>]:cached_uidg:free deveria ser um array!");
+					}
+
+					std::vector<uint32_t> free = cached_uidg["free"].get<std::vector<uint32_t>>();
+
+					for (auto id : cached_uidg["free"])
+					{
+						freeList.push(id);
+					}
+				}
+
+				std::vector<uint32_t> generations;
+				generations.clear();
+
+				if (cached_uidg.contains("generations") && !cached_uidg["generations"].is_null())
+				{
+					nlohmann::json jsonGenerations = cached_uidg["generations"];
+
+					if (!jsonGenerations.is_array())
+					{
+						throw std::runtime_error("[<Project>]:scenes:[<Scene>]:cached_uidg:generations deveria ser um array!");
+					}
+
+					generations = jsonGenerations.get<std::vector<uint32_t>>();
+				}
+
+				registry.m_NextID
+						.Set(cached_uidg["current"].get<uint32_t>(), generations, freeList);
+			}
+		}
 	}
 }
