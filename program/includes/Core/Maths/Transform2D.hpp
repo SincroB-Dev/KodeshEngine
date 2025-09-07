@@ -3,7 +3,7 @@
 #include <nlohmann/json.hpp>
 #include <memory>
 
-#include "Core/Maths/Vector.hpp"
+#include "Core/Maths/Maths.hpp"
 
 
 namespace core
