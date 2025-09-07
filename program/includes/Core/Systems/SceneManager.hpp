@@ -14,6 +14,7 @@
 #include "Core/Serialization/PersistenceFwd.hpp"
 
 #include <memory>
+#include <functional>
 #include <nlohmann/json.hpp>
 
 namespace core
@@ -28,6 +29,7 @@ namespace core
 		public:
 			SceneManager(events::EventDispatcher& dispatcher, input::InputManager& input);
 			SceneManager(input::InputManager& input); // Construtor sem inclusão de callbacks de eventos. ()
+			~SceneManager();
 
 			scene::Scene* AddScene(const std::string& name);
 			scene::Scene* GetScene(const std::string& name);
@@ -64,6 +66,8 @@ namespace core
 
 			// Apontamento para o gerenciador de inputs (ka_ indica que vem do core, KodeshApplication)
 			input::InputManager& ka_InputManager;
+
+			std::vector<std::function<void()>> m_OnDestroyList;
 
 			// Friendship com serializadores/deserializadores
 	    	friend nlohmann::json serialization::persistence::SerializeSystem<SceneManager>(const SceneManager&);

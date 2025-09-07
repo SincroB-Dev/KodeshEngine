@@ -31,11 +31,22 @@ namespace core
 					spe->operator[](GetSystemName()) = serialization::persistence::SerializeSystem(*this);
 				}
 			);
+
+			// Método auxiliar, como dispatchers são utilizados apenas no construtor.
+			m_OnDestroyList.push_back([this,&dispatcher](){ dispatcher.Unregister(this); });
 		}
 
 		SceneManager::SceneManager(input::InputManager& input)
 			: ka_InputManager(input)
 		{}
+
+		SceneManager::~SceneManager()
+		{
+			for (auto& destroy : m_OnDestroyList)
+			{
+				destroy();
+			}
+		}
 
 		Scene* SceneManager::AddScene(const std::string& name)
 		{
